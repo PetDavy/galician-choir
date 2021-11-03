@@ -1,0 +1,70 @@
+<svg width="145" height="145" viewBox="0 0 145 145" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M64 1C105 -0.999999 132 19 144 59C148 91 137 117 110 135C100.103 140.291 89.2146 143.467 78.0252 144.328C66.8359 145.189 55.5897 143.715 45 140C6 119 -7 88 5 46C17 20 36 5 64 1Z" fill="#0F0F0F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M93 8C91 8 90 9 89 11C80 7 76 10 77 19L74 21C73 17 74 13 75 10C70 9 69 10 72 13L71 15L67 10C65 9 64 9 63 11V20H61L59 11L55 13C57 15 58 19 58 23H55C56 16 53 14 47 15L43 18C48 23 47 25 41 26C41 22 40 20 36 21C35 20 36 19 37 18H34C47 7 62 3 80 5L93 8Z" fill="#E0E0E0"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M93 8C131 23 146 51 138 93C123 130 95 146 55 139C18 125 1.00001 99 6.00001 60L8.00001 53C12 37 20 26 34 18H37C36 19 35 20 36 21L32 24C31 25 31 26 33 27L34 29L32 30C26 29 23 31 23 37L21 39L17 43C15 45 15 47 17 49L15 50C13 52 11 55 11 58L19 61L17 65L13 64C11 63 10 64 10 66C9.00001 68 8.00001 71 9.00001 74L12 73C14 72 17 73 20 74V69H16L21 67C22 65 24 64 26 64C23 81 28 96 41 108C44 112 49 114 54 116C57 118 62 119 67 120L79 121L78 133C76 132 76 131 76 130V126C74 127 73 129 73 132C74 135 75 135 78 134H80L83 133C82 131 81 128 82 126L84 125V131L86 132L89 136C91 136 93 135 93 132L92 122L91 123C89.9744 125.322 88.9743 127.656 88 130V124H83L82 120C88 118 93 116 99 112C103 110 106 107 109 103L112 99C118 89 121 79 120 68C120 62 118 57 115 53C114 49 112 47 110 45C104 36 97 31 88 29C85 27 82 26 79 28L77 27C66 24 56 27 47 33L36 43C35 39 36 36 37 34C40 33 41 31 39 29L40 28L43 30L55 23H61L68 21C66 19 65 17 67 16L71 20L74 21L77 19L88 23V15L89 11C90 9 91 8 93 8Z" fill="#ECECEC"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M74 21L71 20L67 16C65 17 66 19 68 21L63 20V11C64 8.99999 65 8.99999 67 9.99999L71 15L72 13C69 9.99999 70 8.99999 75 9.99999C74 13 73 17 74 21Z" fill="#0A0A0A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M89 11L88 15L85 14C83 12 82 12 81 14V19L84 18C85 17 86 17 88 19V23L77 19C76 10 80 7 89 11Z" fill="#1E1E1E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M61 20V23H58C58 19 57 15 55 13L59 11L61 20Z" fill="#111111"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85 14L83 17L84 18L81 19V14C82 12 83 12 85 14Z" fill="#E2E2E2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M55 23L43 30L40 28L39 29C41 31 40 33 37 34C36 31 35 28 33 27C31 26 31 25 32 24L36 21C40 20 41 22 41 26C47 25 48 23 43 18L47 15C53 14 56 16 55 23Z" fill="#141414"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M85 14L88 15V19C86 17 85 17 84 18L83 17L85 14Z" fill="#6E6E6E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M97 16C100 15 103 16 106 19C104 22 103 22 103 19C99 19 99 20 102 23C103 27 102 28 98 27L93 25V22C95 22 96 23 98 25C98 23 98 22 96 21C95 19 96 17 97 16Z" fill="#131313"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M47 17C51 17 53 19 50 24L47 17Z" fill="#D2D2D2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M61 20H63L68 21L61 23V20Z" fill="#767676"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M108 21C111 22 114 25 117 28C115 30 114 30 113 27C111 28 109 31 108 34C103 32 103 31 107 29C107 27 108 26 110 25L107 24L108 21Z" fill="#1A1A1A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M36 24C39 23 39 24 37 27C36 26 35 25 36 24Z" fill="#C2C2C2"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M77 27L79 28L88 29C96 32 103 38 110 45L115 53L119 68C119 78 117 89 112 99C107.673 103.339 103.339 107.673 99 112L81 118C71 119 62 118 54 116C29 101 22 80 31 53L32 51L36 45C46 32 60 26 77 27Z" fill="#F9F9F9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M79 28C82 26 85 27 88 29L79 28Z" fill="#414141"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32 30C37 37 35 40 26 40L23 37C23 31 26 29 32 30Z" fill="#161616"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M118 30L122 33L116 37V40C119 39 122 38 123 35C125 36 126 37 126 40C122 40 120 41 117 43C113 42 112 40 113 36L118 30Z" fill="#1A1A1A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M26 33C29 32 31 34 32 38C28 37 26 36 26 33Z" fill="#E3E3E3"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M77 27C60 26 46 32 36 45V43L47 33C56 27 66 24 77 27Z" fill="#3E3E3E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M88 29C97 31 104 36 110 45C103 38 96 32 88 29Z" fill="#393939"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21 39L23 43H20C19 45 20 47 23 48L27 43C28 51 25 53 18 49C17 47 16 45 17 43L21 39Z" fill="#141414"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M33 27C35 28 36 31 37 34C36 36 35 39 36 43V45C33 46 32 48 32 51L31 53C28 56 26 60 26 64C24 64 22 65 21 67C20 62 19 62 17 65L19 61H22L24 53C22 52 21 53 21 54L22 58H19C18 53 17 53 16 57C13 55 13 53 16 52L15 50L17 49C15 47 15 45 17 43C16 45 17 47 18 49C25 53 28 51 27 43L23 48C20 47 19 45 20 43H23L21 39L23 37L26 40C35 40 37 37 32 30L34 29L33 27Z" fill="#D9D9D9"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M90 91H77C70 86 70 81 78 77C82 76 86 76 90 78V44L64 50L63 96L59 99H46C40 94 40 89 47 85C51 84 55 84 59 86L60 47L95 40L94 87L90 91Z" fill="#0C0C0C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M127 41L131 48C129 52 126 54 122 53C119 51 118 48 118 45C121 45 124 44 127 41Z" fill="#1A1A1A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M36 45L32 51C32 48 33 46 36 45Z" fill="#414141"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M110 45C112 47 114 49 115 53L110 45Z" fill="#434343"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M126 46C127 46 128 47 127 49C124 51 123 51 122 48L126 46Z" fill="#DCDCDC"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M15 50L16 52C13 53 13 55 16 57C17 53 18 53 19 58H22L21 54C21 53 22 52 24 53L22 61H19L11 58C11 55 13 52 15 50Z" fill="#0F0F0F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M132 54C133 55 134 56 133 59C130 57 127 58 125 61C123 59 122 58 123 56C126 56 129 56 132 54Z" fill="#0A0A0A"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8 53L6 60C5 57 6 55 8 53Z" fill="#8E8E8E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M127 61C136 61 138 65 133 72C127 74 125 72 125 67C125 64 125 62 127 61Z" fill="#161616"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21 67L16 69H20V74C17 73 14 72 12 73C10 71 9 68 10 66C10 64 11 63 13 64L17 65C19 62 20 62 21 67Z" fill="#151515"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M115 53C118 57 120 62 120 68H119L115 53Z" fill="#595959"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M128 65H134C133 68 131 69 127 68L128 65Z" fill="#DBDBDB"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M12 67C13 66 14 67 15 69H11L12 67Z" fill="#979797"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10 66C9 68 10 71 12 73L9 74C8 71 9 68 10 66Z" fill="#8B8B8B"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M31 53C22 80 29 101 54 116C49 114 44 112 41 108C35.2576 102.332 30.9129 95.4062 28.3095 87.7695C25.706 80.1328 24.9154 71.995 26 64C26 60 28 56 31 53Z" fill="#404040"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M121 87L131 93C129 100 127 100 122 95C121 93 122 92 123 91C121 89 120 88 121 87Z" fill="#222222"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19 88C21 87 23 88 26 89L23 91V94C17 96 14 94 14 89L19 88Z" fill="#2B2B2B"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 91C18 90 20 91 22 92L19 93L16 91Z" fill="#DEDEDE"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M77 91H90L84 93L78 92L77 91Z" fill="#969696"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M119 68H120C121 79 118 89 112 99C117 89 119 78 119 68Z" fill="#3F3F3F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M124 92C126 92 127 93 129 95C126 96 124 95 124 92Z" fill="#CDCDCD"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20 100C19 100 18 101 19 102C17 98 18 96 22 97C25 96 27 97 27 101L20 100Z" fill="#424242"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M112 99L109 103C109 101 110 99 112 99Z" fill="#353535"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M120 98L127 101L126 104L121 101L120 102L123 106V109L117 102L120 98Z" fill="#292929"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M20 100L24 103C26 101 27 101 29 103L21 106L19 102C18 101 19 100 20 100Z" fill="#868686"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M29 103L24 109L21 106L29 103Z" fill="#1F1F1F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M114 106L121 111C120 112 119 113 118 112L114 106Z" fill="#121212"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M34 106L36 107C32 108 29 110 27 113C26 111 26 109 29 108L34 106Z" fill="#0C0C0C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M113 114L111 111C110 110 111 109 112 109L118 115L116 117L113 114Z" fill="#1E1E1E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M106 115L108 117C108 119 109 120 111 120H112C111 121 109 122 108 121C106 119 105 117 106 115Z" fill="#0F0F0F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M99 112C93 116 88 118 82 120H67C62 119 57 118 54 116C62 118 71 119 81 118L99 112Z" fill="#494949"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M111 120C109 120 108 119 108 117V114C110 115 111 117 111 120Z" fill="#D8D8D8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M104 126C104 123 102 121 100 121C99 119 100 118 101 118L105 122C106 123 105 125 104 126Z" fill="#191919"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M111 111L113 114L112 120H111C111 117 110 115 108 114V117L106 115L111 111Z" fill="#626262"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M41 118C44 117 46 118 48 121C45 125 42 127 38 128L45 120L43 119C37 125 36 124 41 118Z" fill="#212121"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M67 120H82L83 124H88V130L86 125V132L84 131V125L82 126L81 123C80 126 79 130 80 134H78V133L79 121L67 120Z" fill="#B8B8B8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M70 123L72 124C70 127 69 131 69 135C67 130 68 126 70 123Z" fill="#1E1E1E"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M75 122C76 122 77 122 76 124L75 122Z" fill="#191919"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M82 126C81 128 82 131 83 133L80 134C79 130 80 126 81 123L82 126Z" fill="#060606"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M100 121C102 121 104 123 104 126L100 127V121Z" fill="#737373"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M49 122C50 121 51 122 52 123L49 128L50 129L55 123L54 131L47 130C47 127 47 124 49 122ZM78 133V134C75 135 74 135 73 132C73 129 74 127 76 126V130C76 131 76 132 78 133Z" fill="#1F1F1F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M91 123L92 122L93 132L91 123Z" fill="#7D7D7D"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M60 125H63C59 126 58 129 60 132L64 126H66C64 128 63 131 65 133C56 134 55 131 60 125Z" fill="#1C1C1C"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M91 123L93 132C93 135 91 136 89 136C91 132 90 131 86 132V125L88 130L89 131L91 123Z" fill="#262626"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M86 132C90 131 91 132 89 136L86 132Z" fill="#8E8E8E"/>
+</svg>
