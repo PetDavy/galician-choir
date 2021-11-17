@@ -1,4 +1,5 @@
 <template>
+  <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <main class="Home"></main>
     <ScrollParallax>
       <section class="Home__showcase showcase">
@@ -35,7 +36,7 @@
       </div>
     </section>
     <section class="Home__badges badges">
-      <GrandTitle titleText="badges" />
+      <GrandTitle titleText="badges" align="left:35"/>
       <div class="badges__container side-indent">
         <h2 class="badges__title">
           our awards and badges
@@ -95,6 +96,7 @@
 
 <script>
 import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
+import Loader from '@/components/Loader.vue';
 import GrandTitle from '@/components/GrandTitle.vue';
 import ArrowRight from '@/components/ArrowRight.vue';
 import BadgeIcon1 from '@/assets/icons/badge-icon-1.svg?inline';
@@ -107,9 +109,12 @@ export default {
   data() {
     return {
       isShowcaseSet: false,
+      isLoaderVisible: true,
+      isLoaderRemoved: false,
     };
   },
   components: {
+    Loader,
     ArrowRight,
     GrandTitle,
     // icons
@@ -119,10 +124,21 @@ export default {
     BadgeIcon4,
     ScrollParallax,
   },
+  methods: {
+    removeLoader() {
+      setTimeout(() => {
+        this.isLoaderRemoved = true;
+      }, 500);
+    },
+  },
   mounted() {
     setTimeout(() => {
-      this.isShowcaseSet = true;
-    });
+      setTimeout(() => {
+        this.isLoaderVisible = false;
+        this.isShowcaseSet = true;
+        this.removeLoader();
+      });
+    }, 1000);
   },
 };
 </script>
@@ -341,6 +357,10 @@ export default {
   .badges {
     position: relative;
     padding: 180px 0 150px;
+
+    .Grand-title {
+      top: 40px;
+    }
 
     &__title {
       margin-bottom: 20px;

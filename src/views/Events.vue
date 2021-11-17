@@ -1,9 +1,8 @@
 <template>
+  <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <div class="Events">
-    <div class="Events__grand-title-wrapper">
-      <GrandTitle titleText="events"/>
-    </div>
-    <div class="Events__content side-indent">
+    <div class="Events__content side-indent side-indent--full-width">
+      <GrandTitle titleText="events" align="left:35" v-if="isLoaderRemoved" />
       <h1 class="Events__title">
         Our Latest Events
       </h1>
@@ -30,11 +29,32 @@
 
 <script>
 import GrandTitle from '@/components/GrandTitle.vue';
+import Loader from '@/components/Loader.vue';
 
 export default {
   name: 'Events',
+  data() {
+    return {
+      isLoaderVisible: true,
+      isLoaderRemoved: false,
+    };
+  },
   components: {
     GrandTitle,
+    Loader,
+  },
+  methods: {
+    removeLoader() {
+      setTimeout(() => {
+        this.isLoaderRemoved = true;
+      }, 500);
+    },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isLoaderVisible = false;
+      this.removeLoader();
+    }, 1000);
   },
 };
 </script>
@@ -42,25 +62,32 @@ export default {
 <style lang="scss" scoped>
 .Events {
   position: relative;
-  padding-top: 120px;
+  padding: 210px 0 60px;
+  background: #132b34;
 
-  &__grand-title-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
+  &__content {
+    position: relative;
+  }
+
+  .Grand-title {
+    top: -90px;
   }
 
   &__title {
     position: relative;
-    font-size: 50px;
-    padding-bottom: 30px;
+    width: fit-content;
+    padding-bottom: 8px;
     margin-bottom: 40px;
+    margin-left: auto;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 500;
 
     &::before {
       position: absolute;
       content: '';
       bottom: 0;
-      left: 0;
+      right: 0;
       min-width: 150px;
       width: 100%;
       height: 2px;
@@ -74,7 +101,8 @@ export default {
   margin-bottom: 60px;
   padding: 55px 70px;
   box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  background-color: #17313a;
+  border-radius: 4px;
   overflow: hidden;
 
   &__content {
@@ -89,7 +117,7 @@ export default {
 
   &__date {
     font-size: 14px;
-    color: #b6b6;
+    color: #666;
   }
 
   &__title {
@@ -97,14 +125,15 @@ export default {
     font-size: 50px;
     line-height: 60px;
     letter-spacing: 1.5px;
+    color: #ccc;
   }
 
   &__description {
       max-width: 80%;
       margin-bottom: 80px;
-      font-size: 15px;
+      font-size: 17px;
       line-height: 30px;
-      color: #333;
+      color: #ccc;
       letter-spacing: 0.8px;
   }
 
@@ -130,6 +159,10 @@ export default {
     height: 100%;
     object-fit: cover;
     object-position: center;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 </style>

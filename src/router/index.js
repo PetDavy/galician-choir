@@ -5,7 +5,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    meta: { header: ['standart'] },
+    meta: { header: ['full-width'] },
     component: Home,
   },
   {
@@ -13,7 +13,7 @@ const routes = [
     name: 'About',
     component: () => import('../views/About.vue'),
     meta: {
-      header: ['light', 'sticky'],
+      header: ['full-width'],
     },
   },
   {
@@ -21,13 +21,16 @@ const routes = [
     name: 'Events',
     component: () => import('../views/Events.vue'),
     meta: {
-      header: ['light', 'sticky'],
+      header: ['full-width'],
     },
   },
   {
     path: '/gallery',
     name: 'Gallery',
     component: () => import('../views/Gallery.vue'),
+    meta: {
+      header: ['full-width'],
+    },
   },
   {
     path: '/videos',
@@ -38,6 +41,11 @@ const routes = [
     path: '/contacts',
     name: 'Contacts',
     component: () => import('../views/Contacts.vue'),
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue'),
   },
 ];
 
