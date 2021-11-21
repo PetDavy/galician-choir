@@ -4,23 +4,30 @@
     <div class="Events__content side-indent side-indent--full-width">
       <GrandTitle titleText="events" align="left:35" v-if="isLoaderRemoved" />
       <h1 class="Events__title">
-        Our Latest Events
+        Future events
       </h1>
-      <div class="Events__event event">
+      <div
+        class="Events__event event"
+        v-for="event in eventsList"
+        :key="event.id"
+      >
         <div class="event__content">
           <div class="event__header">
             <div class="event__date">
-              2021/04/28
+              {{(formatDate(event.time.toDate())).date}}
+              <span class="event__date--time">
+                {{(formatDate(event.time.toDate())).time}}
+              </span>
             </div>
           </div>
-          <h2 class="event__title">Lorem ipsum dolor sit amet consectetur adipisicing.</h2>
+          <h2 class="event__title">{{event.title}}</h2>
           <div class="event__description">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur pariatur, atque iure recusandae doloremque molestiae labore repellat, voluptates impedit distinctio autem. Voluptate pariatur qui minima assumenda eveniet, voluptas cumque tempora!
+            {{event.text}}
           </div>
-          <a href="www.facebook.com" target="_blank" class="event__btn btn">view more</a>
+          <a :href="event.link" target="_blank" class="event__btn btn">view more</a>
         </div>
         <div class="event__preview-wrapper">
-          <img src="https://old.uinp.gov.ua/sites/default/files/userupload/1_188.jpg" alt="Leontovych" class="event__preview">
+          <img :src="event.img" :alt="event.title" class="event__preview">
         </div>
       </div>
     </div>
@@ -28,6 +35,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import formatters from '../utils/formatters';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
 
@@ -43,7 +52,16 @@ export default {
     GrandTitle,
     Loader,
   },
+  computed: {
+    ...mapGetters(['db', 'events']),
+    eventsList() {
+      return [...this.events].sort((eventA, eventB) => (
+        eventB.time - eventA.time // newest first
+      ));
+    },
+  },
   methods: {
+    formatDate: formatters.formatDate,
     removeLoader() {
       setTimeout(() => {
         this.isLoaderRemoved = true;
@@ -116,8 +134,14 @@ export default {
   }
 
   &__date {
-    font-size: 14px;
-    color: #666;
+    font-size: 18px;
+    color: #ccc;
+
+    &--time {
+      margin-left: 10px;
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
 
   &__title {
@@ -139,6 +163,43 @@ export default {
 
   &__btn {
     background-color: #f8f1e7;
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: '';
+      bottom: 4px;
+      left: 4px;
+      width: 0;
+      height: 0;
+      border-bottom: 1px solid #aaaaaa;
+      border-left: 1px solid #aaaaaa;
+      transition: width .5s, height .5s;
+    }
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 4px;
+      right: 4px;
+      width: 0;
+      height: 0;
+      border-right: 1px solid #aaaaaa;
+      border-top: 1px solid #aaaaaa;
+      transition: width .5s, height .5s;
+    }
+
+    &:hover {
+      &::before {
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+      }
+
+      &::after {
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+      }
+    }
   }
 
   &__preview-wrapper {

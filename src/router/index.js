@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import store from '../store';
 import Home from '../views/Home.vue';
 
 const routes = [
@@ -43,15 +44,40 @@ const routes = [
     component: () => import('../views/Contacts.vue'),
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue'),
+    meta: {
+      header: ['full-width'],
+      // redirectOnAuth: 'Admin',
+    },
+  },
+  {
     path: '/admin',
     name: 'Admin',
     component: () => import('../views/Admin.vue'),
+    meta: {
+      header: ['full-width'],
+      requiresAuth: true,
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isLogedIn = store.getters.logedIn;
+
+  if (to?.meta?.requiresAuth && !isLogedIn) {
+    next({ name: 'Login' });
+  } else if (to?.meta?.redirectOnAuth && isLogedIn) {
+    next({ name: to.meta.redirectOnAuth });
+  } else {
+    next();
+  }
 });
 
 export default router;

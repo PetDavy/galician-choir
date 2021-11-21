@@ -1,6 +1,5 @@
 <template>
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
-  <main class="Home"></main>
     <ScrollParallax>
       <section class="Home__showcase showcase">
         <div class="showcase__bg" :class="{'showcase__bg--zoomed': isShowcaseSet}"></div>
@@ -22,11 +21,11 @@
       <div class="events__container side-indent">
         <div class="events__block events__block-left">
           <div class="events__preview-wrapper">
-            <div class="events__preview"></div>
+            <div class="events__preview" :style="{backgroundImage: `url(${latestEvent.img ?? ''})`}"></div>
           </div>
           <div class="events__title-text">
-            <p class="events__up-title">HAVE YOU HEARD?</p>
-            <h3 class="events__title">Artemiz Podcast is Here</h3>
+            <p class="events__up-title">OUR LATEST EVENT</p>
+            <h3 class="events__title">{{latestEvent.title ?? ''}}</h3>
             <p class="events__sub-title">Get started on latest episodes</p>
           </div>
         </div>
@@ -95,6 +94,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
 import Loader from '@/components/Loader.vue';
 import GrandTitle from '@/components/GrandTitle.vue';
@@ -123,6 +123,22 @@ export default {
     BadgeIcon3,
     BadgeIcon4,
     ScrollParallax,
+  },
+  computed: {
+    ...mapGetters(['db', 'events']),
+    latestEvent() {
+      let currLatest = null;
+
+      this.events.forEach((event) => {
+        if (!currLatest) {
+          currLatest = event;
+        } else if (currLatest.time.toDate() < event.time.toDate()) {
+          currLatest = event;
+        }
+      });
+
+      return currLatest ?? {};
+    },
   },
   methods: {
     removeLoader() {
@@ -288,7 +304,7 @@ export default {
     }
 
     &__block {
-      padding: 90px 0;
+      padding: 60px 0;
     }
 
     &__block-left {
@@ -320,8 +336,8 @@ export default {
     }
 
     &__preview-wrapper {
-      width: 200px;
-      height: 200px;
+      width: 270px;
+      height: 270px;
       margin-right: 40px;
       display: flex;
       justify-content: center;
@@ -331,9 +347,12 @@ export default {
     }
 
     &__preview {
-      width: 190px;
-      padding-top: 190px;
+      width: 260px;
+      padding-top: 260px;
       background-color: #ccc;
+      background-repeat: none;
+      background-size: cover;
+      background-position: center;
     }
 
     &__up-title {
