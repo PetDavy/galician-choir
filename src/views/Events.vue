@@ -53,9 +53,15 @@ export default {
     Loader,
   },
   computed: {
-    ...mapGetters(['db', 'events']),
+    ...mapGetters(['db', 'events', 'locale']),
+
     eventsList() {
-      return [...this.events].sort((eventA, eventB) => (
+      const formatedEvents = this.events.map((event) => ({
+        id: event.id,
+        ...event[this.locale],
+      }));
+
+      return formatedEvents.sort((eventA, eventB) => (
         eventB.time - eventA.time // newest first
       ));
     },

@@ -9,6 +9,7 @@
       <router-link to="/about" class="Menu__link">about</router-link>
       <router-link to="/events" class="Menu__link">events</router-link>
       <router-link to="/gallery" class="Menu__link">gallery</router-link>
+      <router-link to="/contact" class="Menu__link">contact</router-link>
       <router-link to="/admin" class="Menu__link Menu__link--admin" v-if="logedIn">cabinet</router-link>
     </nav>
     <i class="Menu__close-btn" @click="toggleMenu" ></i>

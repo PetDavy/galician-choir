@@ -1,4 +1,10 @@
 <template>
+  <QuestionPopup
+    :questionData="questionPopupData"
+    @handlYes="removeEvent"
+    @handlNo="questionPopupData = null"
+    v-if="questionPopupData"
+  />
   <div class="AdminEvents">
     <div class="AdminEvents__header">
       <h2 class="AdminEvents__title">Events</h2>
@@ -32,7 +38,7 @@
             </div>
           </div>
           <div class="AdminEvent__tools">
-            <div class="AdminEvent__tools-btn" @click="removeEvent(event)">
+            <div class="AdminEvent__tools-btn" @click="openQuestionPopup(event)">
               <svg class="AdminEvent__remove" width="23" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.64 27.19c0 .74.26 1.46.72 1.99.47.52 1.1.82 1.75.82h14.78c.66 0 1.28-.3 1.75-.82.46-.53.72-1.25.72-2V7.5H1.64v19.69Zm13.97-15a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2ZM22.18 1.87h-6.16l-.48-1.1c-.1-.23-.26-.42-.46-.56-.2-.14-.42-.21-.65-.21H8.56c-.23 0-.45.07-.64.2-.2.15-.35.34-.46.58l-.48 1.1H.82c-.22 0-.43.1-.58.27A1 1 0 0 0 0 2.8V4.7a1 1 0 0 0 .24.66c.15.18.36.27.58.27h21.36c.22 0 .43-.1.58-.27a1 1 0 0 0 .24-.66V2.8a1 1 0 0 0-.24-.66.77.77 0 0 0-.58-.28Z" fill="#AE1414"/></svg>
             </div>
           </div>
@@ -49,22 +55,41 @@
 import { mapMutations, mapGetters } from 'vuex';
 import { doc, deleteDoc } from 'firebase/firestore';
 import formatters from '../utils/formatters';
+import QuestionPopup from '@/components/QuestionPopup.vue';
 
 export default {
   name: 'AdminEvents',
+  data() {
+    return {
+      questionPopupData: null,
+    };
+  },
+  components: {
+    QuestionPopup,
+  },
   computed: {
-    ...mapGetters(['db', 'events']),
+    ...mapGetters(['db', 'events', 'locale']),
     eventsList() {
-      return [...this.events].sort((eventA, eventB) => (
+      const formatedEvents = this.events.map((event) => ({
+        id: event.id,
+        ...event[this.locale],
+      }));
+
+      return formatedEvents.sort((eventA, eventB) => (
         eventB.time - eventA.time // newest first
       ));
     },
   },
   methods: {
     ...mapMutations(['updateIsModalFormOpen']),
-    async removeEvent(event) {
+    openQuestionPopup(event) {
+      this.questionPopupData = event;
+    },
+    async removeEvent(data) {
+      this.questionPopupData = null;
+
       try {
-        await deleteDoc(doc(this.db, 'events', event.id));
+        await deleteDoc(doc(this.db, 'events', data.id));
       } catch (error) {
         console.error('Coudn`t remove event');
       }

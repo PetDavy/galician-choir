@@ -9,6 +9,8 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import { collection, query, onSnapshot } from 'firebase/firestore';
+import { useCookies } from 'vue3-cookies';
+import { getStorage } from 'firebase/storage';
 
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
@@ -16,13 +18,17 @@ import Menu from '@/components/Menu.vue';
 
 export default {
   name: 'App',
+  setup() {
+    const { cookies } = useCookies();
+    return { cookies };
+  },
   components: {
     Header,
     Footer,
     Menu,
   },
   computed: {
-    ...mapGetters(['db']),
+    ...mapGetters(['db', 'locale']),
     headerClass() {
       if (!this.$route.meta.header) {
         return '';
@@ -32,7 +38,16 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setEvents']),
+    ...mapMutations(['setEvents', 'setLocale', 'updateStorage']),
+    setSiteLocale() {
+      const locale = this.cookies.get('locale');
+
+      if (locale) {
+        this.setLocale({ locale });
+      } else {
+        this.cookies.set('locale', this.locale);
+      }
+    },
     setEventsData() {
       const q = query(collection(this.db, 'events'));
 
@@ -49,9 +64,16 @@ export default {
         this.setEvents({ events });
       });
     },
+    setStorage() {
+      const storage = getStorage();
+
+      this.updateStorage({ storage });
+    },
   },
   mounted() {
+    this.setSiteLocale();
     this.setEventsData();
+    this.setStorage();
   },
 };
 </script>

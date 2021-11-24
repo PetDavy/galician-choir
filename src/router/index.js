@@ -39,9 +39,12 @@ const routes = [
     component: () => import('../views/Videos.vue'),
   },
   {
-    path: '/contacts',
+    path: '/contact',
     name: 'Contacts',
-    component: () => import('../views/Contacts.vue'),
+    component: () => import('../views/Contact.vue'),
+    meta: {
+      header: ['full-width'],
+    },
   },
   {
     path: '/login',

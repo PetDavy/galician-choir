@@ -1,19 +1,30 @@
 <template>
-    <a class='animated-arrow' href='https://google.com'>
-      <span class='the-arrow -left'>
-        <span class='shaft'></span>
+  <span
+    class="animated-arrow"
+    :class="{'animated-arrow--open': isOpen}"
+  >
+    <span class="the-arrow -left">
+      <span class="shaft"></span>
+    </span>
+    <span class="main">
+      <span class="text">
+        {{isOpen ? 'Hide Details' : 'Explore More'}}
       </span>
-      <span class='main'>
-        <span class='text'>
-          Explore More
-        </span>
-        <span class='the-arrow -right'>
-          <span class='shaft'></span>
-        </span>
+      <span class="the-arrow -right">
+        <span class="shaft"></span>
       </span>
-    </a>
-
+    </span>
+  </span>
 </template>
+
+<script>
+export default {
+  name: 'ArrowRight',
+  props: {
+    isOpen: Boolean,
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 $black: #808080;
@@ -113,15 +124,34 @@ $arrow-head-thickness: $shaft-thickness;
 }
 
 .animated-arrow {
+  position: absolute;
+  top: 50%;
   display: inline-flex;
   align-items: center;
-  height: 100%;
   color: $black;
   font-size: 1.25em;
   font-style: italic;
   text-decoration: none;
-  position: relative;
+  transform: translateY(-50%);
+  cursor: pointer;
   transition: all 0.2s;
+  transition-delay: .3s;
+  z-index: 2;
+
+  &--open {
+    top: 30px;
+    right: 0;
+    transform: translateY(0);
+
+    .-left {
+      left: 40px;
+      transform: scale(-1);
+    }
+
+    .-right {
+      display: none;
+    }
+  }
 
   &:hover {
     color: $gray;

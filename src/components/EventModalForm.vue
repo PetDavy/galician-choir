@@ -4,14 +4,27 @@
     <div class="EventModal__modal">
       <div class="EventModal__modal-close-btn" @click="closeModal"></div>
       <form class="EventModal__form" @submit.prevent="addEvent">
-        <h3 class="EventModal__form-title">New Event</h3>
+        <div class="EventModal__header">
+          <h3 class="EventModal__form-title">New Event</h3>
+          <div class="EventModal__locales">
+            <div
+              class="EventModal__locales-btn"
+              :class="{'EventModal__locales-btn--active': localeItem === activeLocale}"
+              v-for="localeItem in localesList"
+              :key="localeItem"
+              @click="activeLocale = localeItem"
+            >
+              {{localeItem}}
+            </div>
+          </div>
+        </div>
         <label for="eventTitle" class="EventModal__label">
           <div class="EventModal__input-caption">Title</div>
           <input
             type="text"
             class="EventModal__input"
             id="eventTitle"
-            v-model="title"
+            v-model="fields[activeLocale].title"
           >
         </label>
         <label for="eventImage" class="EventModal__label">
@@ -20,7 +33,7 @@
             type="url"
             class="EventModal__input"
             id="eventImage"
-            v-model="imageUrl"
+            v-model="fields[activeLocale].imageUrl"
           >
         </label>
         <label for="eventLink" class="EventModal__label">
@@ -29,7 +42,7 @@
             type="url"
             class="EventModal__input"
             id="eventLink"
-            v-model="linkUrl"
+            v-model="fields[activeLocale].linkUrl"
           >
         </label>
         <label for="eventDate" class="EventModal__label EventModal__inpust-row-item">
@@ -38,7 +51,7 @@
             type="datetime-local"
             class="EventModal__input"
             id="eventDate"
-            v-model="date"
+            v-model="fields[activeLocale].date"
           >
         </label>
         <label for="eventText" class="EventModal__label EventModal__inpust-row-item">
@@ -49,7 +62,7 @@
             cols="30"
             rows="10"
             class="EventModal__input EventModal__input--textarea"
-            v-model="text"
+            v-model="fields[activeLocale].text"
           ></textarea>
         </label>
         <button type="submit" class="EventModal__form-btn btn">save</button>
@@ -62,29 +75,47 @@
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { mapMutations, mapGetters } from 'vuex';
 
+const defaultFields = {
+  title: '',
+  date: '',
+  imageUrl: '',
+  linkUrl: '',
+  text: '',
+};
+
 export default {
   name: 'EventModal',
   data() {
     return {
-      title: '',
-      date: '',
-      imageUrl: '',
-      linkUrl: '',
-      text: '',
+      fields: {
+        ua: { ...defaultFields },
+        en: { ...defaultFields },
+      },
+      activeLocale: 'ua',
+      localesList: ['ua', 'en'],
     };
   },
   computed: {
-    ...mapGetters(['db']),
+    ...mapGetters(['db', 'locale']),
   },
   methods: {
     ...mapMutations(['updateIsModalFormOpen']),
     async addEvent() {
       const eventData = {
-        title: this.title,
-        time: new Timestamp((new Date(this.date).getTime() / 1000), 0),
-        img: this.imageUrl,
-        link: this.linkUrl,
-        text: this.text,
+        ua: {
+          title: this.fields.ua.title,
+          time: new Timestamp((new Date(this.fields.ua.date).getTime() / 1000), 0),
+          img: this.fields.ua.imageUrl,
+          link: this.fields.ua.linkUrl,
+          text: this.fields.ua.text,
+        },
+        en: {
+          title: this.fields.en.title,
+          time: new Timestamp((new Date(this.fields.en.date).getTime() / 1000), 0),
+          img: this.fields.en.imageUrl,
+          link: this.fields.en.linkUrl,
+          text: this.fields.en.text,
+        },
       };
 
       try {
@@ -92,11 +123,10 @@ export default {
         console.log('Document written with ID: ', docRef.id);
         this.closeModal();
 
-        this.title = '';
-        this.date = '';
-        this.imageUrl = '';
-        this.linkUrl = '';
-        this.text = '';
+        this.fields = {
+          ua: { ...defaultFields },
+          en: { ...defaultFields },
+        };
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -104,6 +134,9 @@ export default {
     closeModal() {
       this.updateIsModalFormOpen({ isModalFormOpen: false });
     },
+  },
+  mounted() {
+    this.activeLocale = this.locale;
   },
 };
 </script>
@@ -171,10 +204,38 @@ export default {
       }
     }
 
+    &__header {
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     &__form-title {
       font-size: 22px;
-      margin-bottom: 22px;
       color: #ccc;
+      flex: 1;
+    }
+
+    &__locales {
+      display: flex;
+      align-items: center;
+    }
+
+    &__locales-btn {
+      margin: 0 5px;
+      padding: 5px 8px;
+      border: 1px solid #ccc;
+      color: #fff;
+      font-size: 18px;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+
+      &--active {
+        background-color: #fff;
+        color: #000;
+      }
     }
 
     &__inpust-row {

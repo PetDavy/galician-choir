@@ -25,7 +25,14 @@
       class="Gallery__overlay"
       v-if="activePhoto"
       @click="triggerOverlay"
-    ></div>
+    >
+      <div class="Gallery__modal-arrow Gallery__modal-arrow--left" @click.stop="switchPhoto('previous')">
+        <svg width="42" height="77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.4 35.6 31.7 1.7a3.5 3.5 0 0 1 5.3 0l3.5 4a4.5 4.5 0 0 1 0 5.9l-24 27 24.2 26.8a4.5 4.5 0 0 1 0 5.9L37 75.2a3.5 3.5 0 0 1-5.3 0L1.4 41.5a4.5 4.5 0 0 1 0-6Z" fill="#fff"/></svg>
+      </div>
+      <div class="Gallery__modal-arrow Gallery__modal-arrow--right" @click.stop="switchPhoto('next')">
+        <svg width="42" height="77" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M40.6 41.5 10.2 75.2a3.5 3.5 0 0 1-5.3 0l-3.5-4a4.5 4.5 0 0 1 0-5.8l24-26.9-24-26.9a4.5 4.5 0 0 1 0-5.9l3.5-4a3.5 3.5 0 0 1 5.3 0l30.4 33.9a4.5 4.5 0 0 1 0 5.9Z" fill="#fff"/></svg>
+      </div>
+    </div>
     <div class="Gallery__modal">
       <img
         v-if="activePhoto"
@@ -38,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
 
@@ -45,16 +54,7 @@ export default {
   name: 'Gallery',
   data() {
     return {
-      photos: [
-        { id: 1, url: 'https://lumiere.qodeinteractive.com/wp-content/uploads/2017/09/port-h3-img-1.jpg' },
-        { id: 2, url: 'https://lumiere.qodeinteractive.com/wp-content/uploads/2017/09/port-h3-img-4.jpg' },
-        { id: 3, url: 'https://lumiere.qodeinteractive.com/wp-content/uploads/2017/09/port-h3-img-10.jpg' },
-        { id: 4, url: 'https://snapster.foxthemes.me/wp-content/uploads/2020/08/8.11.jpg' },
-        { id: 5, url: 'https://snapster.foxthemes.me/wp-content/uploads/2020/08/8.9.jpg' },
-        { id: 6, url: 'https://firebasestorage.googleapis.com/v0/b/pari-art-music-orchestra.appspot.com/o/galleryImages%2FIMG_0073-min.JPG?alt=media&token=c885aedf-069b-453a-bae1-a01913532f39' },
-        { id: 7, url: 'https://lumiere.qodeinteractive.com/wp-content/uploads/2017/09/port-h3-img-15.jpg' },
-        { id: 8, url: 'https://lumiere.qodeinteractive.com/wp-content/uploads/2017/08/port-h3-img-20.jpg' },
-      ],
+      photos: [],
       activePhoto: false,
       isLoaderVisible: true,
       isLoaderRemoved: false,
@@ -65,6 +65,7 @@ export default {
     Loader,
   },
   computed: {
+    ...mapGetters(['storage']),
     rows() {
       const rowsArray = [];
       const rowSizes = [3, 2];
@@ -86,6 +87,36 @@ export default {
     },
   },
   methods: {
+    setPhotos() {
+      const photosRef = ref(this.storage, '/photos/');
+
+      listAll(photosRef)
+        .then((res) => {
+          res.items.forEach((itemRef, index) => {
+            getDownloadURL(itemRef)
+              .then((url) => {
+                this.photos.push({ id: index, url });
+              });
+          });
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
+    switchPhoto(type) {
+      const activePhotoIbdex = this.photos.findIndex((photo) => photo.id === this.activePhoto.id);
+
+      if (type === 'next') {
+        if (activePhotoIbdex === this.photos.length - 1) {
+          [this.activePhoto] = this.photos;
+        } else {
+          this.activePhoto = this.photos[activePhotoIbdex + 1];
+        }
+      } else if (activePhotoIbdex === 0) {
+        this.activePhoto = this.photos[this.photos.length - 1];
+      } else {
+        this.activePhoto = this.photos[activePhotoIbdex - 1];
+      }
+    },
     triggerOverlay() {
       this.closePhotoModal();
     },
@@ -102,6 +133,7 @@ export default {
     },
   },
   mounted() {
+    this.setPhotos();
     setTimeout(() => {
       this.isLoaderVisible = false;
       this.removeLoader();
@@ -113,11 +145,11 @@ export default {
 <style lang="scss">
   .Gallery {
     background: #132b34;
-
     &__content {
+      max-width: 2000px;
       position: relative;
-      padding: 250px 0;
-      margin: 0 20px 0;
+      padding: 250px 20px;
+      margin: 0 auto 0;
 
       .Grand-title {
         top: 100px;
@@ -135,6 +167,14 @@ export default {
 
     &__row {
       display: flex;
+
+      &--1-col {
+        &.Gallery__photo-wrapper {
+          padding-top: 500px;
+          max-width: 850px;
+          margin: 0 auto;
+        }
+      }
 
       &--2-col {
         &.Gallery__photo-wrapper {
@@ -185,6 +225,32 @@ export default {
       object-position: center;
       transform: translateX(-50%);
       width: auto;
+    }
+
+    &__modal-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.6;
+      cursor: pointer;
+
+      &--left {
+        left: 50px;
+        transition: left .2s;
+
+         &:active {
+          left: 54px;
+        }
+      }
+
+      &--right {
+        right: 50px;
+        transition: right .2s;
+
+        &:active {
+          right: 54px;
+        }
+      }
     }
 
     &__overlay {

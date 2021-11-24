@@ -7,7 +7,7 @@
         <div class="showcase__container side-indent">
           <div class="showcase__left" :class="{'showcase__left--shown': isShowcaseSet}">
             <h1 class="showcase__title">
-              A Case for Becoming More Gentle in Your Life
+              Galician Academic Chamber Choir
             </h1>
             <p class="showcase__text">
               Lorem ipsum dolor sit amet,consectetur adipisicing elit. Aperiam doloremque quibusdam officiis sunt quasi. Voluptatibus inventore magnam atque.
@@ -19,18 +19,37 @@
     </ScrollParallax>
     <section class="Home__events events">
       <div class="events__container side-indent">
-        <div class="events__block events__block-left">
+        <div
+          class="events__block events__block-left"
+          :class="{'events__block-left--closed': isInfoOpen}"
+        >
           <div class="events__preview-wrapper">
             <div class="events__preview" :style="{backgroundImage: `url(${latestEvent.img ?? ''})`}"></div>
           </div>
           <div class="events__title-text">
             <p class="events__up-title">OUR LATEST EVENT</p>
-            <h3 class="events__title">{{latestEvent.title ?? ''}}</h3>
+            <h3
+              class="events__title"
+              :class="{'events__title--ua': locale === 'ua'}"
+            >
+              {{latestEvent.title ?? ''}}
+            </h3>
             <p class="events__sub-title">Get started on latest episodes</p>
           </div>
         </div>
-        <div class="events__block events__block-right">
-          <ArrowRight />
+        <div
+          class="events__block events__block-right"
+          :class="{'events__block-right--open': isInfoOpen}"
+        >
+          <ArrowRight @click="isInfoOpen = !isInfoOpen" :isOpen="isInfoOpen" />
+          <div
+            class="events__block-right-description"
+            :class="{'events__block-right-description--open': isInfoOpen}"
+          >
+            <router-link to="/events" class="events__block-right-link btn">All Events</router-link>
+            <h3 class="events__title events__title--right">{{latestEvent.title ?? ''}}</h3>
+            <p class="events__description">{{latestEvent.text ?? ''}}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -111,6 +130,7 @@ export default {
       isShowcaseSet: false,
       isLoaderVisible: true,
       isLoaderRemoved: false,
+      isInfoOpen: false,
     };
   },
   components: {
@@ -125,11 +145,15 @@ export default {
     ScrollParallax,
   },
   computed: {
-    ...mapGetters(['db', 'events']),
+    ...mapGetters(['db', 'events', 'locale']),
     latestEvent() {
+      const formatedEvents = this.events.map((event) => ({
+        id: event.id,
+        ...event[this.locale],
+      }));
       let currLatest = null;
 
-      this.events.forEach((event) => {
+      formatedEvents.forEach((event) => {
         if (!currLatest) {
           currLatest = event;
         } else if (currLatest.time.toDate() < event.time.toDate()) {
@@ -161,6 +185,7 @@ export default {
 
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css2?family=Neuton:wght@200&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,300&display=swap');
 
   .Home {
     &__showcase {
@@ -228,7 +253,7 @@ export default {
       max-width: 680px;
       margin-bottom: 40px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
-      font-size: 70px;
+      font-size: 74px;
       line-height: 70px;
       letter-spacing: 1.5px;
       font-style: italic;
@@ -297,8 +322,10 @@ export default {
     position: relative;
     display: flex;
     background-color: #0b0e13;
+    overflow: hidden;
 
     &__container {
+      position: relative;
       width: 100%;
       display: flex;
     }
@@ -311,7 +338,7 @@ export default {
       position: relative;
       display: flex;
       align-items: center;
-      flex: 4 0;
+      width: 70%;
       background-color: #f8f1e7;
       color: #000;
 
@@ -324,15 +351,86 @@ export default {
         width: 5000px;
         background-color: #f8f1e7;
       }
+
+      &--closed {
+        .events__title-text {
+          opacity: 0;
+          transform: translateX(50%);
+        }
+      }
     }
 
     &__block-right {
-      flex: 1 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 30%;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       height: 100%;
-      padding-left: 100px;
-      padding-right: 40px;
+      padding: 45px 40px 80px 100px;
+      background-color: #0b0e13;
+      transition: width 0.4s ease-in;
+
+      &--open {
+        width: calc(100% - 350px);
+      }
+    }
+
+    &__block-right-link {
+      position: absolute;
+      bottom: 30px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 14px;
+      background-color: #f8f1e7;
+
+      &::before {
+        position: absolute;
+        content: '';
+        bottom: 4px;
+        left: 4px;
+        width: 0;
+        height: 0;
+        border-bottom: 1px solid #aaaaaa;
+        border-left: 1px solid #aaaaaa;
+        transition: width .5s, height .5s;
+      }
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: 4px;
+        right: 4px;
+        width: 0;
+        height: 0;
+        border-right: 1px solid #aaaaaa;
+        border-top: 1px solid #aaaaaa;
+        transition: width .5s, height .5s;
+      }
+
+      &:hover {
+        &::before {
+          width: calc(100% - 8px);
+          height: calc(100% - 8px);
+        }
+
+        &::after {
+          width: calc(100% - 8px);
+          height: calc(100% - 8px);
+        }
+      }
+    }
+
+    &__block-right-description {
+      opacity: 0;
+      transition: opacity .3s;
+
+      &--open {
+        transition-delay: 0.3s;
+        opacity: 1;
+      }
     }
 
     &__preview-wrapper {
@@ -355,6 +453,11 @@ export default {
       background-position: center;
     }
 
+    &__title-text {
+      padding-right: 30px;
+      transition: opacity .3s, transform .5s;
+    }
+
     &__up-title {
       margin-bottom: 10px;
     }
@@ -366,6 +469,22 @@ export default {
       margin-bottom: 15px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
       font-style: italic;
+
+      &--right {
+        color: #fff;
+        font-size: 40px;
+      }
+
+      &--ua {
+        font-family: 'IBM Plex Serif', serif;
+      }
+    }
+
+    &__description {
+      color: #fff;
+      font-size: 15px;
+      line-height: 20px;
+      letter-spacing: 1px;
     }
 
     &__sub-title {

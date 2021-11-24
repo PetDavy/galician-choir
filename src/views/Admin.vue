@@ -10,6 +10,9 @@
           @openModal="isModalOpen = true"
           v-if="activeTab === 'events'"
         />
+        <AdminGallery
+          v-if="activeTab === 'gallery'"
+        />
       </div>
     </div>
   </section>
@@ -21,6 +24,7 @@ import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
 import AdminPanelHeader from '@/components/AdminPanelHeader.vue';
 import AdminEvents from '@/components/AdminEvents.vue';
+import AdminGallery from '@/components/AdminGallery.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
 
 export default {
@@ -40,6 +44,7 @@ export default {
     AdminPanelHeader,
     AdminEvents,
     EventModalForm,
+    AdminGallery,
   },
   computed: {
     ...mapGetters(['auth', 'db', 'isModalFormOpen']),

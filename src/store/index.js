@@ -5,9 +5,11 @@ export default createStore({
     isMenuOpen: false,
     auth: null,
     db: null,
+    storage: null,
     logedIn: false,
     events: [], // event: {id: string, title: string, time: timestamp, img: string, link: string, text: string}
     isModalFormOpen: false,
+    locale: 'ua',
   },
   mutations: {
     toggleMenu(state) {
@@ -22,11 +24,17 @@ export default createStore({
     updateDB(state, payload) {
       state.db = payload.db;
     },
+    updateStorage(state, payload) {
+      state.storage = payload.storage;
+    },
     updateLogedIn(state, payload) {
       state.logedIn = payload.logedIn;
     },
     updateIsModalFormOpen(state, payload) {
       state.isModalFormOpen = payload.isModalFormOpen;
+    },
+    setLocale(state, payload) {
+      state.locale = payload.locale;
     },
     setEvents(state, payload) {
       state.events = payload.events;
@@ -51,6 +59,8 @@ export default createStore({
     logedIn: (state) => state.logedIn,
     auth: (state) => state.auth,
     db: (state) => state.db,
+    storage: (state) => state.storage,
     events: (state) => state.events,
+    locale: (state) => state.locale,
   },
 });

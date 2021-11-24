@@ -7,13 +7,13 @@ import router from './router';
 import store from './store';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyC3Frt_pJFIrPpZuiwe6JeXTRS3sx9tkxo',
-  authDomain: 'choir-e1c92.firebaseapp.com',
-  projectId: 'choir-e1c92',
-  storageBucket: 'choir-e1c92.appspot.com',
-  messagingSenderId: '164178242525',
-  appId: '1:164178242525:web:516f63b65002b615642434',
-  measurementId: 'G-Z135Z4T2NC',
+  apiKey: 'AIzaSyA1-ptnTpQ-W-_AKwGpSC1Mf4HI85UJ1A4',
+  authDomain: 'galician-choir.firebaseapp.com',
+  projectId: 'galician-choir',
+  storageBucket: 'galician-choir.appspot.com',
+  messagingSenderId: '532825033346',
+  appId: '1:532825033346:web:cd8e4f925330021ed3829b',
+  measurementId: 'G-MQ17VLCMJM',
 };
 
 initializeApp(firebaseConfig);
