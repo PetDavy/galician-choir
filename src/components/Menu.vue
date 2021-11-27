@@ -74,6 +74,11 @@ export default {
         width: 100%;
         text-align: center;
       }
+
+      @media (max-height: 520px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
     }
 
     &__link {
@@ -96,6 +101,12 @@ export default {
       @media (max-width: 700px) {
         font-size: 55px;
         line-height: 60px;
+      }
+
+      @media (max-height: 520px) {
+        width: auto;
+        margin-left: 20px;
+        margin-right: 20px;
       }
     }
 

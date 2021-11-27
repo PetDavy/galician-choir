@@ -84,8 +84,18 @@ export default {
     padding-bottom: 200px;
     padding-top: 250px;
 
+    @media (max-width: 550px) {
+      padding-top: 200px;
+      padding-bottom: 150px;
+    }
+
     .Grand-title {
       top: -140px;
+
+      @media (max-width: 550px) {
+        top: -100px;
+      }
+
     }
 
     &__content {
@@ -103,7 +113,12 @@ export default {
 
       @media (max-width: 1400px) {
         flex-direction: column;
-        margin: 0 60px 100px 60px;
+        margin: 0 auto 170px auto;
+        width: fit-content;
+        padding: 60px 40px 20px;
+        box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
+        background-color: #17313a;
+        border-radius: 6px;
       }
 
       &:nth-child(odd) {
@@ -112,6 +127,12 @@ export default {
           flex: 1;
           margin-right: 20px;
           padding-left: 60px;
+
+          @media (max-width: 1400px) {
+            margin-right: 0;
+            margin-left: 0;
+            padding-left: 0;
+          }
         }
       }
 
@@ -120,6 +141,13 @@ export default {
           min-width: 56%;
           margin-left: 20px;
           padding-right: 60px;
+
+          @media (max-width: 1400px) {
+            margin-right: 0;
+            margin-left: 0;
+            min-width: 50%;
+            padding-right: 0;
+          }
 
           &__info-top {
             max-width: 900px;
@@ -138,6 +166,10 @@ export default {
 
     &__info {
       padding: 60px 0;
+
+      @media (max-width: 1400px) {
+        padding: 40px 0 20px;
+      }
     }
 
     &__info-top {
@@ -175,11 +207,18 @@ export default {
     &__image-wrapper {
       position: relative;
       width: 600px;
-      padding-top: 32%;
+      padding-top: 35%;
       align-self: stretch;
 
       @media (max-width: 1400px) {
-        display: none;
+        order: -1;
+        margin: 0 auto;
+        padding-top: 600px;
+      }
+
+      @media (max-width: 750px) {
+        width: 100%;
+        padding-top: 80%;
       }
     }
 

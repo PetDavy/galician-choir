@@ -63,8 +63,16 @@ export default {
         font-size: 64px;
       }
 
+      @media (max-width: 550px) {
+        font-size: 45px;
+      }
+
       &--space {
         min-width: 50px;
+
+        @media (max-width: 550px) {
+          min-width: 25px;
+        }
       }
     }
   }
