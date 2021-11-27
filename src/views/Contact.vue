@@ -41,6 +41,7 @@
       </div>
       <form action="" class="Contact__form">
         <div class="Contact__form-content">
+          <h3 class="Contact__form-title">Send a message</h3>
           <label for="Contact-name" class="Contact__input-label">
             <input
               id="Contact-name"
@@ -121,6 +122,17 @@ export default {
     padding-bottom: 200px;
     padding-top: 280px;
 
+    .Grand-title {
+      @media (max-width: 950px) {
+        left: initial !important;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      padding-top: 260px;
+      padding-bottom: 100px;
+    }
+
     .side-indent {
       max-width: 1420px;
     }
@@ -130,11 +142,25 @@ export default {
       position: relative;
       display: flex;
       justify-content: space-between;
+
+      @media (max-width: 1000px) {
+        padding-top: 0
+      }
+
+      @media (max-width: 950px) {
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
     &__info {
       padding-right: 50px;
       width: 50%;
+
+      @media (max-width: 950px) {
+        padding-right: 0;
+        text-align: center;
+      }
     }
 
     &__info-item {
@@ -155,6 +181,10 @@ export default {
       line-height: 30px;
       color: #ccc;
 
+      @media (max-width: 950px) {
+        justify-content: center;
+      }
+
       a {
         margin-left: 10px;
         color: #9b9b9b;
@@ -171,7 +201,26 @@ export default {
 
     &__form {
       width: 550px;
-      padding: 40px 0;
+      padding-bottoM: 40px;
+
+      @media (max-width: 950px) {
+        padding-top: 40px;
+      }
+
+      @media (max-width: 700px) {
+        width: 100%;
+      }
+    }
+
+    &__form-title {
+      margin-bottom: 25px;
+      font-size: 28px;
+      color: #ccc;
+      font-weight: 400;
+
+      @media (max-width: 950px) {
+        text-align: center;
+      }
     }
 
     &__form-content {

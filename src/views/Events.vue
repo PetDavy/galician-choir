@@ -186,6 +186,11 @@ export default {
     @media (max-width: 1400px) {
       text-align: center;
     }
+
+    @media (max-width: 550px) {
+      font-size: 38px;
+      line-height: 40px;
+    }
   }
 
   &__description {
