@@ -69,6 +69,11 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+
+      @media (max-width: 960px) {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     &__link {
@@ -86,6 +91,11 @@ export default {
 
       &:hover {
         color: #999;
+      }
+
+      @media (max-width: 700px) {
+        font-size: 55px;
+        line-height: 60px;
       }
     }
 
@@ -135,6 +145,10 @@ export default {
 
     &_disappeared {
       opacity: 0;
+    }
+
+    @media (max-width: 960px) {
+      width: 100%;
     }
   }
 </style>

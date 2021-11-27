@@ -46,9 +46,11 @@
             class="events__block-right-description"
             :class="{'events__block-right-description--open': isInfoOpen}"
           >
-            <router-link to="/events" class="events__block-right-link btn">All Events</router-link>
             <h3 class="events__title events__title--right">{{latestEvent.title ?? ''}}</h3>
-            <p class="events__description">{{latestEvent.text ?? ''}}</p>
+            <div class="events__description-wrapper">
+              <p class="events__description">{{latestEvent.text ?? ''}}</p>
+            </div>
+            <router-link to="/events" class="events__block-right-link btn">All Events</router-link>
           </div>
         </div>
       </div>
@@ -234,10 +236,15 @@ export default {
       display: flex;
       align-items: center;
       z-index: 3;
+
+      @media (max-width: 700px) {
+        margin-bottom: 50px;
+      }
     }
 
     &__left {
       margin-right: 20px;
+      max-width: 50%;
 
       &--shown {
         .showcase__title,
@@ -246,6 +253,12 @@ export default {
           transform: translateY(0);
           opacity: 1;
         }
+      }
+
+      @media (max-width: 960px) {
+        max-width: 100%;
+        width: 100%;
+        text-align: center;
       }
     }
 
@@ -261,6 +274,16 @@ export default {
       opacity: 0;
       transition: transform .7s ease-out, opacity .7s ease-out;
       transition-delay: 1.1s;
+
+      @media (max-width: 960px) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media (max-width: 700px) {
+        font-size: 40px;
+        line-height: 38px;
+      }
     }
 
     &__text {
@@ -271,6 +294,11 @@ export default {
       opacity: 0;
       transition: transform .7s ease-out, opacity .7s ease-out;
       transition-delay: 1.3s;
+
+      @media (max-width: 960px) {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     &__btn {
@@ -328,6 +356,10 @@ export default {
       position: relative;
       width: 100%;
       display: flex;
+
+      @media (max-width: 780px) {
+        flex-direction: column;
+      }
     }
 
     &__block {
@@ -341,6 +373,19 @@ export default {
       width: 70%;
       background-color: #f8f1e7;
       color: #000;
+      transition: text-align 0.3s;
+
+      @media (max-width: 1200px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      @media (max-width: 780px) {
+        width: 110%;
+        margin-right: 0;
+        align-items: center;
+        text-align: center;
+      }
 
       &::before {
         position: absolute;
@@ -354,8 +399,14 @@ export default {
 
       &--closed {
         .events__title-text {
-          opacity: 0;
-          transform: translateX(50%);
+          @media (min-width: 1199px) {
+            opacity: 0;
+            transform: translateX(50%);
+          }
+
+          @media (max-width: 950px) {
+            display: none;
+          }
         }
       }
     }
@@ -369,12 +420,31 @@ export default {
       display: flex;
       align-items: flex-start;
       height: 100%;
-      padding: 45px 40px 80px 100px;
+      padding: 70px 40px 80px 100px;
       background-color: #0b0e13;
       transition: width 0.4s ease-in;
 
+      @media (max-width: 1200px) {
+        width: 45%;
+      }
+
+      @media (max-width: 780px) {
+        position: relative;
+        width: 100%;
+        justify-content: center;
+        padding: 40px;
+      }
+
       &--open {
         width: calc(100% - 350px);
+
+        @media (max-width: 1200px) {
+          width: calc(100% - 450px);
+        }
+
+        @media (max-width: 950px) {
+          width: 100%;
+        }
       }
     }
 
@@ -385,6 +455,20 @@ export default {
       line-height: 40px;
       font-size: 14px;
       background-color: #f8f1e7;
+
+      @media (max-width: 1200px) {
+        bottom: 55px;
+      }
+
+      @media (max-width: 950px) {
+        position: relative;
+        margin-top: 20px;
+        bottom: initial;
+      }
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
 
       &::before {
         position: absolute;
@@ -425,11 +509,20 @@ export default {
 
     &__block-right-description {
       opacity: 0;
-      transition: opacity .3s;
+      transition: opacity .3s transform .3s;
+
+      @media (max-width: 780px) {
+        height: 0;
+        text-align: justify;
+      }
 
       &--open {
         transition-delay: 0.3s;
         opacity: 1;
+
+        @media (max-width: 780px) {
+          height: auto;
+        }
       }
     }
 
@@ -442,6 +535,12 @@ export default {
       align-items: center;
       border: 1px solid #ccc;
       border-radius: 5px;
+
+      @media (max-width: 1200px) {
+        margin-bottom: 10px;
+        width: 350px;
+        height: 350px;
+      }
     }
 
     &__preview {
@@ -451,10 +550,16 @@ export default {
       background-repeat: none;
       background-size: cover;
       background-position: center;
+
+      @media (max-width: 1200px) {
+        margin-bottom: 1px;
+        width: 340px;
+        height: 340px;
+      }
     }
 
     &__title-text {
-      padding-right: 30px;
+      padding-right: 45px;
       transition: opacity .3s, transform .5s;
     }
 
@@ -473,10 +578,32 @@ export default {
       &--right {
         color: #fff;
         font-size: 40px;
+
+        @media (max-width: 1200px) and (min-width: 949px) {
+          display: none;
+        }
+
+        @media (max-width: 950px) {
+          padding-top: 25px;
+        }
       }
 
       &--ua {
         font-family: 'IBM Plex Serif', serif;
+      }
+    }
+
+    &__description-wrapper {
+      max-height: 200px;
+      position: relative;
+      overflow-y: auto;
+
+      @media (max-width: 1200px) {
+        max-height: 415px;
+      }
+
+      @media (max-width: 950px) {
+        max-height: 220px;
       }
     }
 
@@ -485,6 +612,15 @@ export default {
       font-size: 15px;
       line-height: 20px;
       letter-spacing: 1px;
+
+        @media (max-width: 1200px) {
+          font-size: 19px;
+          line-height: 23px;
+        }
+
+        @media (max-width: 950px) {
+          padding-top: 0;
+        }
     }
 
     &__sub-title {
@@ -518,6 +654,10 @@ export default {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
+
+      @media (max-width: 1080px) {
+        flex-wrap: wrap;
+      }
     }
 
     &__list-item {
@@ -528,13 +668,34 @@ export default {
       flex-direction: column;
       color: #2f2f2f;
 
+      @media (max-width: 1080px) {
+        width: 270px;
+      }
+
+      @media (max-width: 750px) {
+        text-align: center;
+      }
+
       &:first-child {
         padding-left: 0;
+
+        @media (max-width: 1080px) {
+          padding-left: 30px;
+        }
       }
 
       &:last-child {
         padding-right: 0;
+
+        @media (max-width: 1080px) {
+          padding-right: 30px;
+        }
       }
+
+      @media (max-width: 1080px) {
+        width: 300px;
+      }
+
     }
 
     &__icon-wrapper {

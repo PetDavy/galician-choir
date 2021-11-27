@@ -1,7 +1,7 @@
 <template>
   <footer class="Footer">
     <div class="Footer__container side-indent">
-      <small>
+      <small class="Footer__small">
         &copy; Copyright {{new Date().getFullYear()}}, Galitskii Choir
       </small>
       <div class="Footer__links">
@@ -18,7 +18,7 @@
           <svg class="Footer__link-icon Footer__link-icon--hover" width="30" height="27" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M28.63 6.54a3.6 3.6 0 0 0-2.52-2.56C23.9 3.38 15 3.38 15 3.38s-8.9 0-11.11.6a3.6 3.6 0 0 0-2.52 2.56c-.6 2.26-.6 6.98-.6 6.98s0 4.72.6 6.98a3.54 3.54 0 0 0 2.52 2.52c2.22.6 11.11.6 11.11.6s8.9 0 11.11-.6a3.54 3.54 0 0 0 2.52-2.52c.6-2.26.6-6.98.6-6.98s0-4.72-.6-6.98ZM12.09 17.8V9.24l7.44 4.28-7.44 4.28Z" fill="#fff"/></svg>
         </a>
       </div>
-      <small>
+      <small class="Footer__small">
         Developed by Petro Davybida
       </small>
     </div>
@@ -35,11 +35,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      @media (max-width: 750px) {
+        flex-direction: column;
+      }
     }
 
     &__links {
       display: flex;
       align-items: center;
+
+      @media (max-width: 750px) {
+        order: -1;
+        margin-bottom: 15px;
+      }
     }
 
     &__link {
@@ -76,6 +85,12 @@
       &--hover {
         transform: translate(-50%, 100%);
         opacity: 0;
+      }
+    }
+
+    &__small {
+      @media (max-width: 750px) {
+        padding: 5px 0;
       }
     }
   }

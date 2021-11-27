@@ -101,6 +101,11 @@ export default {
       color: #fff;
       border-radius: 4px;
 
+      @media (max-width: 1400px) {
+        flex-direction: column;
+        margin: 0 60px 100px 60px;
+      }
+
       &:nth-child(odd) {
         .About__info {
           min-width: 50%;
@@ -172,6 +177,10 @@ export default {
       width: 600px;
       padding-top: 32%;
       align-self: stretch;
+
+      @media (max-width: 1400px) {
+        display: none;
+      }
     }
 
     &__image {

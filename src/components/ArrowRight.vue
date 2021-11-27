@@ -143,6 +143,14 @@ $arrow-head-thickness: $shaft-thickness;
     right: 0;
     transform: translateY(0);
 
+    @media (max-width: 1600px) {
+      right: 40px;
+    }
+
+    @media (max-width: 1200px) {
+      right: initial;
+    }
+
     .-left {
       left: 40px;
       transform: scale(-1);
