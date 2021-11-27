@@ -85,7 +85,6 @@ export default {
     padding-top: 250px;
 
     @media (max-width: 550px) {
-      padding-top: 200px;
       padding-bottom: 150px;
     }
 
@@ -93,13 +92,18 @@ export default {
       top: -140px;
 
       @media (max-width: 550px) {
-        top: -100px;
+        top: -120px;
       }
 
     }
 
     &__content {
       position: relative;
+
+      @media (max-width: 700px) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
     }
 
     &__block {
@@ -119,6 +123,10 @@ export default {
         box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
         background-color: #17313a;
         border-radius: 6px;
+      }
+
+      @media (max-width: 700px) {
+        padding: 20px 15px 10px;
       }
 
       &:nth-child(odd) {

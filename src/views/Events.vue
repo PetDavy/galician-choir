@@ -91,6 +91,11 @@ export default {
 
   &__content {
     position: relative;
+
+    @media (max-width: 700px) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
 
   .Grand-title {
@@ -129,9 +134,30 @@ export default {
   border-radius: 4px;
   overflow: hidden;
 
+  @media (max-width: 1400px) {
+    display: flex;
+    flex-direction: column;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+  }
+
   &__content {
     width: 60%;
     padding-right: 50px;
+
+    @media (max-width: 1400px) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 40px;
+    }
+
+    @media (max-width: 700px) {
+      padding: 30px 20px 20px;
+    }
   }
 
   &__header {
@@ -156,6 +182,10 @@ export default {
     line-height: 60px;
     letter-spacing: 1.5px;
     color: #ccc;
+
+    @media (max-width: 1400px) {
+      text-align: center;
+    }
   }
 
   &__description {
@@ -165,6 +195,10 @@ export default {
       line-height: 30px;
       color: #ccc;
       letter-spacing: 0.8px;
+
+      @media (max-width: 1400px) {
+        max-width: 100%;
+      }
   }
 
   &__btn {
@@ -216,6 +250,19 @@ export default {
     width: 40%;
     padding-top: 46%;
     overflow: hidden;
+
+    @media (max-width: 1400px) {
+      position: relative;
+      top: initial;
+      right: initial;
+      bottom: initial;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 0;
+      order: -1;
+    }
   }
 
   &__preview {
@@ -226,6 +273,14 @@ export default {
     height: 100%;
     object-fit: cover;
     object-position: center;
+
+    @media (max-width: 1400px) {
+      position: relative;
+      top: initial;
+      bottom: initial;
+      width: 100%;
+      height: auto;
+    }
   }
 
   &:last-child {
