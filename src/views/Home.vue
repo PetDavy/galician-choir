@@ -194,6 +194,12 @@ export default {
       color: #fff;
       height: 100vh;
       background-color: #000;
+
+      @media (max-height: 500px) {
+        height: auto;
+        padding-top: 100px;
+        padding-bottom: 100px;
+      }
     }
   }
 
@@ -509,11 +515,11 @@ export default {
 
     &__block-right-description {
       opacity: 0;
-      transition: opacity .3s transform .3s;
+      transition: opacity .3s, transform .3s;
 
       @media (max-width: 780px) {
         height: 0;
-        text-align: justify;
+        text-align: center;
       }
 
       &--open {
@@ -575,6 +581,11 @@ export default {
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
       font-style: italic;
 
+      @media (max-width: 550px) {
+        font-size: 38px;
+        line-height: 35px;
+      }
+
       &--right {
         color: #fff;
         font-size: 40px;
@@ -585,6 +596,10 @@ export default {
 
         @media (max-width: 950px) {
           padding-top: 25px;
+        }
+
+        @media (max-width: 780px) {
+          text-align: center;
         }
       }
 
