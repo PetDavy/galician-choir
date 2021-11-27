@@ -83,6 +83,13 @@ export default {
     padding-bottom: 200px;
     padding-top: 280px;
 
+    .Grand-title {
+      @media (max-width: 950px) {
+        left: 50% !important;
+        transform: translateX(-50%);
+      }
+    }
+
     &__content {
       position: relative;
     }
@@ -90,6 +97,14 @@ export default {
     &__form {
       width: 550px;
       padding: 40px 0;
+
+      @media (max-width: 950px) {
+        margin: 0 auto;
+      }
+
+      @media (max-width: 700px) {
+        width: 100%;
+      }
     }
 
     &__form-content {
@@ -111,6 +126,10 @@ export default {
       background: #27718c;
       opacity: 0.3;
       filter: blur(60px);
+
+      @media (max-width: 700px) {
+        width: 80%;
+      }
     }
 
     &__input-label {

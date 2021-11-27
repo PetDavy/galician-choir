@@ -15,10 +15,23 @@ const options = {
   },
 };
 
+function getMobileRootMargin() {
+  if (window.innerWidth > 700) {
+    return false;
+  }
+
+  return {
+    'grand-title': {
+      rootMargin: '-180px',
+    },
+  };
+}
+
 function observeElement(element) {
   const type = element.dataset.observer;
+  const mobOptions = getMobileRootMargin();
 
-  const observer = new IntersectionObserver(callbacks[type], options[type]);
+  const observer = new IntersectionObserver(callbacks[type], mobOptions ? mobOptions[type] : options[type]);
   observer.observe(element);
 }
 

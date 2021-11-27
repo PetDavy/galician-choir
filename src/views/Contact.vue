@@ -158,6 +158,7 @@ export default {
       width: 50%;
 
       @media (max-width: 950px) {
+        width: 100%;
         padding-right: 0;
         text-align: center;
       }
@@ -242,6 +243,10 @@ export default {
       background: #27718c;
       opacity: 0.3;
       filter: blur(60px);
+
+      @media (max-width: 700px) {
+        width: 80%;
+      }
     }
 
     &__input-label {
