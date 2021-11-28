@@ -27,15 +27,6 @@
             v-model="fields[activeLocale].title"
           >
         </label>
-        <label for="eventImage" class="EventModal__label">
-          <div class="EventModal__input-caption">Image url</div>
-          <input
-            type="url"
-            class="EventModal__input"
-            id="eventImage"
-            v-model="fields[activeLocale].imageUrl"
-          >
-        </label>
         <label for="eventLink" class="EventModal__label">
           <div class="EventModal__input-caption">Link url</div>
           <input
@@ -45,16 +36,38 @@
             v-model="fields[activeLocale].linkUrl"
           >
         </label>
-        <label for="eventDate" class="EventModal__label EventModal__inpust-row-item">
-          <div class="EventModal__input-caption">Date and Time</div>
-          <input
-            type="datetime-local"
-            class="EventModal__input"
-            id="eventDate"
-            v-model="fields[activeLocale].date"
-          >
-        </label>
-        <label for="eventText" class="EventModal__label EventModal__inpust-row-item">
+        <div class="EventModal__inputs-row">
+          <label for="eventImage" class="EventModal__label EventModal__inputs-row-item">
+            <div class="EventModal__input-caption">Image url</div>
+            <input
+              type="url"
+              class="EventModal__input"
+              id="eventImage"
+              v-model="imageUrl"
+              :disabled="!!image"
+            >
+            <label for="eventUploadImage" class="EventModal__add-photo-btn">
+              <input
+                type="file"
+                id="eventUploadImage"
+                class="EventModal__input--hidden"
+                ref="photoFile"
+                @change="addPhoto"
+              >
+              Add Photo
+            </label>
+          </label>
+          <label for="eventDate" class="EventModal__label EventModal__inputs-row-item">
+            <div class="EventModal__input-caption">Date and Time</div>
+            <input
+              type="datetime-local"
+              class="EventModal__input"
+              id="eventDate"
+              v-model="date"
+            >
+          </label>
+        </div>
+        <label for="eventText" class="EventModal__label">
           <div class="EventModal__input-caption">Description</div>
           <textarea
             name="eventText"
@@ -72,47 +85,67 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import {
+  ref as firebaseRef,
+  uploadBytes,
+  getDownloadURL,
+} from 'firebase/storage';
 import { mapMutations, mapGetters } from 'vuex';
 
 const defaultFields = {
   title: '',
-  date: '',
-  imageUrl: '',
   linkUrl: '',
   text: '',
 };
 
 export default {
   name: 'EventModal',
+  setup() {
+    const photoFile = ref(null);
+
+    return { photoFile };
+  },
   data() {
     return {
       fields: {
         ua: { ...defaultFields },
         en: { ...defaultFields },
       },
+      imageUrl: '',
+      image: null,
+      imageName: '',
+      date: '',
       activeLocale: 'ua',
       localesList: ['ua', 'en'],
     };
   },
   computed: {
-    ...mapGetters(['db', 'locale']),
+    ...mapGetters(['db', 'locale', 'storage']),
   },
   methods: {
     ...mapMutations(['updateIsModalFormOpen']),
     async addEvent() {
+      if (this.image) {
+        const url = await this.uploadPhoto();
+        this.imageUrl = url;
+      }
+
       const eventData = {
         ua: {
           title: this.fields.ua.title,
-          time: new Timestamp((new Date(this.fields.ua.date).getTime() / 1000), 0),
-          img: this.fields.ua.imageUrl,
+          time: new Timestamp((new Date(this.date).getTime() / 1000), 0),
+          img: this.imageUrl,
+          imgName: this.imageName,
           link: this.fields.ua.linkUrl,
           text: this.fields.ua.text,
         },
         en: {
           title: this.fields.en.title,
-          time: new Timestamp((new Date(this.fields.en.date).getTime() / 1000), 0),
-          img: this.fields.en.imageUrl,
+          time: new Timestamp((new Date(this.date).getTime() / 1000), 0),
+          img: this.imageUrl,
+          imgName: this.imageName,
           link: this.fields.en.linkUrl,
           text: this.fields.en.text,
         },
@@ -130,6 +163,26 @@ export default {
       } catch (e) {
         console.error('Error adding document: ', e);
       }
+    },
+    addPhoto() {
+      const eventPhoto = this.photoFile.files[0];
+
+      if (eventPhoto.type.startsWith('image')) {
+        this.imageUrl = eventPhoto.name;
+        this.image = eventPhoto;
+      } else {
+        alert(`файл ${eventPhoto.name} не є зображенням або файлом потрібного формату`);
+      }
+    },
+    async uploadPhoto() {
+      const photoName = `event-preview-${new Date().getTime()}-${this.imageUrl}`;
+      this.imageName = photoName;
+      const storageRef = firebaseRef(this.storage, `events-previews/${photoName}`);
+
+      const snapshot = await uploadBytes(storageRef, this.image);
+      const url = await getDownloadURL(snapshot.ref);
+
+      return url;
     },
     closeModal() {
       this.updateIsModalFormOpen({ isModalFormOpen: false });
@@ -238,12 +291,12 @@ export default {
       }
     }
 
-    &__inpust-row {
+    &__inputs-row {
       display: flex;
       align-items: center;
     }
 
-    &__inpust-row-item {
+    &__inputs-row-item {
       margin-right: 20px;
 
       &:last-child {
@@ -252,6 +305,7 @@ export default {
     }
 
     &__label {
+      position: relative;
       display: block;
       margin-bottom: 20px;
       width: 100%;
@@ -276,6 +330,34 @@ export default {
         height: initial;
         resize: vertical;
       }
+
+      &--hidden {
+        position: absolute;
+        width: 0;
+        visibility: hidden;
+      }
+
+      &#eventImage {
+        padding-left: 145px;
+      }
+    }
+
+    &__add-photo-btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 40px;
+      padding: 10px 25px;
+      background-color: #ccc;
+      color: #000;
+      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
     }
   }
 </style>

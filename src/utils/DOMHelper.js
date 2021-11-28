@@ -1,7 +1,6 @@
 function disableBodyScroll() {
   const body = document.querySelector('body');
   body.classList.add('no-scroll');
-  console.log(body);
 }
 
 function enableBodyScroll() {

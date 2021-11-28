@@ -50,7 +50,7 @@
       <div
         class="AdminGalleryList__photos-item"
         v-for="photo in photos"
-        :key="photo"
+        :key="photo.name"
       >
         <img
           :src="photo.url"
@@ -58,6 +58,7 @@
           class="AdminGalleryList__photo"
         >
         <span class="AdminGalleryList__photo-name">{{photo.name}}</span>
+        <span class="AdminGalleryList__photo-remove-btn" @click="removePhoto(photo)"></span>
       </div>
     </div>
   </div>
@@ -71,6 +72,7 @@ import {
   listAll,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } from 'firebase/storage';
 
 export default {
@@ -91,7 +93,7 @@ export default {
   },
   methods: {
     ...mapMutations(['addStoredPhoto', 'addUploadedPhoto']),
-    async uploadPhoto() {
+    uploadPhoto() {
       const newPhoto = this.photoFile.files[0];
 
       if (newPhoto.type.startsWith('image')) {
@@ -146,13 +148,22 @@ export default {
         this.uploadProgress = 0;
       }, 2400);
     },
+    removePhoto(photo) {
+      const desertRef = firebaseRef(this.storage, `photos/${photo.name}`);
+
+      deleteObject(desertRef)
+        .then(() => {
+          this.photos = this.photos.filter((photoItem) => photoItem.name !== photo.name);
+        }).catch((error) => {
+          console.warn(error);
+        });
+    },
     setPhotos() {
       const photosRef = firebaseRef(this.storage, '/photos/');
 
       listAll(photosRef)
         .then((res) => {
           res.items.forEach((itemRef, index) => {
-            console.log(itemRef);
             getDownloadURL(itemRef)
               .then((url) => {
                 this.photos.push({ id: index, url, name: itemRef.name });
@@ -297,7 +308,7 @@ export default {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
-      padding: 5px;
+      padding: 5px 20px 5px 5px;
       height: 50px;
       background-color: rgba(255, 255, 255, 0.1);
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -313,6 +324,43 @@ export default {
       font-size: 20px;
       color: #ccc;
       font-weight: 500;
+    }
+
+    &__photo-remove-btn {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      margin-left: auto;
+      cursor: pointer;
+      transition: transform .3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #c93c3c;
+        border-radius: 1px;
+        transform: translateY(-50%) rotate(-45deg);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background-color: #c93c3c;
+        border-radius: 1px;
+        transform: translateX(-50%) rotate(-45deg);
+      }
     }
   }
 </style>

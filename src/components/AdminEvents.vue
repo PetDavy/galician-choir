@@ -54,6 +54,7 @@
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import { doc, deleteDoc } from 'firebase/firestore';
+import { ref, deleteObject } from 'firebase/storage';
 import formatters from '../utils/formatters';
 import QuestionPopup from '@/components/QuestionPopup.vue';
 
@@ -68,7 +69,7 @@ export default {
     QuestionPopup,
   },
   computed: {
-    ...mapGetters(['db', 'events', 'locale']),
+    ...mapGetters(['db', 'events', 'locale', 'storage']),
     eventsList() {
       const formatedEvents = this.events.map((event) => ({
         id: event.id,
@@ -90,8 +91,13 @@ export default {
 
       try {
         await deleteDoc(doc(this.db, 'events', data.id));
+        if (data.imgName) {
+          const desertRef = ref(this.storage, `events-previews/${data.imgName}`);
+          deleteObject(desertRef);
+        }
       } catch (error) {
-        console.error('Coudn`t remove event');
+        console.error('Coudn`t remove event or event preview');
+        console.log(error);
       }
     },
     openEventModal() {
@@ -106,7 +112,6 @@ export default {
   .AdminEvents {
     &__event {
       display: flex;
-      align-items: center;
       margin-bottom: 30px;
       padding: 20px;
       width: 100%;

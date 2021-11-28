@@ -3,7 +3,7 @@
   <EventModalForm v-if="isModalFormOpen" />
   <section class="Admin">
     <div class="Admin__content side-indent">
-      <GrandTitle titleText="my admin panel" align="left:40" v-if="isLoaderRemoved" />
+      <GrandTitle titleText="admin panel" align="left:40" v-if="isLoaderRemoved" />
       <div class="Admin__panel">
         <AdminPanelHeader :activeTab="activeTab" @changeTab="changeTab" />
         <AdminEvents

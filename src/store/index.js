@@ -7,7 +7,7 @@ export default createStore({
     db: null,
     storage: null,
     logedIn: false,
-    events: [], // event: {id: string, title: string, time: timestamp, img: string, link: string, text: string}
+    events: [], // event: {id: string, title: string, time: timestamp, img: string, imgName: string, link: string, text: string}
     isModalFormOpen: false,
     locale: 'ua',
     storedPhotos: [],
