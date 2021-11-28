@@ -33,9 +33,9 @@
             <div class="AdminEvent__time">
               {{(formatDate(event.time.toDate())).date}} <strong>{{(formatDate(event.time.toDate())).time}}</strong>
             </div>
-            <div class="AdminEvent__link">
+            <a :href="event.link" target="_blank" class="AdminEvent__link">
               {{event.link}}
-            </div>
+            </a>
           </div>
           <div class="AdminEvent__tools">
             <div class="AdminEvent__tools-btn" @click="openQuestionPopup(event)">
@@ -190,9 +190,11 @@ export default {
 
     &__link {
       position: relative;
+      display: inline-block;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      max-width: 240px;
     }
 
     &__text {

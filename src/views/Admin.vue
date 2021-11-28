@@ -79,10 +79,10 @@ export default {
     }
 
     &__panel {
-      padding: 40px;
-      background-color: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      background-color: #677a81;
+      box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
       border-radius: 4px;
-      border: 1px solid #999;
     }
 
     &__panel-header {

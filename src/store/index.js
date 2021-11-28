@@ -10,6 +10,8 @@ export default createStore({
     events: [], // event: {id: string, title: string, time: timestamp, img: string, link: string, text: string}
     isModalFormOpen: false,
     locale: 'ua',
+    storedPhotos: [],
+    uploadedPhotos: [],
   },
   mutations: {
     toggleMenu(state) {
@@ -39,6 +41,12 @@ export default createStore({
     setEvents(state, payload) {
       state.events = payload.events;
     },
+    addStoredPhoto(state, payload) {
+      state.storedPhotos = [...state.storedPhotos, payload.newPhoto];
+    },
+    addUploadedPhoto(state, payload) {
+      state.uploadedPhotos = [...state.uploadedPhotos, payload.uploadedPhoto];
+    },
   },
   actions: {
     updateLogedIn(context, payload) {
@@ -62,5 +70,7 @@ export default createStore({
     storage: (state) => state.storage,
     events: (state) => state.events,
     locale: (state) => state.locale,
+    storedPhotos: (state) => state.storedPhotos,
+    uploadedPhotos: (state) => state.uploadedPhotos,
   },
 });

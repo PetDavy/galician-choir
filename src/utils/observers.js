@@ -22,7 +22,7 @@ function getMobileRootMargin() {
 
   return {
     'grand-title': {
-      rootMargin: '-180px',
+      rootMargin: '-80px',
     },
   };
 }
