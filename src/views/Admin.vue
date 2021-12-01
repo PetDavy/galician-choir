@@ -1,6 +1,7 @@
 <template>
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
-  <EventModalForm v-if="isModalFormOpen" />
+  <EventModalForm v-if="isModalFormOpen && activeTab === 'events'" />
+  <AboutModalForm v-if="isModalFormOpen && activeTab === 'about'" />
   <section class="Admin">
     <div class="Admin__content side-indent">
       <GrandTitle titleText="admin panel" align="left:40" v-if="isLoaderRemoved" />
@@ -12,6 +13,9 @@
         />
         <AdminGallery
           v-if="activeTab === 'gallery'"
+        />
+        <AdminAbout
+          v-if="activeTab === 'about'"
         />
       </div>
     </div>
@@ -25,7 +29,9 @@ import Loader from '@/components/Loader.vue';
 import AdminPanelHeader from '@/components/AdminPanelHeader.vue';
 import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
+import AdminAbout from '@/components/AdminAbout.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
+import AboutModalForm from '@/components/AboutModalForm.vue';
 
 export default {
 
@@ -43,7 +49,9 @@ export default {
     Loader,
     AdminPanelHeader,
     AdminEvents,
+    AdminAbout,
     EventModalForm,
+    AboutModalForm,
     AdminGallery,
   },
   computed: {

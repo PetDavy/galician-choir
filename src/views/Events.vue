@@ -54,7 +54,6 @@ export default {
   },
   computed: {
     ...mapGetters(['db', 'events', 'locale']),
-
     eventsList() {
       const formatedEvents = this.events.map((event) => ({
         id: event.id,

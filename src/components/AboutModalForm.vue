@@ -1,15 +1,15 @@
 <template>
-  <div class="EventUpdate">
-    <div class="EventUpdate__overlay" @click="closeModal"></div>
-    <div class="EventUpdate__modal">
-      <div class="EventUpdate__modal-close-btn" @click="closeModal"></div>
-      <form class="EventUpdate__form" @submit.prevent="updateEvent">
-        <div class="EventUpdate__header">
-          <h3 class="EventUpdate__form-title">Update Event</h3>
-          <div class="EventUpdate__locales">
+  <div class="AboutModal">
+    <div class="AboutModal__overlay" @click="closeModal"></div>
+    <div class="AboutModal__modal">
+      <div class="AboutModal__modal-close-btn" @click="closeModal"></div>
+      <form class="AboutModal__form" @submit.prevent="addBlock">
+        <div class="AboutModal__header">
+          <h3 class="AboutModal__form-title">New Block</h3>
+          <div class="AboutModal__locales">
             <div
-              class="EventUpdate__locales-btn"
-              :class="{'EventUpdate__locales-btn--active': localeItem === activeLocale}"
+              class="AboutModal__locales-btn"
+              :class="{'AboutModal__locales-btn--active': localeItem === activeLocale}"
               v-for="localeItem in localesList"
               :key="localeItem"
               @click="activeLocale = localeItem"
@@ -18,73 +18,65 @@
             </div>
           </div>
         </div>
-        <div class="EventUpdate__inputs-row">
-          <img
-            :src="imageUrl"
-            :alt="imageName"
-            class="EventUpdate__image-preview EventUpdate__inputs-row-item"
-            v-if="!image"
-          >
-          <div class="EventUpdate__inputs-row-item">
-            <label for="eventUploadImage" class="EventUpdate__add-photo-btn">
-              <input
-                type="file"
-                id="eventUploadImage"
-                class="EventUpdate__input--hidden"
-                ref="photoFile"
-                @change="addPhoto"
-              >
-              Change Image
-            </label>
-            <input
-              type="url"
-              class="EventUpdate__input"
-              id="eventImage"
-              v-model="imageUrl"
-              :disabled="!!image"
-            >
-          </div>
-        </div>
-        <label for="eventTitle" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Title</div>
+        <label for="aboutGrandTitle" class="AboutModal__label">
+          <div class="AboutModal__input-caption">Grand TItle</div>
           <input
             type="text"
-            class="EventUpdate__input"
-            id="eventTitle"
+            class="AboutModal__input"
+            id="aboutGrandTitle"
+            v-model="fields[activeLocale]['grand-title']"
+          >
+        </label>
+        <label for="aboutTitle" class="AboutModal__label">
+          <div class="AboutModal__input-caption">Title</div>
+          <input
+            type="text"
+            class="AboutModal__input"
+            id="aboutTitle"
             v-model="fields[activeLocale].title"
           >
         </label>
-        <label for="eventDate" class="EventUpdate__label EventUpdate__inputs-row-item">
-          <div class="EventUpdate__input-caption">Date and Time</div>
+        <label for="aboutSubTitle" class="AboutModal__label">
+          <div class="AboutModal__input-caption">Sub Title</div>
           <input
-              type="datetime-local"
-              class="EventUpdate__input"
-              id="eventDate"
-              v-model="date"
-              @change="isDateUpdated = true"
+            type="text"
+            class="AboutModal__input"
+            id="aboutSubTitle"
+            v-model="fields[activeLocale]['sub-title']"
           >
         </label>
-        <label for="eventLink" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Link url</div>
+        <label for="aboutImage" class="AboutModal__label">
+          <div class="AboutModal__input-caption">Image url</div>
           <input
             type="url"
-            class="EventUpdate__input"
-            id="eventLink"
-            v-model="fields[activeLocale].link"
+            class="AboutModal__input"
+            id="aboutImage"
+            v-model="imageUrl"
+            :disabled="!!image"
           >
+          <label for="aboutUploadImage" class="AboutModal__add-photo-btn">
+            <input
+              type="file"
+              id="aboutUploadImage"
+              class="AboutModal__input--hidden"
+              ref="photoFile"
+              @change="addPhoto"
+            >
+            Add Photo
+          </label>
         </label>
-        <label for="eventText" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Description</div>
+        <label for="aboutText" class="AboutModal__label">
+          <div class="AboutModal__input-caption">Description</div>
           <textarea
-            name="eventText"
-            id="eventText"
+            name="aboutText"
+            id="aboutText"
             cols="30"
             rows="10"
-            class="EventUpdate__input EventUpdate__input--textarea"
+            class="AboutModal__input AboutModal__input--textarea"
             v-model="fields[activeLocale].text"
           ></textarea>
         </label>
-        <button type="submit" class="EventUpdate__form-btn btn">save</button>
+        <button type="submit" class="AboutModal__form-btn btn">save</button>
       </form>
     </div>
   </div>
@@ -92,11 +84,7 @@
 
 <script>
 import { ref } from 'vue';
-import {
-  setDoc,
-  Timestamp,
-  doc,
-} from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import {
   ref as firebaseRef,
   uploadBytes,
@@ -104,8 +92,15 @@ import {
 } from 'firebase/storage';
 import { mapMutations, mapGetters } from 'vuex';
 
+const defaultFields = {
+  'grand-title': '',
+  title: '',
+  'sub-title': '',
+  text: '',
+};
+
 export default {
-  name: 'EventUpdate',
+  name: 'AboutModal',
   setup() {
     const photoFile = ref(null);
 
@@ -114,76 +109,74 @@ export default {
   data() {
     return {
       fields: {
-        ua: { ...this.eventData.ua },
-        en: { ...this.eventData.en },
+        ua: { ...defaultFields },
+        en: { ...defaultFields },
       },
-      imageUrl: this.eventData.ua.img,
+      imageUrl: '',
       image: null,
-      imageName: this.eventData.ua.imgName,
-      date: this.eventData.ua.time,
-      isDateUpdated: false,
+      imageName: '',
       activeLocale: 'ua',
       localesList: ['ua', 'en'],
     };
-  },
-  props: {
-    eventData: Object,
   },
   computed: {
     ...mapGetters(['db', 'locale', 'storage']),
   },
   methods: {
-    ...mapMutations(['']),
-    async updateEvent() {
+    ...mapMutations(['updateIsModalFormOpen']),
+    async addBlock() {
       if (this.image) {
         const url = await this.uploadPhoto();
         this.imageUrl = url;
       }
 
-      const eventData = {
+      const aboutData = {
         ua: {
+          'grand-title': this.fields.ua['grand-title'],
           title: this.fields.ua.title,
-          time: this.isDateUpdated ? new Timestamp((new Date(this.date).getTime() / 1000), 0) : this.date,
+          'sub-title': this.fields.ua['sub-title'],
           img: this.imageUrl,
-          imgName: this.imageName ?? '',
-          link: this.fields.ua.link,
+          imgName: this.imageName,
           text: this.fields.ua.text,
         },
         en: {
+          'grand-title': this.fields.en['grand-title'],
           title: this.fields.en.title,
-          time: this.isDateUpdated ? new Timestamp((new Date(this.date).getTime() / 1000), 0) : this.date,
+          'sub-title': this.fields.en['sub-title'],
           img: this.imageUrl,
-          imgName: this.imageName ?? '',
-          link: this.fields.en.link,
+          imgName: this.imageName,
           text: this.fields.en.text,
         },
+        orderId: Number(new Date().getTime()),
       };
 
       try {
-        const cityRef = doc(this.db, 'events', this.eventData.id);
-
-        const docRef = await setDoc(cityRef, eventData);
-
-        console.log('Document updated ID: ', docRef);
+        const docRef = await addDoc(collection(this.db, 'about-blocks'), aboutData);
+        console.log('Document written with ID: ', docRef.id);
         this.closeModal();
+
+        this.fields = {
+          ua: { ...defaultFields },
+          en: { ...defaultFields },
+        };
       } catch (e) {
-        console.error('Error updating document: ', e);
+        console.error('Error adding document: ', e);
       }
     },
     addPhoto() {
-      const eventPhoto = this.photoFile.files[0];
+      const aboutPhoto = this.photoFile.files[0];
 
-      if (eventPhoto.type.startsWith('image')) {
-        this.imageUrl = eventPhoto.name;
-        this.image = eventPhoto;
+      if (aboutPhoto.type.startsWith('image')) {
+        this.imageUrl = aboutPhoto.name;
+        this.image = aboutPhoto;
       } else {
-        alert(`файл ${eventPhoto.name} не є зображенням або файлом потрібного формату`);
+        alert(`файл ${aboutPhoto.name} не є зображенням або файлом потрібного формату`);
       }
     },
     async uploadPhoto() {
-      const photoName = `event-preview-${new Date().getTime()}-${this.imageUrl}`;
+      const photoName = `about-preview-${new Date().getTime()}-${this.imageUrl}`;
       this.imageName = photoName;
-      const storageRef = firebaseRef(this.storage, `events-previews/${photoName}`);
+      const storageRef = firebaseRef(this.storage, `about-previews/${photoName}`);
 
       const snapshot = await uploadBytes(storageRef, this.image);
       const url = await getDownloadURL(snapshot.ref);
@@ -191,7 +184,7 @@ export default {
       return url;
     },
     closeModal() {
-      this.$emit('closeUpdateForm');
+      this.updateIsModalFormOpen({ isModalFormOpen: false });
     },
   },
   mounted() {
@@ -201,7 +194,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .EventUpdate {
+  .AboutModal {
     &__overlay {
       position: fixed;
       top: 0;
@@ -300,12 +293,10 @@ export default {
     &__inputs-row {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
     }
 
     &__inputs-row-item {
       margin-right: 20px;
-      width: 100%;
 
       &:last-child {
         margin-right: 0;
@@ -345,22 +336,16 @@ export default {
         visibility: hidden;
       }
 
-      &#eventImage {
-        width: 100%;
+      &#aboutImage {
+        padding-left: 145px;
       }
     }
 
-    &__image-preview {
-      max-height: 100px;
-      width: auto;
-      object-fit: contain;
-      object-position: center;
-      margin-right: 20px;
-    }
-
     &__add-photo-btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
       height: 40px;
-      margin-bottom: 10px;
       padding: 10px 25px;
       background-color: #ccc;
       color: #000;

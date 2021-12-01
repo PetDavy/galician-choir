@@ -3,7 +3,7 @@
   <div class="QuestionPopup__layout"></div>
   <div class="QuestionPopup__content">
     <p class="QuestionPopup__text">
-      Are you sure you want to delete this event?
+      {{questionText}}
     </p>
     <div class="QuestionPopup__buttons">
       <button
@@ -28,7 +28,7 @@
 <script>
 export default {
   name: 'QuestionPopup',
-  props: ['questionData'],
+  props: ['questionData', 'questionText'],
   methods: {
     sentAnswer(confirm) {
       if (confirm) {

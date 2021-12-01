@@ -1,6 +1,7 @@
 <template>
   <QuestionPopup
     :questionData="questionPopupData"
+    questionText="Are you sure you want to delete this event?"
     @handlYes="removeEvent"
     @handlNo="questionPopupData = null"
     v-if="questionPopupData"

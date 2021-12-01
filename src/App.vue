@@ -38,7 +38,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setEvents', 'setLocale', 'updateStorage']),
+    ...mapMutations(['setEvents', 'setAboutBlocks', 'setLocale', 'updateStorage']),
     setSiteLocale() {
       const locale = this.cookies.get('locale');
 
@@ -64,6 +64,22 @@ export default {
         this.setEvents({ events });
       });
     },
+    setAboutBlocksData() {
+      const q = query(collection(this.db, 'about-blocks'));
+
+      onSnapshot(q, (querySnapshot) => {
+        const aboutBlocks = [];
+
+        querySnapshot.forEach((doc) => {
+          aboutBlocks.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+
+        this.setAboutBlocks({ aboutBlocks });
+      });
+    },
     setStorage() {
       const storage = getStorage();
 
@@ -73,6 +89,7 @@ export default {
   mounted() {
     this.setSiteLocale();
     this.setEventsData();
+    this.setAboutBlocksData();
     this.setStorage();
   },
 };

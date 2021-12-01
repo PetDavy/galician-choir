@@ -1,15 +1,15 @@
 <template>
-  <div class="EventUpdate">
-    <div class="EventUpdate__overlay" @click="closeModal"></div>
-    <div class="EventUpdate__modal">
-      <div class="EventUpdate__modal-close-btn" @click="closeModal"></div>
-      <form class="EventUpdate__form" @submit.prevent="updateEvent">
-        <div class="EventUpdate__header">
-          <h3 class="EventUpdate__form-title">Update Event</h3>
-          <div class="EventUpdate__locales">
+  <div class="AboutUpdate">
+    <div class="AboutUpdate__overlay" @click="closeModal"></div>
+    <div class="AboutUpdate__modal">
+      <div class="AboutUpdate__modal-close-btn" @click="closeModal"></div>
+      <form class="AboutUpdate__form" @submit.prevent="updateEvent">
+        <div class="AboutUpdate__header">
+          <h3 class="AboutUpdate__form-title">Update Event</h3>
+          <div class="AboutUpdate__locales">
             <div
-              class="EventUpdate__locales-btn"
-              :class="{'EventUpdate__locales-btn--active': localeItem === activeLocale}"
+              class="AboutUpdate__locales-btn"
+              :class="{'AboutUpdate__locales-btn--active': localeItem === activeLocale}"
               v-for="localeItem in localesList"
               :key="localeItem"
               @click="activeLocale = localeItem"
@@ -18,19 +18,19 @@
             </div>
           </div>
         </div>
-        <div class="EventUpdate__inputs-row">
+        <div class="AboutUpdate__inputs-row">
           <img
             :src="imageUrl"
             :alt="imageName"
-            class="EventUpdate__image-preview EventUpdate__inputs-row-item"
+            class="AboutUpdate__image-preview AboutUpdate__inputs-row-item"
             v-if="!image"
           >
-          <div class="EventUpdate__inputs-row-item">
-            <label for="eventUploadImage" class="EventUpdate__add-photo-btn">
+          <div class="AboutUpdate__inputs-row-item">
+            <label for="aboutUploadImage" class="AboutUpdate__add-photo-btn">
               <input
                 type="file"
-                id="eventUploadImage"
-                class="EventUpdate__input--hidden"
+                id="aboutUploadImage"
+                class="AboutUpdate__input--hidden"
                 ref="photoFile"
                 @change="addPhoto"
               >
@@ -38,53 +38,52 @@
             </label>
             <input
               type="url"
-              class="EventUpdate__input"
-              id="eventImage"
+              class="AboutUpdate__input"
+              id="aboutImage"
               v-model="imageUrl"
               :disabled="!!image"
             >
           </div>
         </div>
-        <label for="eventTitle" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Title</div>
+        <label for="aboutGrandTitle" class="AboutUpdate__label">
+          <div class="AboutUpdate__input-caption">Grand Title</div>
           <input
             type="text"
-            class="EventUpdate__input"
-            id="eventTitle"
+            class="AboutUpdate__input"
+            id="aboutGrandTitle"
+            v-model="fields[activeLocale]['grand-title']"
+          >
+        </label>
+        <label for="aboutTitle" class="AboutUpdate__label">
+          <div class="AboutUpdate__input-caption">Title</div>
+          <input
+            type="text"
+            class="AboutUpdate__input"
+            id="aboutTitle"
             v-model="fields[activeLocale].title"
           >
         </label>
-        <label for="eventDate" class="EventUpdate__label EventUpdate__inputs-row-item">
-          <div class="EventUpdate__input-caption">Date and Time</div>
+        <label for="aboutSubTitle" class="AboutUpdate__label">
+          <div class="AboutUpdate__input-caption">Sub Title</div>
           <input
-              type="datetime-local"
-              class="EventUpdate__input"
-              id="eventDate"
-              v-model="date"
-              @change="isDateUpdated = true"
+            type="text"
+            class="AboutUpdate__input"
+            id="aboutSubTitle"
+            v-model="fields[activeLocale]['sub-title']"
           >
         </label>
-        <label for="eventLink" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Link url</div>
-          <input
-            type="url"
-            class="EventUpdate__input"
-            id="eventLink"
-            v-model="fields[activeLocale].link"
-          >
-        </label>
-        <label for="eventText" class="EventUpdate__label">
-          <div class="EventUpdate__input-caption">Description</div>
+        <label for="aboutText" class="AboutUpdate__label">
+          <div class="AboutUpdate__input-caption">Description</div>
           <textarea
             name="eventText"
-            id="eventText"
+            id="aboutText"
             cols="30"
             rows="10"
-            class="EventUpdate__input EventUpdate__input--textarea"
+            class="AboutUpdate__input AboutUpdate__input--textarea"
             v-model="fields[activeLocale].text"
           ></textarea>
         </label>
-        <button type="submit" class="EventUpdate__form-btn btn">save</button>
+        <button type="submit" class="AboutUpdate__form-btn btn">save</button>
       </form>
     </div>
   </div>
@@ -94,7 +93,6 @@
 import { ref } from 'vue';
 import {
   setDoc,
-  Timestamp,
   doc,
 } from 'firebase/firestore';
 import {
@@ -105,7 +103,7 @@ import {
 import { mapMutations, mapGetters } from 'vuex';
 
 export default {
-  name: 'EventUpdate',
+  name: 'AboutUpdate',
   setup() {
     const photoFile = ref(null);
 
@@ -114,20 +112,18 @@ export default {
   data() {
     return {
       fields: {
-        ua: { ...this.eventData.ua },
-        en: { ...this.eventData.en },
+        ua: { ...this.aboutData.ua },
+        en: { ...this.aboutData.en },
       },
-      imageUrl: this.eventData.ua.img,
+      imageUrl: this.aboutData.ua.img,
       image: null,
-      imageName: this.eventData.ua.imgName,
-      date: this.eventData.ua.time,
-      isDateUpdated: false,
+      imageName: this.aboutData.ua.imgName,
       activeLocale: 'ua',
       localesList: ['ua', 'en'],
     };
   },
   props: {
-    eventData: Object,
+    aboutData: Object,
   },
   computed: {
     ...mapGetters(['db', 'locale', 'storage']),
@@ -140,29 +136,30 @@ export default {
         this.imageUrl = url;
       }
 
-      const eventData = {
+      const blockData = {
         ua: {
+          'grand-title': this.fields.ua['grand-title'],
           title: this.fields.ua.title,
-          time: this.isDateUpdated ? new Timestamp((new Date(this.date).getTime() / 1000), 0) : this.date,
+          'sub-title': this.fields.ua['sub-title'],
           img: this.imageUrl,
           imgName: this.imageName ?? '',
-          link: this.fields.ua.link,
           text: this.fields.ua.text,
         },
         en: {
+          'grand-title': this.fields.en['grand-title'],
           title: this.fields.en.title,
-          time: this.isDateUpdated ? new Timestamp((new Date(this.date).getTime() / 1000), 0) : this.date,
+          'sub-title': this.fields.en['sub-title'],
           img: this.imageUrl,
           imgName: this.imageName ?? '',
-          link: this.fields.en.link,
           text: this.fields.en.text,
         },
+        orderId: this.aboutData.orderId,
       };
 
       try {
-        const cityRef = doc(this.db, 'events', this.eventData.id);
+        const cityRef = doc(this.db, 'about-blocks', this.aboutData.id);
 
-        const docRef = await setDoc(cityRef, eventData);
+        const docRef = await setDoc(cityRef, blockData);
 
         console.log('Document updated ID: ', docRef);
         this.closeModal();
@@ -181,9 +178,9 @@ export default {
       }
     },
     async uploadPhoto() {
-      const photoName = `event-preview-${new Date().getTime()}-${this.imageUrl}`;
+      const photoName = `about-preview-${new Date().getTime()}-${this.imageUrl}`;
       this.imageName = photoName;
-      const storageRef = firebaseRef(this.storage, `events-previews/${photoName}`);
+      const storageRef = firebaseRef(this.storage, `about-previews/${photoName}`);
 
       const snapshot = await uploadBytes(storageRef, this.image);
       const url = await getDownloadURL(snapshot.ref);
@@ -201,7 +198,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .EventUpdate {
+  .AboutUpdate {
     &__overlay {
       position: fixed;
       top: 0;
