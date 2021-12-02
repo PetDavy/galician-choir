@@ -38,7 +38,14 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setEvents', 'setAboutBlocks', 'setLocale', 'updateStorage']),
+    ...mapMutations([
+      'setEvents',
+      'setAboutBlocks',
+      'setHomeData',
+      'setCooperations',
+      'setLocale',
+      'updateStorage',
+    ]),
     setSiteLocale() {
       const locale = this.cookies.get('locale');
 
@@ -80,6 +87,38 @@ export default {
         this.setAboutBlocks({ aboutBlocks });
       });
     },
+    setHomeDataLocal() {
+      const q = query(collection(this.db, 'home'));
+
+      onSnapshot(q, (querySnapshot) => {
+        let homeData = {};
+
+        querySnapshot.forEach((doc) => {
+          homeData = {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+        console.log('home', homeData);
+        this.setHomeData({ homeData });
+      });
+    },
+    setCooperationsData() {
+      const q = query(collection(this.db, 'cooperations'));
+
+      onSnapshot(q, (querySnapshot) => {
+        const cooperations = [];
+
+        querySnapshot.forEach((doc) => {
+          cooperations.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+
+        this.setCooperations({ cooperations });
+      });
+    },
     setStorage() {
       const storage = getStorage();
 
@@ -90,7 +129,9 @@ export default {
     this.setSiteLocale();
     this.setEventsData();
     this.setAboutBlocksData();
+    this.setHomeDataLocal();
     this.setStorage();
+    this.setCooperationsData();
   },
 };
 </script>

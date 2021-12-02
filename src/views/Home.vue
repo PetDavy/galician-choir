@@ -5,12 +5,12 @@
         <div class="showcase__bg" :class="{'showcase__bg--zoomed': isShowcaseSet}"></div>
         <div class="showcase__overlay"></div>
         <div class="showcase__container side-indent">
-          <div class="showcase__left" :class="{'showcase__left--shown': isShowcaseSet}">
-            <h1 class="showcase__title">
-              Galician Academic Chamber Choir
+          <div class="showcase__left" :class="{'showcase__left--shown': isShowcaseSet}" v-if="homeData[locale]">
+            <h1 class="showcase__title" :class="{'showcase__title--ua': locale === 'ua'}">
+              {{homeData[locale].title}}
             </h1>
-            <p class="showcase__text">
-              Lorem ipsum dolor sit amet,consectetur adipisicing elit. Aperiam doloremque quibusdam officiis sunt quasi. Voluptatibus inventore magnam atque.
+            <p class="showcase__text" :class="{'showcase__text--ua': locale === 'ua'}">
+              {{homeData[locale]['sub-title']}}
             </p>
             <router-link to="/about" class="showcase__btn btn">view more</router-link>
           </div>
@@ -147,7 +147,7 @@ export default {
     ScrollParallax,
   },
   computed: {
-    ...mapGetters(['db', 'events', 'locale']),
+    ...mapGetters(['db', 'events', 'homeData', 'locale']),
     latestEvent() {
       const formatedEvents = this.events.map((event) => ({
         id: event.id,
@@ -173,6 +173,11 @@ export default {
       }, 500);
     },
   },
+  watch: {
+    homeData(data) {
+      console.log(data);
+    },
+  },
   mounted() {
     setTimeout(() => {
       setTimeout(() => {
@@ -188,6 +193,7 @@ export default {
 <style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css2?family=Neuton:wght@200&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,300&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@1,300&family=Spectral:wght@300&display=swap');
 
   .Home {
     &__showcase {
@@ -275,11 +281,18 @@ export default {
       font-size: 74px;
       line-height: 70px;
       letter-spacing: 1.5px;
-      font-style: italic;
+      // font-style: italic;
       transform: translateY(100px);
       opacity: 0;
       transition: transform .7s ease-out, opacity .7s ease-out;
       transition-delay: 1.1s;
+
+      &--ua {
+        font-family: 'Spectral', serif;
+        font-size: 64px;
+        line-height: 60px;
+        letter-spacing: 1px;
+      }
 
       @media (max-width: 960px) {
         margin-left: auto;
@@ -300,6 +313,10 @@ export default {
       opacity: 0;
       transition: transform .7s ease-out, opacity .7s ease-out;
       transition-delay: 1.3s;
+
+      &--ua {
+        // font-family: 'IBM Plex Serif', serif;
+      }
 
       @media (max-width: 960px) {
         margin-left: auto;
@@ -579,7 +596,7 @@ export default {
       max-width: 450px;
       margin-bottom: 15px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
-      font-style: italic;
+      // font-style: italic;
 
       @media (max-width: 550px) {
         font-size: 38px;
@@ -601,10 +618,6 @@ export default {
         @media (max-width: 780px) {
           text-align: center;
         }
-      }
-
-      &--ua {
-        font-family: 'IBM Plex Serif', serif;
       }
     }
 
@@ -657,6 +670,10 @@ export default {
       text-transform: uppercase;
       font-weight: 500;
       letter-spacing: 1px;
+
+      &--ua {
+        font-family: 'IBM Plex Serif', serif;
+      }
     }
 
     &__sub-title {

@@ -127,7 +127,6 @@ export default {
       padding: 20px;
       width: 100%;
       background-color: #d2dfe0;
-
     }
 
     &__header {

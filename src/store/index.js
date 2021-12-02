@@ -8,7 +8,9 @@ export default createStore({
     storage: null,
     logedIn: false,
     events: [], // event: {id: string, title: string, time: timestamp, img: string, imgName: string, link: string, text: string}
-    aboutBlocks: [], // block {id, grand-title, title, sub-title, text, img} <string>
+    aboutBlocks: [], // block {id, grand-title, title, sub-title, text, img} <string> {orderId: number}
+    homeData: {}, // {id, title, sub-title} <string>
+    cooperations: [], // {id, img: string, svg: string(html), orderId: number} {title, text} <string>
     isModalFormOpen: false,
     locale: 'ua',
     storedPhotos: [],
@@ -45,6 +47,12 @@ export default createStore({
     setAboutBlocks(state, payload) {
       state.aboutBlocks = payload.aboutBlocks;
     },
+    setHomeData(state, payload) {
+      state.homeData = payload.homeData;
+    },
+    setCooperations(state, payload) {
+      state.cooperations = payload.cooperations;
+    },
     addStoredPhoto(state, payload) {
       state.storedPhotos = [...state.storedPhotos, payload.newPhoto];
     },
@@ -74,6 +82,8 @@ export default createStore({
     storage: (state) => state.storage,
     events: (state) => state.events,
     aboutBlocks: (state) => state.aboutBlocks,
+    homeData: (state) => state.homeData,
+    cooperations: (state) => state.cooperations,
     locale: (state) => state.locale,
     storedPhotos: (state) => state.storedPhotos,
     uploadedPhotos: (state) => state.uploadedPhotos,

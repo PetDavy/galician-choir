@@ -11,11 +11,14 @@
           @openModal="isModalOpen = true"
           v-if="activeTab === 'events'"
         />
-        <AdminGallery
-          v-if="activeTab === 'gallery'"
-        />
         <AdminAbout
           v-if="activeTab === 'about'"
+        />
+        <AdminHome
+          v-if="activeTab === 'home'"
+        />
+        <AdminGallery
+          v-if="activeTab === 'gallery'"
         />
       </div>
     </div>
@@ -30,6 +33,7 @@ import AdminPanelHeader from '@/components/AdminPanelHeader.vue';
 import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
 import AdminAbout from '@/components/AdminAbout.vue';
+import AdminHome from '@/components/AdminHome.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
 import AboutModalForm from '@/components/AboutModalForm.vue';
 
@@ -50,6 +54,7 @@ export default {
     AdminPanelHeader,
     AdminEvents,
     AdminAbout,
+    AdminHome,
     EventModalForm,
     AboutModalForm,
     AdminGallery,
