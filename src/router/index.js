@@ -14,7 +14,7 @@ const routes = [
     name: 'About',
     component: () => import('../views/About.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
     },
   },
   {
@@ -22,7 +22,7 @@ const routes = [
     name: 'Events',
     component: () => import('../views/Events.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
     },
   },
   {
@@ -30,7 +30,7 @@ const routes = [
     name: 'Gallery',
     component: () => import('../views/Gallery.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
     },
   },
   {
@@ -43,7 +43,7 @@ const routes = [
     name: 'Contacts',
     component: () => import('../views/Contact.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
     },
   },
   {
@@ -51,7 +51,7 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
       // redirectOnAuth: 'Admin',
     },
   },
@@ -60,7 +60,7 @@ const routes = [
     name: 'Admin',
     component: () => import('../views/Admin.vue'),
     meta: {
-      header: ['full-width'],
+      header: ['full-width', 'light'],
       requiresAuth: true,
     },
   },

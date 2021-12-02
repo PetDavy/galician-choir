@@ -130,7 +130,7 @@ $arrow-head-thickness: $shaft-thickness;
   align-items: center;
   color: $black;
   font-size: 1.25em;
-  font-style: italic;
+  // font-style: italic;
   text-decoration: none;
   transform: translateY(-50%);
   cursor: pointer;

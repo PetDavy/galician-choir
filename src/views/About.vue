@@ -77,7 +77,7 @@ export default {
 
 <style lang="scss" scoped>
   .About {
-    background-color: #132b34;
+    // background-color: #132b34;
     padding-bottom: 200px;
     padding-top: 250px;
 
@@ -109,7 +109,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       margin: 0 60px 200px 0;
-      color: #fff;
+      // color: #fff;
       border-radius: 4px;
 
       @media (max-width: 1400px) {
@@ -199,7 +199,7 @@ export default {
     &__info-sub-title {
       font-size: 16px;
       line-height: 19px;
-      color: #f4f4f4;
+      // color: #f4f4f4;
       font-weight: 600;
       letter-spacing: 0.8px;
     }
@@ -209,7 +209,7 @@ export default {
       margin-bottom: 12px;
       font-size: 16px;
       line-height: 30px;
-      color: #f4f4f4;
+      // color: #f4f4f4;
       letter-spacing: 0.8px;
     }
 

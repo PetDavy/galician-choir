@@ -4,7 +4,7 @@
     <div class="Events__content side-indent side-indent--full-width">
       <GrandTitle titleText="events" align="left:35" v-if="isLoaderRemoved" />
       <h1 class="Events__title">
-        Future events
+        {{' '}}
       </h1>
       <div
         class="Events__event event"
@@ -86,7 +86,7 @@ export default {
 .Events {
   position: relative;
   padding: 210px 0 60px;
-  background: #132b34;
+  // background: #132b34;
 
   &__content {
     position: relative;
@@ -107,20 +107,20 @@ export default {
     padding-bottom: 8px;
     margin-bottom: 40px;
     margin-left: auto;
-    color: #fff;
+    // color: #fff;
     font-size: 28px;
     font-weight: 500;
 
-    &::before {
-      position: absolute;
-      content: '';
-      bottom: 0;
-      right: 0;
-      min-width: 150px;
-      width: 100%;
-      height: 2px;
-      background-color: #ccc;
-    }
+    // &::before {
+    //   position: absolute;
+    //   content: '';
+    //   bottom: 0;
+    //   right: 0;
+    //   min-width: 150px;
+    //   width: 100%;
+    //   height: 2px;
+    //   background-color: #ccc;
+    // }
   }
 }
 
@@ -129,7 +129,8 @@ export default {
   margin-bottom: 60px;
   padding: 55px 70px;
   box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-  background-color: #17313a;
+  // background-color: #17313a;
+  background-color: #f1f1f1;
   border-radius: 4px;
   overflow: hidden;
 
@@ -166,7 +167,8 @@ export default {
 
   &__date {
     font-size: 18px;
-    color: #ccc;
+    // color: #ccc;
+    color: #666;
 
     &--time {
       margin-left: 10px;
@@ -180,7 +182,7 @@ export default {
     font-size: 50px;
     line-height: 60px;
     letter-spacing: 1.5px;
-    color: #ccc;
+    // color: #ccc;
 
     @media (max-width: 1400px) {
       text-align: center;
@@ -197,7 +199,7 @@ export default {
       margin-bottom: 80px;
       font-size: 17px;
       line-height: 30px;
-      color: #ccc;
+      // color: #ccc;
       letter-spacing: 0.8px;
 
       @media (max-width: 1400px) {
