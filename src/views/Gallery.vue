@@ -2,7 +2,7 @@
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <section class="Gallery">
     <div class="Gallery__content">
-      <GrandTitle titleText="our photos" align="left:40" v-if="isLoaderRemoved" />
+      <GrandTitle :titleText="titles[locale].gallery" align="left:40" v-if="isLoaderRemoved" />
       <div
         class="Gallery__row-wrapper"
         v-for="row in rows"
@@ -54,6 +54,7 @@ import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { enableBodyScroll, disableBodyScroll } from '../utils/DOMHelper';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
+import titles from '@/assets/texts/titles.json';
 
 export default {
   name: 'Gallery',
@@ -63,6 +64,7 @@ export default {
       activePhoto: false,
       isLoaderVisible: true,
       isLoaderRemoved: false,
+      titles,
     };
   },
   components: {
@@ -70,7 +72,7 @@ export default {
     Loader,
   },
   computed: {
-    ...mapGetters(['storage']),
+    ...mapGetters(['storage', 'locale']),
     rows() {
       const rowsArray = [];
       const rowSizes = [3, 2];

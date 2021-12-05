@@ -8,7 +8,7 @@
     </span>
     <span class="main">
       <span class="text">
-        {{isOpen ? 'Hide Details' : 'Explore More'}}
+        {{isOpen ? buttons[locale].hide : buttons[locale]['ex-more']}}
       </span>
       <span class="the-arrow -right">
         <span class="shaft"></span>
@@ -18,10 +18,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import buttons from '@/assets/texts/buttons.json';
+
 export default {
   name: 'ArrowRight',
   props: {
     isOpen: Boolean,
+  },
+  data() {
+    return {
+      buttons,
+    };
+  },
+  computed: {
+    ...mapGetters(['locale']),
   },
 };
 </script>

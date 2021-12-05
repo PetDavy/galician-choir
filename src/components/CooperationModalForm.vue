@@ -56,6 +56,15 @@
             Add Photo
           </label>
         </label>
+        <label for="cooperationSVG" class="CooperationModal__label">
+          <div class="CooperationModal__input-caption">SVG icon code</div>
+          <input
+            type="text"
+            class="CooperationModal__input"
+            id="cooperationSVG"
+            v-model="svg"
+          >
+        </label>
         <button type="submit" class="CooperationModal__form-btn btn">save</button>
       </form>
     </div>

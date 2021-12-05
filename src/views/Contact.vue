@@ -2,7 +2,7 @@
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <section class="Contact">
     <div class="Contact__content side-indent">
-      <GrandTitle titleText="contact" align="left:40" v-if="isLoaderRemoved" />
+      <GrandTitle :titleText="titles[locale].contact" align="left:40" color="light" v-if="isLoaderRemoved" />
       <div class="Contact__info">
         <div class="Contact__info-item">
           <p class="Contact__info-item-title">
@@ -72,7 +72,7 @@
               required
             ></textarea>
           </label>
-          <button type="submit" class="Contact__btn btn">Contact</button>
+          <button type="submit" class="Contact__btn btn">{{buttons[locale].send}}</button>
         </div>
       </form>
     </div>
@@ -80,8 +80,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
+import titles from '@/assets/texts/titles.json';
+import buttons from '@/assets/texts/buttons.json';
 
 export default {
   name: 'Contact',
@@ -92,11 +95,16 @@ export default {
       name: '',
       email: '',
       message: '',
+      titles,
+      buttons,
     };
   },
   components: {
     GrandTitle,
     Loader,
+  },
+  computed: {
+    ...mapGetters(['locale']),
   },
   methods: {
     removeLoader() {

@@ -2,7 +2,7 @@
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <div class="Events">
     <div class="Events__content side-indent side-indent--full-width">
-      <GrandTitle titleText="events" align="left:35" v-if="isLoaderRemoved" />
+      <GrandTitle :titleText="titles[locale].events" align="left:35" v-if="isLoaderRemoved" />
       <h1 class="Events__title">
         {{' '}}
       </h1>
@@ -24,7 +24,7 @@
           <div class="event__description">
             {{event.text}}
           </div>
-          <a :href="event.link" target="_blank" class="event__btn btn">view more</a>
+          <a :href="event.link" target="_blank" class="event__btn btn">{{buttons[locale].more}}</a>
         </div>
         <div class="event__preview-wrapper">
           <img :src="event.img" :alt="event.title" class="event__preview">
@@ -39,6 +39,8 @@ import { mapGetters } from 'vuex';
 import formatters from '../utils/formatters';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
+import titles from '@/assets/texts/titles.json';
+import buttons from '@/assets/texts/buttons.json';
 
 export default {
   name: 'Events',
@@ -46,6 +48,8 @@ export default {
     return {
       isLoaderVisible: true,
       isLoaderRemoved: false,
+      titles,
+      buttons,
     };
   },
   components: {
@@ -86,7 +90,6 @@ export default {
 .Events {
   position: relative;
   padding: 210px 0 60px;
-  // background: #132b34;
 
   &__content {
     position: relative;
@@ -168,7 +171,6 @@ export default {
     font-size: 50px;
     line-height: 60px;
     letter-spacing: 1.5px;
-    // color: #ccc;
 
     @media (max-width: 1400px) {
       text-align: center;
@@ -185,7 +187,6 @@ export default {
       margin-bottom: 80px;
       font-size: 17px;
       line-height: 30px;
-      // color: #ccc;
       letter-spacing: 0.8px;
 
       @media (max-width: 1400px) {

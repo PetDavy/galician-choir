@@ -13,7 +13,7 @@
             <h1 class="showcase__title" :class="{'showcase__title--ua': locale === 'ua'}">
               {{homeData[locale].title}}
             </h1>
-            <router-link to="/about" class="showcase__btn btn">view more</router-link>
+            <router-link to="/about" class="showcase__btn btn">{{buttons[locale].more}}</router-link>
           </div>
         </div>
       </section>
@@ -51,13 +51,13 @@
             <div class="events__description-wrapper">
               <p class="events__description">{{latestEvent.text ?? ''}}</p>
             </div>
-            <router-link to="/events" class="events__block-right-link btn">All Events</router-link>
+            <router-link to="/events" class="events__block-right-link btn">{{buttons[locale]['all-events']}}</router-link>
           </div>
         </div>
       </div>
     </section>
     <section class="Home__cooperations cooperations">
-      <GrandTitle titleText="Cooperations" align="left:35"/>
+      <GrandTitle :titleText="titles[locale].cooperations" align="left:35"/>
       <div class="cooperations__container side-indent">
         <h2 class="cooperations__title">
           our awards and cooperations
@@ -102,6 +102,8 @@ import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
 import Loader from '@/components/Loader.vue';
 import GrandTitle from '@/components/GrandTitle.vue';
 import ArrowRight from '@/components/ArrowRight.vue';
+import titles from '@/assets/texts/titles.json';
+import buttons from '@/assets/texts/buttons.json';
 
 export default {
   name: 'Home',
@@ -111,6 +113,8 @@ export default {
       isLoaderVisible: true,
       isLoaderRemoved: false,
       isInfoOpen: false,
+      titles,
+      buttons,
     };
   },
   components: {
@@ -159,7 +163,6 @@ export default {
     },
   },
   mounted() {
-    console.log('home data', this.homeData);
     setTimeout(() => {
       setTimeout(() => {
         this.isLoaderVisible = false;
@@ -263,7 +266,6 @@ export default {
       font-size: 78px;
       line-height: 70px;
       letter-spacing: 2px;
-      // font-style: italic;
       transform: translateY(100px);
       opacity: 0;
       transition: transform .7s ease-out, opacity .7s ease-out;
@@ -578,11 +580,14 @@ export default {
       max-width: 450px;
       margin-bottom: 15px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
-      // font-style: italic;
 
       @media (max-width: 550px) {
         font-size: 38px;
         line-height: 35px;
+      }
+
+      &--ua {
+        font-weight: 400;
       }
 
       &--right {
@@ -640,10 +645,10 @@ export default {
 
   .cooperations {
     position: relative;
-    padding: 180px 0 150px;
+    padding: 250px 0 150px;
 
     .Grand-title {
-      top: 40px;
+      top: 80px;
     }
 
     &__title {
@@ -652,6 +657,7 @@ export default {
       text-transform: uppercase;
       font-weight: 500;
       letter-spacing: 1px;
+      text-align: center;
 
       &--ua {
         font-family: 'IBM Plex Serif', serif;
@@ -662,6 +668,7 @@ export default {
       margin-bottom: 70px;
       font-size: 19px;
       color: #7e7f7f;
+      text-align: center;
     }
 
     &__list {

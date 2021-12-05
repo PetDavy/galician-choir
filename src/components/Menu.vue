@@ -5,12 +5,12 @@
     }"
   >
     <nav class="Menu__navigation" @click="toggleMenu">
-      <router-link to="/" class="Menu__link">home</router-link>
-      <router-link to="/about" class="Menu__link">about</router-link>
-      <router-link to="/events" class="Menu__link">events</router-link>
-      <router-link to="/gallery" class="Menu__link">gallery</router-link>
-      <router-link to="/contact" class="Menu__link">contact</router-link>
-      <router-link to="/admin" class="Menu__link Menu__link--admin" v-if="logedIn">cabinet</router-link>
+      <router-link to="/" class="Menu__link">{{menu[locale].home}}</router-link>
+      <router-link to="/about" class="Menu__link">{{menu[locale].about}}</router-link>
+      <router-link to="/events" class="Menu__link">{{menu[locale].events}}</router-link>
+      <router-link to="/gallery" class="Menu__link">{{menu[locale].gallery}}</router-link>
+      <router-link to="/contact" class="Menu__link">{{menu[locale].contact}}</router-link>
+      <router-link to="/admin" class="Menu__link Menu__link--admin" v-if="logedIn">{{menu[locale].cabinet}}</router-link>
     </nav>
     <i class="Menu__close-btn" @click="toggleMenu" ></i>
   </div>
@@ -18,16 +18,18 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import menu from '@/assets/texts/menu.json';
 
 export default {
   name: 'Menu',
   data() {
     return {
       isDisappearing: false,
+      menu,
     };
   },
   computed: {
-    ...mapGetters(['isMenuOpen', 'logedIn']),
+    ...mapGetters(['isMenuOpen', 'logedIn', 'locale']),
   },
   methods: {
     ...mapMutations(['toggleMenu']),
