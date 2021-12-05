@@ -41,7 +41,6 @@
       </div>
       <form action="" class="Contact__form">
         <div class="Contact__form-content">
-          <h3 class="Contact__form-title">Send a message</h3>
           <label for="Contact-name" class="Contact__input-label">
             <input
               id="Contact-name"
@@ -74,7 +73,6 @@
             ></textarea>
           </label>
           <button type="submit" class="Contact__btn btn">Contact</button>
-          <div class="Contact__form-bg-spot"></div>
         </div>
       </form>
     </div>
@@ -118,9 +116,26 @@ export default {
 
 <style lang="scss" scoped>
   .Contact {
-    background-color: #132b34;
+    position: relative;
     padding-bottom: 200px;
     padding-top: 280px;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/galician-choir.appspot.com/o/photos%2F4-choir-2.jpg?alt=media&token=1902a2ec-7f12-4dae-85bb-4c11344ba491');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      opacity: 0.7;
+      z-index: 1;
+    }
 
     .Grand-title {
       @media (max-width: 950px) {
@@ -138,10 +153,12 @@ export default {
     }
 
     &__content {
+      position: relative;
       padding-top: 60px;
       position: relative;
       display: flex;
       justify-content: space-between;
+      z-index: 2;
 
       @media (max-width: 1000px) {
         padding-top: 0
@@ -155,7 +172,11 @@ export default {
 
     &__info {
       padding-right: 50px;
-      width: 50%;
+      width: 38%;
+      padding: 40px;
+      background-color: #f4f4f4;
+      align-self: flex-start;
+      border-radius: 4px;
 
       @media (max-width: 950px) {
         width: 100%;
@@ -172,7 +193,7 @@ export default {
       margin-bottom: 25px;
       font-size: 28px;
       line-height: 28px;
-      color: #ccc;
+      color: #000;
     }
 
     &__info-item-line {
@@ -188,10 +209,10 @@ export default {
 
       a {
         margin-left: 10px;
-        color: #9b9b9b;
+        color: #32454e;
 
         &:hover {
-          color: #9b9b9b;
+          color: #32454e;
         }
       }
 
@@ -201,7 +222,7 @@ export default {
     }
 
     &__form {
-      width: 550px;
+      width: 600px;
       padding-bottoM: 40px;
 
       @media (max-width: 950px) {
@@ -213,40 +234,14 @@ export default {
       }
     }
 
-    &__form-title {
-      margin-bottom: 25px;
-      font-size: 28px;
-      color: #ccc;
-      font-weight: 400;
-
-      @media (max-width: 950px) {
-        text-align: center;
-      }
-    }
-
     &__form-content {
       position: relative;
       display: flex;
       flex-direction: column;
       width: 100%;
-    }
-
-    &__form-bg-spot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      width: 500px;
-      height: 500px;
-      border-radius: 50%;
-      background: #27718c;
-      opacity: 0.3;
-      filter: blur(60px);
-
-      @media (max-width: 700px) {
-        width: 80%;
-      }
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 4px;
     }
 
     &__input-label {
@@ -256,14 +251,18 @@ export default {
 
     &__input {
       height: 60px;
-      background-color: #1c1f22;
+      background-color: #fff;
       width: 100%;
-      border-radius: 4px;
-      padding: 10px 50px 10px 25px;
+      padding: 10px 10px 10px 15px;
       margin-bottom: 25px;
-      border-right: none;
+      border: none;
+      border-bottom: 2px solid #ccc;
       font-size: 20px;
-      color: #fff;
+      color: #000;
+
+      &:focus {
+        outline: none;
+      }
 
       &::placeholder {
         color: #555658;

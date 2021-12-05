@@ -107,29 +107,16 @@ export default {
     padding-bottom: 8px;
     margin-bottom: 40px;
     margin-left: auto;
-    // color: #fff;
     font-size: 28px;
     font-weight: 500;
-
-    // &::before {
-    //   position: absolute;
-    //   content: '';
-    //   bottom: 0;
-    //   right: 0;
-    //   min-width: 150px;
-    //   width: 100%;
-    //   height: 2px;
-    //   background-color: #ccc;
-    // }
   }
 }
 
 .event {
   position: relative;
   margin-bottom: 60px;
-  padding: 55px 70px;
-  box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-  // background-color: #17313a;
+  padding: 45px 65px;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
   background-color: #f1f1f1;
   border-radius: 4px;
   overflow: hidden;
@@ -167,7 +154,6 @@ export default {
 
   &__date {
     font-size: 18px;
-    // color: #ccc;
     color: #666;
 
     &--time {
@@ -208,8 +194,9 @@ export default {
   }
 
   &__btn {
-    background-color: #f8f1e7;
+    background-color: #fff;
     position: relative;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 
     &::before {
       position: absolute;

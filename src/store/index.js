@@ -9,7 +9,7 @@ export default createStore({
     logedIn: false,
     events: [], // event: {id: string, title: string, time: timestamp, img: string, imgName: string, link: string, text: string}
     aboutBlocks: [], // block {id, grand-title, title, sub-title, text, img} <string> {orderId: number}
-    homeData: {}, // {id, title, sub-title} <string>
+    homeData: {}, // {id, title} <string>
     cooperations: [], // {id, img: string, svg: string(html), orderId: number} {title, text} <string>
     isModalFormOpen: false,
     locale: 'ua',

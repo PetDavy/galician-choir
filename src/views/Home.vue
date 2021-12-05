@@ -2,16 +2,17 @@
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
     <ScrollParallax>
       <section class="Home__showcase showcase">
-        <div class="showcase__bg" :class="{'showcase__bg--zoomed': isShowcaseSet}"></div>
+        <div
+          class="showcase__bg"
+          :class="{'showcase__bg--zoomed': isShowcaseSet}"
+          :style="{backgroundImage: `url('${homeData.img ?? ''}')`}"
+        />
         <div class="showcase__overlay"></div>
         <div class="showcase__container side-indent">
           <div class="showcase__left" :class="{'showcase__left--shown': isShowcaseSet}" v-if="homeData[locale]">
             <h1 class="showcase__title" :class="{'showcase__title--ua': locale === 'ua'}">
               {{homeData[locale].title}}
             </h1>
-            <p class="showcase__text" :class="{'showcase__text--ua': locale === 'ua'}">
-              {{homeData[locale]['sub-title']}}
-            </p>
             <router-link to="/about" class="showcase__btn btn">view more</router-link>
           </div>
         </div>
@@ -55,58 +56,39 @@
         </div>
       </div>
     </section>
-    <section class="Home__badges badges">
-      <GrandTitle titleText="badges" align="left:35"/>
-      <div class="badges__container side-indent">
-        <h2 class="badges__title">
-          our awards and badges
+    <section class="Home__cooperations cooperations">
+      <GrandTitle titleText="Cooperations" align="left:35"/>
+      <div class="cooperations__container side-indent">
+        <h2 class="cooperations__title">
+          our awards and cooperations
         </h2>
-        <p class="badges__sub-title">
+        <p class="cooperations__sub-title">
           Proin gravida nibh vel velitt. Aenean sollicitudtin lorem quis
         </p>
-        <ul class="badges__list">
-          <li class="badges__list-item">
-            <div class="badges__icon-wrapper">
-              <BadgeIcon1 class="badges__icon" />
+        <ul class="cooperations__list">
+          <li
+            class="cooperations__list-item"
+            v-for="cooperation in cooperationsList"
+            :key="cooperation.id"
+          >
+            <div class="cooperations__icon-wrapper">
+              <img
+                class="cooperations__icon-img"
+                :src="cooperation.img"
+                :alt="cooperation.title"
+                v-if="cooperation.img"
+              >
+              <svg
+                class="cooperations__icon"
+                v-html="cooperation.svg"
+                v-if="cooperation.svg"
+              />
             </div>
-            <p class="badges__list-item-title">
-              some award
+            <p class="cooperations__list-item-title">
+              {{cooperation.title}}
             </p>
-            <p class="badges__list-item-sub-title">
-              Lorem ipsum dolor sit amet consectetur.
-            </p>
-          </li>
-          <li class="badges__list-item">
-            <div class="badges__icon-wrapper">
-              <BadgeIcon2 class="badges__icon" />
-            </div>
-            <p class="badges__list-item-title">
-              some award
-            </p>
-            <p class="badges__list-item-sub-title">
-              Lorem ipsum dolor sit amet consectetur.
-            </p>
-          </li>
-          <li class="badges__list-item">
-            <div class="badges__icon-wrapper">
-              <BadgeIcon3 class="badges__icon" />
-            </div>
-            <p class="badges__list-item-title">
-              some award
-            </p>
-            <p class="badges__list-item-sub-title">
-              Lorem ipsum dolor sit amet consectetur.
-            </p>
-          </li>
-          <li class="badges__list-item">
-            <div class="badges__icon-wrapper">
-              <BadgeIcon4 class="badges__icon" />
-            </div>
-            <p class="badges__list-item-title">
-              some award
-            </p>
-            <p class="badges__list-item-sub-title">
-              Lorem ipsum dolor sit amet consectetur.
+            <p class="cooperations__list-item-sub-title">
+              {{cooperation.text}}
             </p>
           </li>
         </ul>
@@ -120,10 +102,6 @@ import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
 import Loader from '@/components/Loader.vue';
 import GrandTitle from '@/components/GrandTitle.vue';
 import ArrowRight from '@/components/ArrowRight.vue';
-import BadgeIcon1 from '@/assets/icons/badge-icon-1.svg?inline';
-import BadgeIcon2 from '@/assets/icons/badge-icon-2.svg?inline';
-import BadgeIcon3 from '@/assets/icons/badge-icon-3.svg?inline';
-import BadgeIcon4 from '@/assets/icons/badge-icon-4.svg?inline';
 
 export default {
   name: 'Home',
@@ -139,15 +117,11 @@ export default {
     Loader,
     ArrowRight,
     GrandTitle,
-    // icons
-    BadgeIcon1,
-    BadgeIcon2,
-    BadgeIcon3,
-    BadgeIcon4,
+
     ScrollParallax,
   },
   computed: {
-    ...mapGetters(['db', 'events', 'homeData', 'locale']),
+    ...mapGetters(['db', 'events', 'homeData', 'cooperations', 'locale']),
     latestEvent() {
       const formatedEvents = this.events.map((event) => ({
         id: event.id,
@@ -165,6 +139,17 @@ export default {
 
       return currLatest ?? {};
     },
+    cooperationsList() {
+      const formatedCooperations = this.cooperations.map((cooperation) => ({
+        id: cooperation.id,
+        img: cooperation.img,
+        svg: cooperation.svg,
+        orderId: cooperation.orderId,
+        ...cooperation[this.locale],
+      }));
+
+      return formatedCooperations.sort((coopA, coopB) => coopA.orderId - coopB.orderId);
+    },
   },
   methods: {
     removeLoader() {
@@ -173,12 +158,8 @@ export default {
       }, 500);
     },
   },
-  watch: {
-    homeData(data) {
-      console.log(data);
-    },
-  },
   mounted() {
+    console.log('home data', this.homeData);
     setTimeout(() => {
       setTimeout(() => {
         this.isLoaderVisible = false;
@@ -219,7 +200,6 @@ export default {
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: url(https://uh.edu/kgmca/music/ensembles/choirs/auditionfooter.jpeg);
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
@@ -246,7 +226,9 @@ export default {
       position: relative;
       height: 100%;
       display: flex;
+      justify-content: center;
       align-items: center;
+      text-align: center;
       z-index: 3;
 
       @media (max-width: 700px) {
@@ -278,9 +260,9 @@ export default {
       max-width: 680px;
       margin-bottom: 40px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
-      font-size: 74px;
+      font-size: 78px;
       line-height: 70px;
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       // font-style: italic;
       transform: translateY(100px);
       opacity: 0;
@@ -289,7 +271,7 @@ export default {
 
       &--ua {
         font-family: 'Spectral', serif;
-        font-size: 64px;
+        font-size: 66px;
         line-height: 60px;
         letter-spacing: 1px;
       }
@@ -656,7 +638,7 @@ export default {
     }
   }
 
-  .badges {
+  .cooperations {
     position: relative;
     padding: 180px 0 150px;
 
@@ -677,7 +659,7 @@ export default {
     }
 
     &__sub-title {
-      margin-bottom: 55px;
+      margin-bottom: 70px;
       font-size: 19px;
       color: #7e7f7f;
     }
@@ -697,7 +679,9 @@ export default {
       flex-basis: 25%;
       padding: 20px 30px;
       display: flex;
+      align-items: center;
       flex-direction: column;
+      text-align: center;
       color: #2f2f2f;
 
       @media (max-width: 1080px) {
@@ -731,14 +715,19 @@ export default {
     }
 
     &__icon-wrapper {
-      min-height: 150px;
+      position: relative;
+      max-height: 150px;
+      height: 100%;
       display: inline-flex;
       align-items: center;
       margin-bottom: 40px;
+      overflow: hidden;
     }
 
-    &__icon {
-      // margin: auto;
+    &__icon-img {
+      object-fit: contain;
+      object-position: center;
+      height: 100%;
     }
 
     &__list-item-title {

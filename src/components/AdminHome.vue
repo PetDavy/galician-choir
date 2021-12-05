@@ -16,6 +16,41 @@
     </div>
     <!-- SHOWCASE -->
     <div class="AdminHome__showcase" v-if="homeFields[activeLocale]">
+      <div class="AdminHome__inputs-row" v-if="showcaseImageRef">
+        <img
+          v-if="!showcaseImage"
+          :src="showcaseImageUrl"
+          alt="showcase"
+          class="AdminHome__image-preview AdminHome__inputs-row-item"
+        >
+        <div class="AdminHome__inputs-row-item">
+          <label for="showcaseUploadImage" class="AdminHome__add-photo-btn">
+            <input
+              type="file"
+              id="showcaseUploadImage"
+              class="AdminHome__input--hidden"
+              ref="showcasePhotoFile"
+              @change="uploadShowcasePhoto"
+              v-if="!showcaseImage"
+            >
+            <input
+              type="button"
+              id="showcaseUploadImage"
+              class="AdminHome__input--hidden"
+              ref="showcasePhotoFile"
+              @click="updateHomeData"
+              v-if="showcaseImage"
+            >
+            {{showcaseImage ? 'Save Image' : 'Change Image'}}
+          </label>
+          <input
+            type="url"
+            class="AdminHome__input"
+            id="aboutImage"
+            v-model="showcaseImageUrl"
+          >
+        </div>
+      </div>
       <label for="home-title" class="AdminHome__label">
         <span class="AdminHome__input-name">Main Title</span>
         <input
@@ -23,117 +58,151 @@
           id="home-title"
           class="AdminHome__input"
           v-model="homeFields[activeLocale].title"
+          :disabled="!onTitleEdit"
         >
-        <button class="AdminHome__save-btn">save</button>
-      </label>
-      <label for="home-sub-title" class="AdminHome__label">
-        <span class="AdminHome__input-name">Sub Title</span>
-        <textarea
-          type="text"
-          id="home-sub-title"
-          cols="30"
-          rows="5"
-          class="AdminHome__input AdminHome__input--textarea"
-          v-model="homeFields[activeLocale]['sub-title']"
-        ></textarea>
-        <button class="AdminHome__save-btn">save</button>
+        <button
+          class="AdminHome__save-btn"
+          @click="handleClick"
+        >
+          {{onTitleEdit ? 'save' : 'edit'}}
+        </button>
       </label>
     </div>
-    <!-- COOPERATIONS -->
-    <div class="AdminHome__cooperations">
-      <div
-        class="AdminHome__cooperation Cooperation"
-        v-for="cooperation in cooperationsList"
-        :key="cooperation.id"
-      >
-        <div class="Cooperation__image-wrapper" :class="{'Cooperation__image-wrapper--svg': cooperation.svg}">
-          <img
-            class="Cooperation__image"
-            :src="block.img"
-            :alt="block.title"
-            v-if="cooperation.img"
-          >
-          <svg
-            class="Cooperation__image-svg"
-            v-html="cooperation.svg"
-            v-if="true"
-          ></svg>
-        </div>
-        <div class="Cooperation__info">
-          <div class="Cooperation__info-top">
-            <div class="Cooperation__info-top-left">
-              <div class="Cooperation__title">
-                {{cooperation.title}}
-              </div>
-            </div>
-            <div class="Cooperation__tools">
-              <div class="Cooperation__tools-btn" @click="updateBlockData = aboutBlocks.find((currBlock) => currBlock.id === block.id)">
-                <svg class="Cooperation__update" width="28" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m15.9 5.46 7 7.5-15.2 16.3-6.24.73c-.84.1-1.55-.66-1.45-1.55l.7-6.7L15.9 5.47Zm11.33-1.11L23.94.82a2.5 2.5 0 0 0-3.71 0l-3.1 3.32 7 7.5 3.1-3.31a2.96 2.96 0 0 0 0-3.98Z" fill="#AE1414"/></svg>
-              </div>
-              <div class="Cooperation__tools-btn" @click="openQuestionPopup(block)">
-                <svg class="Cooperation__remove" width="23" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.64 27.19c0 .74.26 1.46.72 1.99.47.52 1.1.82 1.75.82h14.78c.66 0 1.28-.3 1.75-.82.46-.53.72-1.25.72-2V7.5H1.64v19.69Zm13.97-15a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2ZM22.18 1.87h-6.16l-.48-1.1c-.1-.23-.26-.42-.46-.56-.2-.14-.42-.21-.65-.21H8.56c-.23 0-.45.07-.64.2-.2.15-.35.34-.46.58l-.48 1.1H.82c-.22 0-.43.1-.58.27A1 1 0 0 0 0 2.8V4.7a1 1 0 0 0 .24.66c.15.18.36.27.58.27h21.36c.22 0 .43-.1.58-.27a1 1 0 0 0 .24-.66V2.8a1 1 0 0 0-.24-.66.77.77 0 0 0-.58-.28Z" fill="#AE1414"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="Cooperation__text">
-            {{cooperation.text}}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Cooperations :locale="activeLocale" />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
-const defaultFields = {
-  title: '',
-  'sub-title': '',
-};
+import { ref } from 'vue';
+import {
+  ref as firebaseRef,
+  listAll,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
+import Cooperations from '@/components/Cooperations.vue';
 
 export default {
   name: 'AdminHome',
+  setup() {
+    const showcasePhotoFile = ref(null);
+
+    return { showcasePhotoFile };
+  },
+  components: {
+    Cooperations,
+  },
   data() {
     return {
       homeFields: {
-        ua: { ...defaultFields },
-        en: { ...defaultFields },
+        ua: { title: '' },
+        en: { title: '' },
       },
-      cooperationsData: [],
+      showcaseImageUrl: null,
+      showcaseImage: null,
+      showcaseImageRef: null,
+      onTitleEdit: false,
+
       activeLocale: 'ua',
       localesList: ['ua', 'en'],
     };
   },
   computed: {
-    ...mapGetters(['homeData', 'cooperations', 'locale']),
-    cooperationsList() {
-      const formatedCooperations = this.cooperationsData.map((cooperation) => ({
-        id: cooperation.id,
-        img: cooperation.img,
-        svg: cooperation.svg,
-        orderId: cooperation.orderId,
-        ...cooperation[this.locale],
-      }));
-
-      return formatedCooperations.sort((coopA, coopB) => coopA.orderId - coopB.orderId);
-    },
+    ...mapGetters(['db', 'homeData', 'locale', 'storage']),
   },
   methods: {
+    handleClick() {
+      if (this.onTitleEdit) {
+        this.updateHomeData();
+      } else {
+        this.onTitleEdit = true;
+      }
+    },
     setHomeData() {
       this.homeFields = {
         ua: this.homeData.ua,
         en: this.homeData.en,
       };
+      this.showcaseImageUrl = this.homeData.img;
     },
-    setCooperationsData() {
-      this.cooperationsData = this.cooperations;
+    setShowcaseImageRef() {
+      const photosRef = firebaseRef(this.storage, '/showcase/');
+
+      listAll(photosRef)
+        .then((res) => {
+          res.items.forEach((itemRef) => {
+            this.showcaseImageRef = itemRef;
+            getDownloadURL(itemRef)
+              .then((url) => {
+                console.log(url);
+              });
+          });
+        }).catch((error) => {
+          console.log(error);
+        });
+    },
+    uploadShowcasePhoto() {
+      const newShowcasePhoto = this.showcasePhotoFile.files[0];
+
+      if (newShowcasePhoto.type.startsWith('image')) {
+        this.showcaseImage = newShowcasePhoto;
+        this.showcaseImageUrl = newShowcasePhoto.name;
+      } else {
+        alert(`файл ${newShowcasePhoto.name} не є зображенням або файлом потрібного формату`);
+      }
+    },
+    async updateHomeData() {
+      if (this.showcaseImage) {
+        const url = await this.saveShowcaseImage();
+        this.showcaseImageUrl = url;
+      }
+
+      const newHomeData = {
+        ua: {
+          ...this.homeFields.ua,
+        },
+        en: {
+          ...this.homeFields.en,
+        },
+        img: this.showcaseImageUrl,
+      };
+      try {
+        const homeDataRef = doc(this.db, 'home', this.homeData.id);
+
+        const docRef = await setDoc(homeDataRef, newHomeData);
+
+        console.log('home data updated ID: ', docRef);
+        this.showcaseImage = null;
+      } catch (e) {
+        console.error('Error updating document: ', e);
+      }
+    },
+    async saveShowcaseImage() {
+      const photoName = `showcase${new Date().getTime()}-${this.showcaseImageUrl}`;
+      const storageRef = firebaseRef(this.storage, `showcase/${photoName}`);
+
+      try {
+        const snapshot = await uploadBytes(storageRef, this.showcaseImage);
+        const url = await getDownloadURL(snapshot.ref);
+
+        const desertRef = firebaseRef(this.storage, `showcase/${this.showcaseImageRef.name}`);
+        await deleteObject(desertRef);
+
+        return url;
+      } catch (error) {
+        console.warn(error);
+        console.log('couldn\'t update image');
+        return this.showcaseImageUrl;
+      }
     },
   },
   mounted() {
+    this.activeLocale = this.locale;
     this.setHomeData();
-    console.log(this.cooperations[0].ua);
-    this.setCooperationsData();
+    this.setShowcaseImageRef();
   },
 };
 </script>
@@ -173,6 +242,45 @@ export default {
         background-color: #fff;
         color: #000;
       }
+    }
+
+    &__inputs-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    &__inputs-row-item {
+      margin-right: 20px;
+      width: 100%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &__image-preview {
+      max-height: 100px;
+      width: auto;
+      object-fit: contain;
+      object-position: center;
+      margin-right: 20px;
+    }
+
+    &__add-photo-btn {
+      height: 40px;
+      margin-bottom: 10px;
+      padding: 10px 25px;
+      background-color: #ccc;
+      color: #000;
+      font-size: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
     }
 
     &__showcase {
@@ -218,6 +326,12 @@ export default {
         resize: vertical;
         line-height: 28px;
       }
+
+      &--hidden {
+        position: absolute;
+        width: 0;
+        visibility: hidden;
+      }
     }
 
     &__save-btn {
@@ -232,81 +346,6 @@ export default {
       min-width: 120px;
       border-radius: 3px;
       cursor: pointer;
-    }
-
-    &__cooperation {
-      display: flex;
-      margin-bottom: 30px;
-      padding: 20px;
-      width: 100%;
-      background-color: #d2dfe0;
-    }
-  }
-
-  .Cooperation {
-    &__image-wrapper {
-      position: relative;
-      width: 300px;
-      padding-top: 250px;
-      margin-right: 30px;
-      flex-shrink: 0;
-      overflow: hidden;
-
-      &--svg {
-        padding-top: 0;
-      }
-    }
-
-    &__image {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-
-    &__info {
-      width: calc(100% - 330px);
-      display: flex;
-      flex-direction: column;
-    }
-
-    &__info-top {
-      display: flex;
-    }
-
-    &__info-top-left {
-      width: 50%;
-    }
-
-    &__tools {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-      width: 50%;
-      padding-left: 40px;
-
-    }
-
-    &__tools-btn {
-      margin-left: 15px;
-      cursor: pointer;
-    }
-
-    &__title,
-    &__text {
-      position: relative;
-      padding-right: 20px;
-      margin-bottom: 20px;
-    }
-
-    &__title {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    &__text {
-      font-weight: 500;
     }
   }
 </style>

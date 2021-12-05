@@ -43,7 +43,7 @@ const routes = [
     name: 'Contacts',
     component: () => import('../views/Contact.vue'),
     meta: {
-      header: ['full-width', 'light'],
+      header: ['full-width'],
     },
   },
   {
@@ -51,7 +51,7 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
-      header: ['full-width', 'light'],
+      header: ['full-width'],
       // redirectOnAuth: 'Admin',
     },
   },

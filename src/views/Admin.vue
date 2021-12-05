@@ -2,6 +2,7 @@
   <Loader :isVisible="isLoaderVisible" v-if="!isLoaderRemoved" />
   <EventModalForm v-if="isModalFormOpen && activeTab === 'events'" />
   <AboutModalForm v-if="isModalFormOpen && activeTab === 'about'" />
+  <CooperationModalForm v-if="isModalFormOpen && activeTab === 'home'" />
   <section class="Admin">
     <div class="Admin__content side-indent">
       <GrandTitle titleText="admin panel" align="left:40" v-if="isLoaderRemoved" />
@@ -34,6 +35,7 @@ import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
 import AdminAbout from '@/components/AdminAbout.vue';
 import AdminHome from '@/components/AdminHome.vue';
+import CooperationModalForm from '@/components/CooperationModalForm.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
 import AboutModalForm from '@/components/AboutModalForm.vue';
 
@@ -56,6 +58,7 @@ export default {
     AdminAbout,
     AdminHome,
     EventModalForm,
+    CooperationModalForm,
     AboutModalForm,
     AdminGallery,
   },

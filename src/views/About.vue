@@ -66,7 +66,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.aboutBlocks);
     setTimeout(() => {
       this.isLoaderVisible = false;
       this.removeLoader();
@@ -91,7 +90,6 @@ export default {
       @media (max-width: 550px) {
         top: -120px;
       }
-
     }
 
     &__content {
@@ -109,8 +107,9 @@ export default {
       justify-content: space-between;
       align-items: center;
       margin: 0 60px 200px 0;
-      // color: #fff;
+      background-color: #e6e6e6;
       border-radius: 4px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 
       @media (max-width: 1400px) {
         flex-direction: column;
