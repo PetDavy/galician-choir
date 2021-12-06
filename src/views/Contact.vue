@@ -6,7 +6,7 @@
       <div class="Contact__info">
         <div class="Contact__info-item">
           <p class="Contact__info-item-title">
-            Phone
+            {{lines[locale].phone}}
           </p>
           <p class="Contact__info-item-line">
             <svg width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="m14.6 10.6-3.3-1.4a.7.7 0 0 0-.8.2L9 11.2C6.7 10 5 8.2 3.8 6l1.8-1.5a.7.7 0 0 0 .2-.8L4.4.4a.7.7 0 0 0-.8-.4L.6.7a.7.7 0 0 0-.6.7C0 9 6 15 13.6 15a.7.7 0 0 0 .7-.5l.7-3a.7.7 0 0 0-.4-.9Z" fill="#A56F50"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h15v15H0z"/></clipPath></defs></svg>
@@ -23,12 +23,12 @@
         </div>
         <div class="Contact__info-item">
           <p class="Contact__info-item-title">
-            Email
+            {{lines[locale].email}}
           </p>
           <p class="Contact__info-item-line">
             <svg width="15" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.7 3.7c.1 0 .3 0 .3.2v6c0 .7-.6 1.3-1.4 1.3H1.4c-.8 0-1.4-.6-1.4-1.4v-6s.2-.2.3 0L4.8 7c.6.5 1.7 1.4 2.7 1.4 1 0 2.1-1 2.7-1.4l4.5-3.3ZM7.5 7.5c.7 0 1.7-.9 2.2-1.2l5-3.8c.2-.1.3-.3.3-.5v-.6c0-.8-.6-1.4-1.4-1.4H1.4C.6 0 0 .6 0 1.4V2c0 .2.1.4.3.5l5 3.8c.5.3 1.5 1.2 2.2 1.2Z" fill="#A56F50"/></svg>
-            <a href="mailto:sometestemail@gmail.com">
-              sometestemail@gmail.com
+            <a href="mailto:galicianchoir@gmail.com">
+              galicianchoir@gmail.com
             </a>
           </p>
           <p class="Contact__info-item-line">
@@ -39,14 +39,22 @@
           </p>
         </div>
       </div>
-      <form action="" class="Contact__form">
+      <form
+        action="https://formsubmit.co/galicianchoir@gmail.com"
+        class="Contact__form"
+        method="POST"
+        @submit="handlSubmit"
+      >
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://galician-choir.web.app/contact">
         <div class="Contact__form-content">
           <label for="Contact-name" class="Contact__input-label">
             <input
               id="Contact-name"
               type="text"
-              placeholder="Name"
+              :placeholder="lines[locale].name"
               class="Contact__input"
+              name="name"
               v-model="name"
             >
           </label>
@@ -54,20 +62,21 @@
             <input
               id="Contact-email"
               type="email"
-              placeholder="Email"
+              :placeholder="lines[locale].email"
               class="Contact__input"
+              name="email"
               v-model="email"
               required
             >
           </label>
           <label for="Contact-message" class="Contact__input-label">
             <textarea
-              name="contact-text"
               id="Contact-message"
               cols="30"
               rows="6"
-              placeholder="Your Message"
+              :placeholder="lines[locale].message"
               class="Contact__input Contact__input--textarea"
+              name="message"
               v-model="message"
               required
             ></textarea>
@@ -85,6 +94,7 @@ import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
 import titles from '@/assets/texts/titles.json';
 import buttons from '@/assets/texts/buttons.json';
+import lines from '@/assets/texts/lines.json';
 
 export default {
   name: 'Contact',
@@ -97,6 +107,7 @@ export default {
       message: '',
       titles,
       buttons,
+      lines,
     };
   },
   components: {
@@ -105,8 +116,16 @@ export default {
   },
   computed: {
     ...mapGetters(['locale']),
+    isValidForm() {
+      return this.email && this.message;
+    },
   },
   methods: {
+    handlSubmit(event) {
+      if (!this.isValidForm) {
+        event.preventDefault();
+      }
+    },
     removeLoader() {
       setTimeout(() => {
         this.isLoaderRemoved = true;
@@ -202,6 +221,7 @@ export default {
       font-size: 28px;
       line-height: 28px;
       color: #000;
+      text-transform: capitalize;
     }
 
     &__info-item-line {
@@ -274,6 +294,7 @@ export default {
 
       &::placeholder {
         color: #555658;
+        text-transform: capitalize;
       }
 
       &--textarea {

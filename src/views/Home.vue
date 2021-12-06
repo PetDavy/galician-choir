@@ -28,14 +28,19 @@
             <div class="events__preview" :style="{backgroundImage: `url(${latestEvent.img ?? ''})`}"></div>
           </div>
           <div class="events__title-text">
-            <p class="events__up-title">OUR LATEST EVENT</p>
+            <p class="events__up-title">
+              {{isComingEvent ? lines[locale]['coming-event'] : lines[locale]['last-event']}}
+              </p>
             <h3
               class="events__title"
               :class="{'events__title--ua': locale === 'ua'}"
             >
               {{latestEvent.title ?? ''}}
             </h3>
-            <p class="events__sub-title">Get started on latest episodes</p>
+            <p class="events__sub-title" v-if="latestEvent.time">
+              {{(formatDate(latestEvent.time.toDate())).date}}&nbsp;
+              <strong>{{(formatDate(latestEvent.time.toDate())).time}}</strong>
+            </p>
           </div>
         </div>
         <div
@@ -57,10 +62,10 @@
       </div>
     </section>
     <section class="Home__cooperations cooperations">
-      <GrandTitle :titleText="titles[locale].cooperations" align="left:35"/>
+      <!-- <GrandTitle :titleText="titles[locale].cooperations" align="left:35"/> -->
       <div class="cooperations__container side-indent">
         <h2 class="cooperations__title">
-          our awards and cooperations
+          {{lines[locale]['coop-header']}}
         </h2>
         <p class="cooperations__sub-title">
           Proin gravida nibh vel velitt. Aenean sollicitudtin lorem quis
@@ -100,10 +105,12 @@
 import { mapGetters } from 'vuex';
 import ScrollParallax from 'vue3-parallax/src/components/ScrollParallax.vue';
 import Loader from '@/components/Loader.vue';
-import GrandTitle from '@/components/GrandTitle.vue';
+// import GrandTitle from '@/components/GrandTitle.vue';
 import ArrowRight from '@/components/ArrowRight.vue';
+import formatters from '../utils/formatters';
 import titles from '@/assets/texts/titles.json';
 import buttons from '@/assets/texts/buttons.json';
+import lines from '@/assets/texts/lines.json';
 
 export default {
   name: 'Home',
@@ -115,12 +122,14 @@ export default {
       isInfoOpen: false,
       titles,
       buttons,
+      lines,
+      formatters,
     };
   },
   components: {
     Loader,
     ArrowRight,
-    GrandTitle,
+    // GrandTitle,
 
     ScrollParallax,
   },
@@ -143,6 +152,13 @@ export default {
 
       return currLatest ?? {};
     },
+    isComingEvent() {
+      if (!this.latestEvent.time) {
+        return false;
+      }
+
+      return this.latestEvent.time.toDate() > new Date().getTime();
+    },
     cooperationsList() {
       const formatedCooperations = this.cooperations.map((cooperation) => ({
         id: cooperation.id,
@@ -156,6 +172,7 @@ export default {
     },
   },
   methods: {
+    formatDate: formatters.formatDate,
     removeLoader() {
       setTimeout(() => {
         this.isLoaderRemoved = true;
@@ -572,6 +589,7 @@ export default {
 
     &__up-title {
       margin-bottom: 10px;
+      text-transform: uppercase;
     }
 
     &__title {
@@ -639,13 +657,14 @@ export default {
     }
 
     &__sub-title {
-      font-size: 20px;
+      font-size: 19px;
+      color: #666;
     }
   }
 
   .cooperations {
     position: relative;
-    padding: 250px 0 150px;
+    padding: 150px 0 150px;
 
     .Grand-title {
       top: 80px;
