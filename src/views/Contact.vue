@@ -187,13 +187,13 @@ export default {
       justify-content: space-between;
       z-index: 2;
 
-      @media (max-width: 1000px) {
-        padding-top: 0
-      }
-
-      @media (max-width: 950px) {
+      @media (max-width: 1100px) {
         flex-direction: column;
         align-items: center;
+      }
+
+      @media (max-width: 1000px) {
+        padding-top: 0
       }
     }
 
@@ -205,10 +205,12 @@ export default {
       align-self: flex-start;
       border-radius: 4px;
 
-      @media (max-width: 950px) {
-        width: 100%;
-        padding-right: 0;
+      @media (max-width: 1100px) {
+        width: auto;
+        max-width: 600px;
         text-align: center;
+        align-self: center;
+        margin-bottom: 60px;
       }
     }
 

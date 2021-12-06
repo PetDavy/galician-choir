@@ -666,6 +666,10 @@ export default {
     position: relative;
     padding: 150px 0 150px;
 
+    @media (max-width: 700px) {
+      padding: 100px 0 100px;
+    }
+
     .Grand-title {
       top: 80px;
     }
@@ -681,6 +685,14 @@ export default {
       &--ua {
         font-family: 'IBM Plex Serif', serif;
       }
+
+      @media (max-width: 700px) {
+        font-size: 35px;
+      }
+
+      @media (max-width: 360px) {
+        font-size: 30px;
+      }
     }
 
     &__sub-title {
@@ -688,6 +700,10 @@ export default {
       font-size: 19px;
       color: #7e7f7f;
       text-align: center;
+
+      @media (max-width: 700px) {
+        margin-bottom: 40px;
+      }
     }
 
     &__list {

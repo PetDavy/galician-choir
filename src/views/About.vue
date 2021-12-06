@@ -109,15 +109,13 @@ export default {
       margin: 0 60px 200px 0;
       background-color: #e6e6e6;
       border-radius: 4px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 
       @media (max-width: 1400px) {
         flex-direction: column;
         margin: 0 auto 170px auto;
         width: fit-content;
         padding: 60px 40px 20px;
-        box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-        background-color: #17313a;
         border-radius: 6px;
       }
 

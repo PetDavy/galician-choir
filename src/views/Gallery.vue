@@ -200,7 +200,7 @@ export default {
     &__content {
       max-width: 2000px;
       position: relative;
-      padding: 250px 20px;
+      padding: 250px 20px 100px;
       margin: 0 auto 0;
 
       .Grand-title {

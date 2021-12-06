@@ -4,13 +4,13 @@
     "ex-more": "Explore More",
     "hide": "Hide Delails",
     "all-events": "all events",
-    "send": "send message"
+    "send": "send"
   },
   "ua": {
     "more": "більше",
     "ex-more": "Читати Більше",
     "hide": "Приховати",
     "all-events": "всі події",
-    "send": "надіслати повідомлення"
+    "send": "надіслати"
   }
 }
