@@ -13,13 +13,12 @@
   />
   <div class="AboutBlocks">
     <div class="AboutBlocks__header">
-      <h2 class="AboutBlocks__title">About Blocks</h2>
       <button
         type="button"
         class="AboutBlocks__btn btn"
         @click="openEventModal"
       >
-        add new block
+        add block
       </button>
     </div>
     <div
@@ -43,14 +42,10 @@
               {{block['sub-title']}}
             </div>
           </div>
-          <div class="AdminAboutBlock__tools">
-            <div class="AdminAboutBlock__tools-btn" @click="updateBlockData = aboutBlocks.find((currBlock) => currBlock.id === block.id)">
-              <svg class="AdminAboutBlock__update" width="28" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m15.9 5.46 7 7.5-15.2 16.3-6.24.73c-.84.1-1.55-.66-1.45-1.55l.7-6.7L15.9 5.47Zm11.33-1.11L23.94.82a2.5 2.5 0 0 0-3.71 0l-3.1 3.32 7 7.5 3.1-3.31a2.96 2.96 0 0 0 0-3.98Z" fill="#AE1414"/></svg>
-            </div>
-            <div class="AdminAboutBlock__tools-btn" @click="openQuestionPopup(block)">
-              <svg class="AdminAboutBlock__remove" width="23" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.64 27.19c0 .74.26 1.46.72 1.99.47.52 1.1.82 1.75.82h14.78c.66 0 1.28-.3 1.75-.82.46-.53.72-1.25.72-2V7.5H1.64v19.69Zm13.97-15a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2Zm-4.93 0a1 1 0 0 1 .24-.67.77.77 0 0 1 .58-.27c.22 0 .43.1.58.27a1 1 0 0 1 .24.67V25.3a1 1 0 0 1-.24.67.77.77 0 0 1-.58.27.77.77 0 0 1-.58-.27 1 1 0 0 1-.24-.67V12.2ZM22.18 1.87h-6.16l-.48-1.1c-.1-.23-.26-.42-.46-.56-.2-.14-.42-.21-.65-.21H8.56c-.23 0-.45.07-.64.2-.2.15-.35.34-.46.58l-.48 1.1H.82c-.22 0-.43.1-.58.27A1 1 0 0 0 0 2.8V4.7a1 1 0 0 0 .24.66c.15.18.36.27.58.27h21.36c.22 0 .43-.1.58-.27a1 1 0 0 0 .24-.66V2.8a1 1 0 0 0-.24-.66.77.77 0 0 0-.58-.28Z" fill="#AE1414"/></svg>
-            </div>
-          </div>
+          <Tools
+            @edit="updateBlockData = aboutBlocks.find((currBlock) => currBlock.id === block.id)"
+            @delete="openQuestionPopup(block)"
+          />
         </div>
         <div class="AdminAboutBlock__text">
           {{block.text}}
@@ -67,6 +62,7 @@ import { ref, deleteObject } from 'firebase/storage';
 import formatters from '../utils/formatters';
 import QuestionPopup from '@/components/QuestionPopup.vue';
 import UpdateAboutForm from '@/components/UpdateAboutForm.vue';
+import Tools from '@/components/Tools.vue';
 
 export default {
   name: 'AdminAbout',
@@ -79,6 +75,7 @@ export default {
   components: {
     QuestionPopup,
     UpdateAboutForm,
+    Tools,
   },
   computed: {
     ...mapGetters(['db', 'aboutBlocks', 'locale', 'storage']),
@@ -121,12 +118,17 @@ export default {
 
 <style lang="scss" scoped>
   .AboutBlocks {
+    padding: 20px;
+
     &__block {
+      position: relative;
       display: flex;
       margin-bottom: 30px;
-      padding: 20px;
+      padding: 30px;
       width: 100%;
-      background-color: #d2dfe0;
+      background-color: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     &__header {
@@ -135,22 +137,38 @@ export default {
       align-items: flex-start;
     }
 
-    &__title {
-      font-size: 30px;
-      margin-bottom: 25px;
-      margin-right: 25px;
+    &__btn {
+      background-color: #15aaff;
+      box-shadow: 0 2px 5px rgba(21, 170, 255, 0.4);
+      height: 40px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px 22px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      border: none;
       color: #fff;
+      font-size: 15px;
+      text-transform: capitalize;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 2px 5px rgba(21, 170, 255, 0.8);
+      }
     }
   }
 
   .AdminAboutBlock {
     &__image-wrapper {
       position: relative;
-      width: 300px;
+      width: 250px;
       padding-top: 250px;
       margin-right: 30px;
       flex-shrink: 0;
       overflow: hidden;
+      border-radius: 4px;
     }
 
     &__image {
@@ -159,12 +177,14 @@ export default {
       height: 100%;
       object-fit: contain;
       object-position: center;
+      border-radius: 4px;
     }
 
     &__info {
       width: calc(100% - 330px);
       display: flex;
       flex-direction: column;
+      color: #0d1b3eb3;
     }
 
     &__info-top {
@@ -175,26 +195,12 @@ export default {
       width: 50%;
     }
 
-    &__tools {
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
-      width: 50%;
-      padding-left: 40px;
-
-    }
-
-    &__tools-btn {
-      margin-left: 15px;
-      cursor: pointer;
-    }
-
     &__grand-title,
     &__title,
     &__sub-title {
       position: relative;
       padding-right: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     &__grand-title,
@@ -213,6 +219,7 @@ export default {
 
     &__text {
       width: 100%;
+      font-size: 16px;
     }
   }
 </style>

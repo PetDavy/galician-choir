@@ -139,5 +139,6 @@ export default {
 <style lang="scss">
 @import './assets/styles/normalize.scss';
 @import './assets/styles/common.scss';
-
+@import './assets/styles/modalsUpdate.scss';
+@import './assets/styles/modalsCreate.scss';
 </style>

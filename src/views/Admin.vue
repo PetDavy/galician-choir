@@ -4,10 +4,9 @@
   <AboutModalForm v-if="isModalFormOpen && activeTab === 'about'" />
   <CooperationModalForm v-if="isModalFormOpen && activeTab === 'home'" />
   <section class="Admin">
-    <div class="Admin__content side-indent">
-      <GrandTitle titleText="admin panel" align="left:40" v-if="isLoaderRemoved" />
+    <div class="Admin__content">
       <div class="Admin__panel">
-        <AdminPanelHeader :activeTab="activeTab" @changeTab="changeTab" />
+        <AdminPanelSidebar :activeTab="activeTab" @changeTab="changeTab" />
         <AdminEvents
           @openModal="isModalOpen = true"
           v-if="activeTab === 'events'"
@@ -28,9 +27,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
-import AdminPanelHeader from '@/components/AdminPanelHeader.vue';
+import AdminPanelSidebar from '@/components/AdminPanelSidebar.vue';
 import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
 import AdminAbout from '@/components/AdminAbout.vue';
@@ -51,9 +49,8 @@ export default {
     };
   },
   components: {
-    GrandTitle,
     Loader,
-    AdminPanelHeader,
+    AdminPanelSidebar,
     AdminEvents,
     AdminAbout,
     AdminHome,
@@ -86,36 +83,15 @@ export default {
 
 <style lang="scss" scoped>
   .Admin {
-    background-color: #4e6b75;
-    padding-bottom: 200px;
-    padding-top: 280px;
+    padding-top: 98px;
+    background-color: #f1f4f6;
 
     &__content {
       position: relative;
     }
 
     &__panel {
-      padding: 15px;
-      background-color: #677a81;
-      box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
-    }
-
-    &__panel-header {
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-
-    &__logout-btn {
-      min-width: 250px;
-      height: 60px;
-      line-height: 60px;
-    }
-
-    .Grand-title {
-      top: -140px;
     }
   }
 </style>

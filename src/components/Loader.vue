@@ -112,9 +112,9 @@ export default {
   }
 
   @keyframes wave-move {
-    0% {opacity: 0; width: 500px; height: 250px;}
-    10% {opacity: 0.8; width: 500px; height: 250px;}
-    90% {opacity: 0.8; width: 2000px; height: 1000px;}
-    100% {opacity: 0.1; width: 2500px; height: 1250px;}
+    0% {opacity: 0; width: 500px; height: 500px;}
+    10% {opacity: 0.8; width: 500px; height: 500px;}
+    90% {opacity: 0.8; width: 2000px; height: 2000px;}
+    100% {opacity: 0.1; width: 2500px; height: 2500px;}
   }
 </style>
