@@ -6,8 +6,9 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    meta: { header: ['full-width'] },
+    meta: { header: ['full-width', 'no-logo'] },
     component: Home,
+
   },
   {
     path: '/about',
