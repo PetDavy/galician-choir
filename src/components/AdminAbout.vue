@@ -129,6 +129,10 @@ export default {
       background-color: #fff;
       border-radius: 4px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      @media (max-width: 950px) {
+        flex-direction: column;
+      }
     }
 
     &__header {
@@ -169,6 +173,16 @@ export default {
       flex-shrink: 0;
       overflow: hidden;
       border-radius: 4px;
+
+      @media (max-width: 950px) {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      @media (max-width: 550px) {
+        width: 160px;
+        padding-top: 160px;
+      }
     }
 
     &__image {
@@ -185,6 +199,10 @@ export default {
       display: flex;
       flex-direction: column;
       color: #0d1b3eb3;
+
+      @media (max-width: 950px) {
+        width: 100%;
+      }
     }
 
     &__info-top {

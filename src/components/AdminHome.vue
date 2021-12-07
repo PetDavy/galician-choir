@@ -194,6 +194,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
 
+    @media (max-width: 1300px) {
+      flex-direction: column;
+    }
+
     &__header {
       width: 100%;
       padding-bottom: 20px;
@@ -239,6 +243,10 @@ export default {
       display: flex;
       padding: 0 20px;
       gap: 20px;
+
+      @media (max-width: 550px) {
+        flex-direction: column;
+      }
     }
 
     &__image-preview {
@@ -278,6 +286,10 @@ export default {
       background-color: #fff;
       border-radius: 4px;
       align-self: flex-start;
+
+      @media (max-width: 1300px) {
+        width: 100%;
+      }
     }
 
     &__label {

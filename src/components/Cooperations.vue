@@ -109,16 +109,25 @@ export default {
   .Cooperations {
     width: 50%;
     padding: 0 20px 20px;
+
+    @media (max-width: 1300px) {
+      width: 100%;
+      padding: 0;
+    }
   }
   .Cooperation {
-      position: relative;
-      display: flex;
-      margin-bottom: 30px;
-      padding: 20px;
-      width: 100%;
-      background-color: #fff;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    margin-bottom: 30px;
+    padding: 20px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+    }
 
     &__add-cooperation {
       background-color: #15aaff;
@@ -182,6 +191,11 @@ export default {
 
     &__info-top-left {
       width: 50%;
+
+      @media (max-width: 550px) {
+        width: 100%;
+        margin-top: 10px;
+      }
     }
 
     &__title,

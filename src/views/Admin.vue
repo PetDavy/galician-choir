@@ -92,6 +92,10 @@ export default {
 
     &__panel {
       display: flex;
+
+      @media (max-width: 830px) {
+        flex-direction: column;
+      }
     }
   }
 </style>

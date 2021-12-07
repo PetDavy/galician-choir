@@ -16,12 +16,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 900px;
+    width: 100%;
+    max-width: 900px;
     padding: 35px;
     box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
     background-color: #fff;
     z-index: 10;
     border-radius: 4px;
+
+    @media (max-width: 1100px) {
+      max-width: 95%;
+      width: 95%;
+    }
   }
 
   &__modal-close-btn {
@@ -99,6 +105,10 @@
   &__inputs-row {
     display: flex;
     align-items: center;
+
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
   }
 
   &__inputs-row-item {

@@ -60,6 +60,10 @@ export default {
       width: 20%;
       padding-top: 40px;
       background-color: #fff;
+
+      @media (max-width: 830px) {
+        width: 100%;
+      }
     }
 
     &__panel-tabs {
@@ -68,6 +72,13 @@ export default {
       justify-content: flex-start;
       align-items: flex-start;
       flex: 1;
+
+      @media (max-width: 830px) {
+        padding: 0 20px;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+      }
     }
 
     &__panel-tab {
@@ -77,6 +88,12 @@ export default {
       text-transform: uppercase;
       color: #666;
       cursor: pointer;
+
+      @media (max-width: 830px) {
+        padding: 20px;
+        width: auto;
+        margin-bottom: 15px;
+      }
 
       &:hover {
         background-color: #f4f4f4;
@@ -89,6 +106,12 @@ export default {
         background-color: #e0f3ff;
         color: #3f6ad8;
         border-left: 4px solid #3379c4;
+
+      @media (max-width: 830px) {
+        padding-left: 20px;
+        border-left: 0;
+        border-bottom: 4px solid #3379c4;
+      }
 
         &:hover {
           background-color: #e0f3ff;
@@ -107,6 +130,15 @@ export default {
           right: 50px;
           height: 1px;
           background-color: #ccc;
+          margin-bottom: 0;
+
+          @media (max-width: 830px) {
+            display: none;
+          }
+        }
+
+        @media (max-width: 830px) {
+          margin-bottom: 15px;
         }
       }
     }
@@ -120,6 +152,11 @@ export default {
       background-color: #f2f2f2;
       border: none;
       cursor: pointer;
+
+      @media (max-width: 830px) {
+        padding: 20px 35px;
+        margin-bottom: 15px;
+      }
     }
   }
 </style>

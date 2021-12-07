@@ -191,6 +191,10 @@ export default {
     flex: 1;
     display: flex;
 
+    @media (max-width: 1100px) {
+      flex-direction: column;
+    }
+
     &__form-wrapper {
       display: flex;
       flex-direction: column;
@@ -199,6 +203,11 @@ export default {
       border-radius: 4px;
       width: 50%;
       align-self: flex-start;
+
+      @media (max-width: 1100px) {
+        width: 100%;
+        order: -1;
+      }
     }
 
     &__form {
@@ -304,6 +313,10 @@ export default {
     margin-bottom: 20px;
     padding: 15px;
     width: 50%;
+
+    @media (max-width: 1100px) {
+      width: 100%;
+    }
 
     &__photos-item {
       position: relative;
