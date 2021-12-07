@@ -1,7 +1,6 @@
 <template>
   <div class="AdminHome">
     <div class="AdminHome__header">
-      <h2 class="AdminHome__title">Home Page</h2>
       <div class="AdminHome__locales">
         <div
           class="AdminHome__locales-btn"
@@ -14,16 +13,16 @@
         </div>
       </div>
     </div>
-    <!-- SHOWCASE -->
     <div class="AdminHome__showcase" v-if="homeFields[activeLocale]">
-      <div class="AdminHome__inputs-row" v-if="showcaseImageRef">
+      <div class="AdminHome__showcase-header">Showcase Main Image</div>
+      <div class="AdminHome__showcase-preview" v-if="showcaseImageRef">
         <img
           v-if="!showcaseImage"
           :src="showcaseImageUrl"
           alt="showcase"
-          class="AdminHome__image-preview AdminHome__inputs-row-item"
+          class="AdminHome__image-preview"
         >
-        <div class="AdminHome__inputs-row-item">
+        <div class="AdminHome__showcase-preview-tools">
           <label for="showcaseUploadImage" class="AdminHome__add-photo-btn">
             <input
               type="file"
@@ -31,7 +30,7 @@
               class="AdminHome__input--hidden"
               ref="showcasePhotoFile"
               @change="uploadShowcasePhoto"
-              v-if="!showcaseImage"
+              v-if="!showcaseImage && !isOnSaveImage"
             >
             <input
               type="button"
@@ -39,9 +38,9 @@
               class="AdminHome__input--hidden"
               ref="showcasePhotoFile"
               @click="updateHomeData"
-              v-if="showcaseImage"
+              v-if="showcaseImage || isOnSaveImage"
             >
-            {{showcaseImage ? 'Save Image' : 'Change Image'}}
+            {{showcaseImage || isOnSaveImage ? 'Save Image' : 'Change Image'}}
           </label>
           <input
             type="url"
@@ -51,22 +50,6 @@
           >
         </div>
       </div>
-      <label for="home-title" class="AdminHome__label">
-        <span class="AdminHome__input-name">Main Title</span>
-        <input
-          type="text"
-          id="home-title"
-          class="AdminHome__input"
-          v-model="homeFields[activeLocale].title"
-          :disabled="!onTitleEdit"
-        >
-        <button
-          class="AdminHome__save-btn"
-          @click="handleClick"
-        >
-          {{onTitleEdit ? 'save' : 'edit'}}
-        </button>
-      </label>
     </div>
     <Cooperations :locale="activeLocale" />
   </div>
@@ -112,15 +95,12 @@ export default {
   },
   computed: {
     ...mapGetters(['db', 'homeData', 'locale', 'storage']),
+    isOnSaveImage() {
+      console.log('on save mode: ', this.showcaseImageUrl !== this.homeData.img);
+      return this.showcaseImageUrl !== this.homeData.img;
+    },
   },
   methods: {
-    handleClick() {
-      if (this.onTitleEdit) {
-        this.updateHomeData();
-      } else {
-        this.onTitleEdit = true;
-      }
-    },
     setHomeData() {
       this.homeFields = {
         ua: this.homeData.ua,
@@ -209,18 +189,19 @@ export default {
 
 <style lang="scss" scoped>
   .AdminHome {
-    &__title {
-      font-size: 30px;
-      margin-bottom: 25px;
-      margin-right: 25px;
-      color: #fff;
-    }
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
 
     &__header {
-      margin-bottom: 22px;
+      width: 100%;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid #ccc;
     }
 
     &__locales {
@@ -232,39 +213,46 @@ export default {
       margin: 0 5px;
       padding: 5px 8px;
       border: 1px solid #ccc;
-      color: #fff;
+      color: #000;
       font-size: 18px;
       text-transform: uppercase;
       font-weight: 500;
       cursor: pointer;
 
       &--active {
-        background-color: #fff;
-        color: #000;
+        background-color: #000;
+        color: #fff;
       }
     }
 
-    &__inputs-row {
+    &__showcase-header {
+      font-size: 20px;
+      margin-bottom: 15px;
+      padding: 0 20px 20px;
+      border-bottom: 1px solid #ccc;
+      color: #0d1b3eb3;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    &__showcase-preview {
       display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    &__inputs-row-item {
-      margin-right: 20px;
-      width: 100%;
-
-      &:last-child {
-        margin-right: 0;
-      }
+      padding: 0 20px;
+      gap: 20px;
     }
 
     &__image-preview {
-      max-height: 100px;
+      max-height: 180px;
       width: auto;
       object-fit: contain;
       object-position: center;
-      margin-right: 20px;
+      border-radius: 4px;
+    }
+
+    &__showcase-preview-tools {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
     &__add-photo-btn {
@@ -285,6 +273,11 @@ export default {
 
     &__showcase {
       margin-bottom: 40px;
+      width: 50%;
+      padding: 20px 0 40px;
+      background-color: #fff;
+      border-radius: 4px;
+      align-self: flex-start;
     }
 
     &__label {
@@ -309,12 +302,12 @@ export default {
       padding: 0 20px 0 10px;
       background-color: transparent;
       margin-right: 10px;
-      width: 50%;
-      font-size: 28px;
+      width: 100%;
+      font-size: 23px;
       line-height: 22px;
       font-weight: 500;
       letter-spacing: 1px;
-      color: #000;
+      color: #666;
 
       &:focus {
         outline: none;
@@ -329,8 +322,10 @@ export default {
 
       &--hidden {
         position: absolute;
-        width: 0;
+        width: 0 !important;
+        border-bottom: none;
         visibility: hidden;
+        border-bottom: none;
       }
     }
 

@@ -2,11 +2,27 @@
   <div class="Tools__tools">
     <div class="Tools__tools-toggler"></div>
     <div class="Tools__tools-popup">
-      <span class="Tools__tool" @click="$emit('edit')">Edit</span>
-      <span class="Tools__tool" @click="$emit('delete')">Delete</span>
+      <span class="Tools__tool" v-if="editType" @click="$emit('edit')">Edit</span>
+      <span class="Tools__tool" v-if="deleteType" @click="$emit('delete')">Delete</span>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Tools',
+  props: {
+    editType: {
+      type: Boolean,
+      default: true,
+    },
+    deleteType: {
+      type: Boolean,
+      default: true,
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
   .Tools {
@@ -64,6 +80,7 @@
       top: 80%;
       right: 8px;
       border-radius: 4px;
+      background-color: #fff;
       border: 1px solid #ccc;
       min-width: 150px;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);

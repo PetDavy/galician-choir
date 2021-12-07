@@ -1,11 +1,28 @@
 <template>
   <div class="AdminGallery">
-    <div class="AdminGallery__title">Gallery</div>
+    <div class="AdminGalleryList">
+      <div class="AdminGalleryList__photos-list">
+        <div
+          class="AdminGalleryList__photos-item"
+          v-for="photo in photos"
+          :key="photo.name"
+        >
+          <img
+            :src="photo.url"
+            alt=""
+            class="AdminGalleryList__photo"
+          >
+          <span class="AdminGalleryList__photo-name">{{photo.name}}</span>
+          <span class="AdminGalleryList__photo-remove-btn" @click="removePhoto(photo)"></span>
+        </div>
+      </div>
+    </div>
     <div class="AdminGallery__form-wrapper">
       <form class="AdminGallery__form">
         <label
           for="addPhotoInput"
           class="AdminGallery__label"
+          title="Ckick area for uploading one file"
           @drop.prevent="dropHandler"
           @dragover.prevent
         >
@@ -36,29 +53,12 @@
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="AdminGallery__store-btn btn"
-      v-if="storedPhotos.length"
-      @click="uploadPhotos"
-    >
-      Upload Photos
-    </div>
-  </div>
-  <div class="AdminGalleryList">
-    <div class="AdminGalleryList__photos-list">
       <div
-        class="AdminGalleryList__photos-item"
-        v-for="photo in photos"
-        :key="photo.name"
+        class="AdminGallery__store-btn btn"
+        v-if="storedPhotos.length"
+        @click="uploadPhotos"
       >
-        <img
-          :src="photo.url"
-          alt=""
-          class="AdminGalleryList__photo"
-        >
-        <span class="AdminGalleryList__photo-name">{{photo.name}}</span>
-        <span class="AdminGalleryList__photo-remove-btn" @click="removePhoto(photo)"></span>
+        Upload Photos
       </div>
     </div>
   </div>
@@ -122,6 +122,7 @@ export default {
     },
     uploadPhotos() {
       let freeMaxId = 1;
+      const promiseFiles = [];
 
       if (this.photos.length) {
         const photosNames = this.photos.map((photo) => parseInt(photo.name.split('-')[0], 10));
@@ -131,16 +132,20 @@ export default {
       this.storedPhotos.forEach((photo, i) => {
         const storageRef = firebaseRef(this.storage, `photos/${freeMaxId + i}-${photo.name}`);
 
-        uploadBytes(storageRef, photo).then((snapshot) => { // fix to Promise.all then clear this.photos
+        const promiseFile = uploadBytes(storageRef, photo).then((snapshot) => { // fix to Promise.all then clear this.photos
           this.addUploadedPhoto({ uploadedPhoto: photo.name });
           this.uploadProgress += 100 / this.storedPhotos.length;
 
-          if (i === this.storedPhotos.length - 1) {
-            this.photos = [];
-            this.setPhotos();
-            this.clearProgressBar();
-          }
+          return i;
         });
+
+        promiseFiles.push(promiseFile);
+      });
+
+      Promise.all(promiseFiles).then(() => {
+        this.photos = [];
+        this.setPhotos();
+        this.clearProgressBar();
       });
     },
     clearProgressBar() {
@@ -182,44 +187,58 @@ export default {
 
 <style lang="scss" scoped>
   .AdminGallery {
-    background-color: #6e8087;
-    box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding: 15px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
 
     &__form-wrapper {
       display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+      flex-direction: column;
+      margin: 15px 0 20px;
+      padding: 0 20px 20px;
+      border-radius: 4px;
+      width: 50%;
+      align-self: flex-start;
     }
 
     &__form {
-      margin-right: 40px;
-      width: 50%;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 4px;
+      background-color: #fff;
+      display: flex;
     }
 
     &__store-list-container {
       position: relative;
-      height: 250px;
+      max-height: 250px;
       flex-grow: 1;
       overflow-y: auto;
+      margin-bottom: 30px;
     }
 
     &__store-list {
+      padding: 20px;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+      &:empty {
+        padding: 0;
+      }
     }
 
     &__store-list-item {
       width: 100%;
       margin-bottom: 8px;
       font-size: 16px;
-      padding: 4px 15px;
-      background-color: rgba(255, 255, 255, 0.1);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-      color: #ccc;
+      padding: 5px 15px;
+      background-color: #fff;
+      border-radius: 2px;
+      color: #0d1b3eb3;
+      font-weight: 500;
 
       &--uploaded {
-        text-shadow: none;
         background-color: rgba(81, 216, 28, 0.1);
       }
     }
@@ -237,8 +256,8 @@ export default {
       display: block;
       height: 250px;
       width: 100%;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      border-radius: 4px;
+      border: 2px dashed #ccc;
       background-color: rgba(255, 255, 255, 0.2);
       cursor: pointer;
       transition: background-color .3s;
@@ -248,27 +267,14 @@ export default {
       }
 
       &::before {
-        content: '';
+        content: 'Drag Your Files Here';
         position: absolute;
         top: 50%;
         left: 50%;
-        height: 20px;
-        width: 4px;
+        white-space: nowrap;
         border-radius: 2px;
-        background-color: rgba(255, 255, 255, 0.8);
-        transform: translate(-50%, -50%);
-        z-index: 2;
-      }
-
-      &::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 20px;
-        height: 4px;
-        border-radius: 3px;
-        background-color: rgba(255, 255, 255, 0.7);
+        color: #ccc;
+        font-size: 20px;
         transform: translate(-50%, -50%);
         z-index: 2;
       }
@@ -295,42 +301,46 @@ export default {
   }
 
   .AdminGalleryList {
-    background-color: #6e8087;
-    box-shadow: 0 25px 45px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     padding: 15px;
-
-    &__photos-list {
-
-    }
+    width: 50%;
 
     &__photos-item {
+      position: relative;
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
-      padding: 5px 20px 5px 5px;
-      height: 50px;
-      background-color: rgba(255, 255, 255, 0.1);
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      margin-bottom: 12px;
+      padding: 12px;
+      height: 90px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
     }
 
     &__photo {
       margin-right: 20px;
       height: 100%;
-      width: 40px;
+      width: 80px;
+      border-radius: 4px;
+      object-fit: cover;
+      object-position: center;
     }
 
     &__photo-name {
-      font-size: 20px;
-      color: #ccc;
-      font-weight: 500;
+      font-size: 18px;
+      color: #0d1b3eb3;
+      font-weight: 400;
+      align-self: flex-start;
+      padding-right: 25px;
+      word-break: break-all;
     }
 
     &__photo-remove-btn {
-      position: relative;
+      position: absolute;
+      top: 15px;
+      right: 15px;
       width: 20px;
       height: 20px;
-      margin-left: auto;
       cursor: pointer;
       transition: transform .3s;
 

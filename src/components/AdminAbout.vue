@@ -220,6 +220,7 @@ export default {
     &__text {
       width: 100%;
       font-size: 16px;
+      letter-spacing: 1px;
     }
   }
 </style>
