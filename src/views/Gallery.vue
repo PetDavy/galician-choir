@@ -195,8 +195,6 @@ export default {
 
 <style lang="scss">
   .Gallery {
-    // background: #132b34;
-
     &__content {
       max-width: 2000px;
       position: relative;

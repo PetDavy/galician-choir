@@ -43,6 +43,8 @@ export default {
       'setAboutBlocks',
       'setHomeData',
       'setCooperations',
+      'setContact',
+      'setSocials',
       'setLocale',
       'updateStorage',
     ]),
@@ -99,7 +101,6 @@ export default {
             ...doc.data(),
           };
         });
-        console.log('home', homeData);
         this.setHomeData({ homeData });
       });
     },
@@ -119,6 +120,36 @@ export default {
         this.setCooperations({ cooperations });
       });
     },
+    setContactData() {
+      const q = query(collection(this.db, 'contact'));
+
+      onSnapshot(q, (querySnapshot) => {
+        let contact = {};
+
+        querySnapshot.forEach((doc) => {
+          contact = {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+        this.setContact({ contact });
+      });
+    },
+    setSocialsData() {
+      const q = query(collection(this.db, 'socials'));
+
+      onSnapshot(q, (querySnapshot) => {
+        let socials = {};
+
+        querySnapshot.forEach((doc) => {
+          socials = {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
+        this.setSocials({ socials });
+      });
+    },
     setStorage() {
       const storage = getStorage();
 
@@ -132,6 +163,8 @@ export default {
     this.setHomeDataLocal();
     this.setStorage();
     this.setCooperationsData();
+    this.setContactData();
+    this.setSocialsData();
   },
 };
 </script>

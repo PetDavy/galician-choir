@@ -11,6 +11,8 @@ export default createStore({
     aboutBlocks: [], // block {id, grand-title, title, sub-title, text, img} <string> {orderId: number}
     homeData: {}, // {id, title} <string>
     cooperations: [], // {id, img: string, svg: string(html), orderId: number} {title, text} <string>
+    contact: {}, // {id, phone: arry<string>, email: arry<string>}
+    socials: {}, // {id, facebook, instagram, youtube, twitter, tiktok, soundcloud} <string>
     isModalFormOpen: false,
     locale: 'ua',
     storedPhotos: [],
@@ -53,6 +55,12 @@ export default createStore({
     setCooperations(state, payload) {
       state.cooperations = payload.cooperations;
     },
+    setContact(state, payload) {
+      state.contact = payload.contact;
+    },
+    setSocials(state, payload) {
+      state.socials = payload.socials;
+    },
     addStoredPhoto(state, payload) {
       state.storedPhotos = [...state.storedPhotos, payload.newPhoto];
     },
@@ -84,6 +92,8 @@ export default createStore({
     aboutBlocks: (state) => state.aboutBlocks,
     homeData: (state) => state.homeData,
     cooperations: (state) => state.cooperations,
+    contact: (state) => state.contact,
+    socials: (state) => state.socials,
     locale: (state) => state.locale,
     storedPhotos: (state) => state.storedPhotos,
     uploadedPhotos: (state) => state.uploadedPhotos,

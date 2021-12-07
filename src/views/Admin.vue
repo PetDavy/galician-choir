@@ -20,6 +20,9 @@
         <AdminGallery
           v-if="activeTab === 'gallery'"
         />
+        <AdminContact
+          v-if="activeTab === 'contact'"
+        />
       </div>
     </div>
   </section>
@@ -33,6 +36,7 @@ import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
 import AdminAbout from '@/components/AdminAbout.vue';
 import AdminHome from '@/components/AdminHome.vue';
+import AdminContact from '@/components/AdminContact.vue';
 import CooperationModalForm from '@/components/CooperationModalForm.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
 import AboutModalForm from '@/components/AboutModalForm.vue';
@@ -54,6 +58,7 @@ export default {
     AdminEvents,
     AdminAbout,
     AdminHome,
+    AdminContact,
     EventModalForm,
     CooperationModalForm,
     AboutModalForm,

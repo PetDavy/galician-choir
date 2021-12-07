@@ -8,16 +8,14 @@
           <p class="Contact__info-item-title">
             {{lines[locale].phone}}
           </p>
-          <p class="Contact__info-item-line">
+          <p
+            class="Contact__info-item-line"
+            v-for="phone in contact.phone"
+            :key="phone"
+          >
             <svg width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="m14.6 10.6-3.3-1.4a.7.7 0 0 0-.8.2L9 11.2C6.7 10 5 8.2 3.8 6l1.8-1.5a.7.7 0 0 0 .2-.8L4.4.4a.7.7 0 0 0-.8-.4L.6.7a.7.7 0 0 0-.6.7C0 9 6 15 13.6 15a.7.7 0 0 0 .7-.5l.7-3a.7.7 0 0 0-.4-.9Z" fill="#A56F50"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h15v15H0z"/></clipPath></defs></svg>
-            <a href="tel:+38 097 471 1218">
-              +38 097 471 1218
-            </a>
-          </p>
-          <p class="Contact__info-item-line">
-            <svg width="15" height="15" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d="m14.6 10.6-3.3-1.4a.7.7 0 0 0-.8.2L9 11.2C6.7 10 5 8.2 3.8 6l1.8-1.5a.7.7 0 0 0 .2-.8L4.4.4a.7.7 0 0 0-.8-.4L.6.7a.7.7 0 0 0-.6.7C0 9 6 15 13.6 15a.7.7 0 0 0 .7-.5l.7-3a.7.7 0 0 0-.4-.9Z" fill="#A56F50"/></g><defs><clipPath id="a"><path fill="#fff" d="M0 0h15v15H0z"/></clipPath></defs></svg>
-            <a href="tel:+72 (555) 243 12">
-              +72 (555) 243 12
+            <a :href="`tel:${formatPhone(phone)}`">
+              {{phone}}
             </a>
           </p>
         </div>
@@ -25,16 +23,14 @@
           <p class="Contact__info-item-title">
             {{lines[locale].email}}
           </p>
-          <p class="Contact__info-item-line">
+          <p
+            class="Contact__info-item-line"
+            v-for="email in contact.email"
+            :key="email"
+          >
             <svg width="15" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.7 3.7c.1 0 .3 0 .3.2v6c0 .7-.6 1.3-1.4 1.3H1.4c-.8 0-1.4-.6-1.4-1.4v-6s.2-.2.3 0L4.8 7c.6.5 1.7 1.4 2.7 1.4 1 0 2.1-1 2.7-1.4l4.5-3.3ZM7.5 7.5c.7 0 1.7-.9 2.2-1.2l5-3.8c.2-.1.3-.3.3-.5v-.6c0-.8-.6-1.4-1.4-1.4H1.4C.6 0 0 .6 0 1.4V2c0 .2.1.4.3.5l5 3.8c.5.3 1.5 1.2 2.2 1.2Z" fill="#A56F50"/></svg>
-            <a href="mailto:galicianchoir@gmail.com">
-              galicianchoir@gmail.com
-            </a>
-          </p>
-          <p class="Contact__info-item-line">
-            <svg width="15" height="12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.7 3.7c.1 0 .3 0 .3.2v6c0 .7-.6 1.3-1.4 1.3H1.4c-.8 0-1.4-.6-1.4-1.4v-6s.2-.2.3 0L4.8 7c.6.5 1.7 1.4 2.7 1.4 1 0 2.1-1 2.7-1.4l4.5-3.3ZM7.5 7.5c.7 0 1.7-.9 2.2-1.2l5-3.8c.2-.1.3-.3.3-.5v-.6c0-.8-.6-1.4-1.4-1.4H1.4C.6 0 0 .6 0 1.4V2c0 .2.1.4.3.5l5 3.8c.5.3 1.5 1.2 2.2 1.2Z" fill="#A56F50"/></svg>
-            <a href="mailto:fakeemail@gmail.com">
-              fakeemail@gmail.com
+            <a :href="`mailto:${email}`">
+              {{email}}
             </a>
           </p>
         </div>
@@ -115,7 +111,7 @@ export default {
     Loader,
   },
   computed: {
-    ...mapGetters(['locale']),
+    ...mapGetters(['locale', 'contact']),
     isValidForm() {
       return this.email && this.message;
     },
@@ -130,6 +126,9 @@ export default {
       setTimeout(() => {
         this.isLoaderRemoved = true;
       }, 500);
+    },
+    formatPhone(number) {
+      return number.replaceAll(' ', '').replaceAll('-', '');
     },
   },
   mounted() {

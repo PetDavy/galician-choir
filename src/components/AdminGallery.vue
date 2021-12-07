@@ -132,7 +132,7 @@ export default {
       this.storedPhotos.forEach((photo, i) => {
         const storageRef = firebaseRef(this.storage, `photos/${freeMaxId + i}-${photo.name}`);
 
-        const promiseFile = uploadBytes(storageRef, photo).then((snapshot) => { // fix to Promise.all then clear this.photos
+        const promiseFile = uploadBytes(storageRef, photo).then((snapshot) => {
           this.addUploadedPhoto({ uploadedPhoto: photo.name });
           this.uploadProgress += 100 / this.storedPhotos.length;
 
@@ -190,6 +190,7 @@ export default {
     padding: 20px;
     flex: 1;
     display: flex;
+    min-height: 70vh;
 
     @media (max-width: 1100px) {
       flex-direction: column;
