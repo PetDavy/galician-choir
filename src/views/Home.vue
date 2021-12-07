@@ -277,8 +277,20 @@ export default {
 
       @media (max-width: 960px) {
         max-width: 100%;
-        width: 100%;
+        width: fit-content;
         text-align: center;
+      }
+
+      @media (max-width: 700px) {
+        transform: scale(0.7);
+      }
+
+      @media (max-width: 400px) {
+        transform: translateX(-20px) scale(0.5);
+      }
+
+      @media (max-width: 500px) {
+        transform: translateX(-45px) scale(0.5);
       }
     }
 
