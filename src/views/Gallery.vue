@@ -16,7 +16,13 @@
             :class="{[`Gallery__row--${row.columns.length}-col`]: true}"
             @click="openPhotoModal(photo.id)"
           >
-            <img :src="photo.url" alt="" class="Gallery__photo">
+            <img
+              src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'/%3E"
+              alt=""
+              class="Gallery__photo"
+              :data-src="photo.url"
+              data-observer="lazyloading"
+            >
           </div>
         </div>
       </div>
@@ -268,10 +274,15 @@ export default {
       width: 100%;
       object-fit: cover;
       object-position: center;
-      transition: opacity .3s;
+      transition: opacity 1s;
+      opacity: 0;
 
-      &:hover {
-        opacity: 0.8;
+      &--lazyloaded {
+        opacity: 1;
+
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
 

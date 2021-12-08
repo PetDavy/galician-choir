@@ -130,6 +130,11 @@ export default {
     width: 50%;
     padding: 0 20px;
 
+    @media (max-width: 700px) {
+      width: 100%;
+      padding: 0;
+    }
+
     &__content {
       background-color: #fff;
       border-radius: 4px;

@@ -186,8 +186,16 @@ export default {
     padding: 20px;
     min-height: 70vh;
 
+    @media (max-width: 700px) {
+      flex-direction: column;
+    }
+
     &__contacts {
       width: 50%;
+
+      @media (max-width: 700px) {
+        width: 100%;
+      }
     }
 
     &__contacts-group {

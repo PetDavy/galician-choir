@@ -7,11 +7,29 @@ const callbacks = {
       }
     });
   },
+  lazyloading: (entries, observer) => {
+    entries.forEach((entry) => {
+      const { target } = entry;
+      if (entry.isIntersecting) {
+        target.addEventListener('load', () => {
+          target.classList.add('Gallery__photo--lazyloaded');
+        });
+
+        const { src } = target.dataset;
+        target.src = src;
+
+        observer.unobserve(target);
+      }
+    });
+  },
 };
 
 const options = {
   'grand-title': {
     rootMargin: '-180px',
+  },
+  lazyloading: {
+    rootMargin: '0px',
   },
 };
 
