@@ -59,7 +59,7 @@ export default {
     width: 50%;
     display: flex;
     align-items: center;
-    padding: 40px;
+    padding: 40px 50px;
     background: #1d1d1d;
     transform: translateX(0);
     opacity: 1;
@@ -84,10 +84,10 @@ export default {
     }
 
     &__link {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       width: 100%;
-      font-size: 67px;
-      line-height: 70px;
+      font-size: 60px;
+      line-height: 65px;
       color: #fff;
       text-transform: uppercase;
       font-weight: 300;

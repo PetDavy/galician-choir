@@ -145,7 +145,7 @@ export default {
     position: relative;
     padding-bottom: 200px;
     padding-top: 280px;
-    background-image: url('https://firebasestorage.googleapis.com/v0/b/galician-choir.appspot.com/o/photos%2F4-choir-2.jpg?alt=media&token=1902a2ec-7f12-4dae-85bb-4c11344ba491');
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/galician-choir.appspot.com/o/photos%2F11-DSC_9706.jpg?alt=media&token=94124b3d-2999-4379-8e2e-3b14baea1997');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

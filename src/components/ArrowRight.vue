@@ -10,9 +10,6 @@
       <span class="text">
         {{isOpen ? buttons[locale].hide : buttons[locale]['ex-more']}}
       </span>
-      <span class="the-arrow -right">
-        <span class="shaft"></span>
-      </span>
     </span>
   </span>
 </template>
