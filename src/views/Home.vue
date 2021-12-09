@@ -601,6 +601,11 @@ export default {
         width: 350px;
         height: 350px;
       }
+
+      @media (max-width: 450px) {
+        width: 310px;
+        height: 310px;
+      }
     }
 
     &__preview {
@@ -615,6 +620,11 @@ export default {
         margin-bottom: 1px;
         width: 340px;
         height: 340px;
+      }
+
+      @media (max-width: 450px) {
+        width: 300px;
+        height: 300px;
       }
     }
 
@@ -645,6 +655,11 @@ export default {
         font-weight: 400;
         font-size: 46px;
         line-height: 46px;
+
+        @media (max-width: 550px) {
+          font-size: 40px;
+          line-height: 40px;
+        }
       }
 
       &--right {

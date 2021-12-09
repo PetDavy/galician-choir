@@ -138,7 +138,6 @@ $arrow-head-thickness: $shaft-thickness;
   align-items: center;
   color: $black;
   font-size: 1.25em;
-  // font-style: italic;
   text-decoration: none;
   transform: translateY(-50%);
   cursor: pointer;
@@ -230,7 +229,7 @@ $arrow-head-thickness: $shaft-thickness;
     transition: all 0.2s;
 
     .text {
-      margin: 0 $text-arrow-space 0 0;
+      margin: 0 45px 0 0;
       line-height: 1;
     }
 
