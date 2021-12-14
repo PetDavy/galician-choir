@@ -8,7 +8,6 @@ const routes = [
     name: 'Home',
     meta: { header: ['full-width', 'no-logo'] },
     component: Home,
-
   },
   {
     path: '/about',
@@ -38,6 +37,9 @@ const routes = [
     path: '/videos',
     name: 'Videos',
     component: () => import('../views/Videos.vue'),
+    meta: {
+      header: ['full-width'],
+    },
   },
   {
     path: '/contact',
@@ -53,7 +55,7 @@ const routes = [
     component: () => import('../views/Login.vue'),
     meta: {
       header: ['full-width'],
-      // redirectOnAuth: 'Admin',
+      redirectOnAuth: 'Admin',
     },
   },
   {
@@ -64,6 +66,12 @@ const routes = [
       header: ['full-width', 'light'],
       requiresAuth: true,
     },
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'Home',
+    meta: { header: ['full-width', 'no-logo'] },
+    component: Home,
   },
 ];
 

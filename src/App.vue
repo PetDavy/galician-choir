@@ -45,6 +45,7 @@ export default {
       'setCooperations',
       'setContact',
       'setSocials',
+      'setVideos',
       'setLocale',
       'updateStorage',
     ]),
@@ -150,6 +151,22 @@ export default {
         this.setSocials({ socials });
       });
     },
+    setVideosData() {
+      const q = query(collection(this.db, 'videos'));
+
+      onSnapshot(q, (querySnapshot) => {
+        const videos = [];
+
+        querySnapshot.forEach((doc) => {
+          videos.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+        });
+
+        this.setVideos({ videos });
+      });
+    },
     setStorage() {
       const storage = getStorage();
 
@@ -165,6 +182,7 @@ export default {
     this.setCooperationsData();
     this.setContactData();
     this.setSocialsData();
+    this.setVideosData();
   },
 };
 </script>

@@ -133,8 +133,6 @@ export default {
         svg: this.svg,
       };
 
-      console.log('cooperationData: ', cooperationData);
-
       try {
         const docRef = await addDoc(collection(this.db, 'cooperations'), cooperationData);
         console.log('Document written with ID: ', docRef.id);

@@ -29,7 +29,7 @@ export default {
   name: 'AdminPanelsidebar',
   data() {
     return {
-      tabs: ['events', 'about', 'home', 'gallery', 'contact'],
+      tabs: ['events', 'about', 'home', 'gallery', 'video', 'contact'],
     };
   },
   props: {

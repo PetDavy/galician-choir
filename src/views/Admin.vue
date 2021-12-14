@@ -3,6 +3,7 @@
   <EventModalForm v-if="isModalFormOpen && activeTab === 'events'" />
   <AboutModalForm v-if="isModalFormOpen && activeTab === 'about'" />
   <CooperationModalForm v-if="isModalFormOpen && activeTab === 'home'" />
+  <VideoModalForm v-if="isModalFormOpen && activeTab === 'video'" />
   <section class="Admin">
     <div class="Admin__content">
       <div class="Admin__panel">
@@ -20,6 +21,9 @@
         <AdminGallery
           v-if="activeTab === 'gallery'"
         />
+        <AdminVideo
+          v-if="activeTab === 'video'"
+        />
         <AdminContact
           v-if="activeTab === 'contact'"
         />
@@ -34,10 +38,12 @@ import Loader from '@/components/Loader.vue';
 import AdminPanelSidebar from '@/components/AdminPanelSidebar.vue';
 import AdminEvents from '@/components/AdminEvents.vue';
 import AdminGallery from '@/components/AdminGallery.vue';
+import AdminVideo from '@/components/AdminVideo.vue';
 import AdminAbout from '@/components/AdminAbout.vue';
 import AdminHome from '@/components/AdminHome.vue';
 import AdminContact from '@/components/AdminContact.vue';
 import CooperationModalForm from '@/components/CooperationModalForm.vue';
+import VideoModalForm from '@/components/VideoModalForm.vue';
 import EventModalForm from '@/components/EventModalForm.vue';
 import AboutModalForm from '@/components/AboutModalForm.vue';
 
@@ -61,8 +67,10 @@ export default {
     AdminContact,
     EventModalForm,
     CooperationModalForm,
+    VideoModalForm,
     AboutModalForm,
     AdminGallery,
+    AdminVideo,
   },
   computed: {
     ...mapGetters(['auth', 'db', 'isModalFormOpen']),

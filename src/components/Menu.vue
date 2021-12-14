@@ -9,6 +9,7 @@
       <router-link to="/about" class="Menu__link">{{menu[locale].about}}</router-link>
       <router-link to="/events" class="Menu__link">{{menu[locale].events}}</router-link>
       <router-link to="/gallery" class="Menu__link">{{menu[locale].gallery}}</router-link>
+      <router-link to="/videos" class="Menu__link">{{menu[locale].videos}}</router-link>
       <router-link to="/contact" class="Menu__link">{{menu[locale].contact}}</router-link>
       <router-link to="/admin" class="Menu__link Menu__link--admin" v-if="logedIn">{{menu[locale].cabinet}}</router-link>
     </nav>
