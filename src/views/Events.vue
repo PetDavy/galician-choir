@@ -20,7 +20,12 @@
               </span>
             </div>
           </div>
-          <h2 class="event__title">{{event.title}}</h2>
+          <h2
+            class="event__title"
+            :class="{'event__title--ua': locale === 'ua'}"
+          >
+            {{event.title}}
+          </h2>
           <div class="event__description">
             {{event.text}}
           </div>
@@ -179,6 +184,20 @@ export default {
     @media (max-width: 550px) {
       font-size: 38px;
       line-height: 40px;
+    }
+
+    &--ua {
+      font-size: 42px;
+      line-height: 48px;
+
+      @media (max-width: 1400px) {
+        text-align: center;
+      }
+
+      @media (max-width: 550px) {
+        font-size: 38px;
+        line-height: 40px;
+      }
     }
   }
 
