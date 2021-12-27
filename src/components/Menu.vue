@@ -87,8 +87,8 @@ export default {
     &__link {
       margin-bottom: 10px;
       width: 100%;
-      font-size: 60px;
-      line-height: 65px;
+      font-size: 56px;
+      line-height: 62px;
       color: #fff;
       text-transform: uppercase;
       font-weight: 300;
@@ -102,7 +102,7 @@ export default {
       }
 
       @media (max-width: 700px) {
-        font-size: 55px;
+        font-size: 50px;
         line-height: 60px;
       }
 

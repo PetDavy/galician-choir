@@ -168,7 +168,7 @@ export default {
     &__image-wrapper {
       position: relative;
       width: 250px;
-      padding-top: 250px;
+      padding-top: 200px;
       margin-right: 30px;
       flex-shrink: 0;
       overflow: hidden;
@@ -188,7 +188,7 @@ export default {
     &__image {
       position: absolute;
       top: 0;
-      height: 100%;
+      width: 100%;
       object-fit: contain;
       object-position: center;
       border-radius: 4px;

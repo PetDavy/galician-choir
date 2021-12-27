@@ -13,9 +13,15 @@
             <h3 class="About__info-title">{{block.title}}</h3>
             <p class="About__info-sub-title">{{block['sub-title']}}</p>
           </div>
-          <p class="About__info-description">
-            {{block.text}}
-          </p>
+          <input type="checkbox" :id="`description-check-${index}`" class="About__checkbox">
+          <div class="About__info-description">
+            <p>
+              {{block.text}}
+            </p>
+          </div>
+          <label :for="`description-check-${index}`" class="btn About__info-btn">
+            {{buttons[locale]['more']}}
+          </label>
         </div>
         <div class="About__image-wrapper">
           <img
@@ -33,6 +39,7 @@
 import { mapGetters } from 'vuex';
 import GrandTitle from '@/components/GrandTitle.vue';
 import Loader from '@/components/Loader.vue';
+import buttons from '@/assets/texts/buttons.json';
 
 export default {
   name: 'About',
@@ -40,6 +47,7 @@ export default {
     return {
       isLoaderVisible: true,
       isLoaderRemoved: false,
+      buttons,
     };
   },
   components: {
@@ -76,7 +84,6 @@ export default {
 
 <style lang="scss" scoped>
   .About {
-    // background-color: #132b34;
     padding-bottom: 200px;
     padding-top: 250px;
 
@@ -102,6 +109,7 @@ export default {
     }
 
     &__block {
+      height: 580px;
       position: relative;
       display: flex;
       justify-content: space-between;
@@ -112,11 +120,16 @@ export default {
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 
       @media (max-width: 1400px) {
+        height: 480px;
+      }
+
+      @media (max-width: 1200px) {
         flex-direction: column;
         margin: 0 auto 170px auto;
         width: fit-content;
         padding: 60px 40px 20px;
         border-radius: 6px;
+        height: auto;
       }
 
       @media (max-width: 700px) {
@@ -130,7 +143,7 @@ export default {
           margin-right: 20px;
           padding-left: 60px;
 
-          @media (max-width: 1400px) {
+          @media (max-width: 1200px) {
             margin-right: 0;
             margin-left: 0;
             padding-left: 0;
@@ -144,7 +157,7 @@ export default {
           margin-left: 20px;
           padding-right: 60px;
 
-          @media (max-width: 1400px) {
+          @media (max-width: 1200px) {
             margin-right: 0;
             margin-left: 0;
             min-width: 50%;
@@ -162,6 +175,17 @@ export default {
 
         .About__image-wrapper {
           order: -1;
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        .About__image {
+          border-top-left-radius: 4px;
+          border-bottom-left-radius: 4px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
         }
       }
 
@@ -173,15 +197,15 @@ export default {
     &__info {
       padding: 60px 0;
 
-      @media (max-width: 1400px) {
+      @media (max-width: 1200px) {
         padding: 40px 0 20px;
       }
     }
 
     &__info-top {
       max-width: 800px;
-      margin-bottom: 40px;
-      padding-bottom: 40px;
+      margin-bottom: 30px;
+      padding-bottom: 25px;
       border-bottom: 1px solid #ccc;
     }
 
@@ -196,27 +220,110 @@ export default {
     &__info-sub-title {
       font-size: 16px;
       line-height: 19px;
-      // color: #f4f4f4;
       font-weight: 600;
       letter-spacing: 0.8px;
     }
 
+    &__checkbox {
+      position: absolute;
+      z-index: -1;
+      visibility: hidden;
+
+      &:not(:checked) ~ .About__info-description {
+        -webkit-line-clamp: 10;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        overflow: hidden;
+        position: relative;
+        text-overflow: clip;
+        white-space: normal;
+        word-break: break-word;
+
+        @media (max-width: 1400px) {
+          -webkit-line-clamp: 6;
+        }
+      }
+
+      &:checked ~ .About__info-btn {
+        display: none;
+      }
+    }
+
     &__info-description {
-      max-width: 700px;
+      max-width: 816px;
       margin-bottom: 12px;
       font-size: 16px;
       line-height: 30px;
-      // color: #f4f4f4;
       letter-spacing: 0.8px;
+      max-height: 358px;
+      position: relative;
+      overflow-y: auto;
+
+      @media (max-width: 1400px) {
+        max-height: 235px;
+      }
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        background-color: hsl(0, 0%, 90%);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        height: 24px;
+        background-color: hsl(0, 0%, 70%);
+      }
+    }
+
+    &__info-btn {
+      background-color: #fff;
+      position: relative;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+
+      &::before {
+        position: absolute;
+        content: '';
+        bottom: 4px;
+        left: 4px;
+        width: 0;
+        height: 0;
+        border-bottom: 1px solid #aaaaaa;
+        border-left: 1px solid #aaaaaa;
+        transition: width .5s, height .5s;
+      }
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: 4px;
+        right: 4px;
+        width: 0;
+        height: 0;
+        border-right: 1px solid #aaaaaa;
+        border-top: 1px solid #aaaaaa;
+        transition: width .5s, height .5s;
+      }
+
+      &:hover {
+        &::before {
+          width: calc(100% - 8px);
+          height: calc(100% - 8px);
+        }
+
+        &::after {
+          width: calc(100% - 8px);
+          height: calc(100% - 8px);
+        }
+      }
     }
 
     &__image-wrapper {
       position: relative;
       width: 600px;
-      padding-top: 35%;
       align-self: stretch;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
 
-      @media (max-width: 1400px) {
+      @media (max-width: 1200px) {
         order: -1;
         margin: 0 auto;
         padding-top: 600px;
@@ -233,10 +340,17 @@ export default {
       top: 0;
       width: 100%;
       height: 100%;
+      max-height: 580px;
       left: 0;
       display: block;
       object-fit: cover;
       object-position: center;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+
+      @media (max-width: 1400px) {
+
+      }
     }
   }
 </style>

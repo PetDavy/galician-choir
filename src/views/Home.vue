@@ -127,13 +127,10 @@ export default {
   components: {
     Loader,
     ArrowRight,
-    // GrandTitle,
 
     ScrollParallax,
     Logo,
     LogoMobile,
-    // LogoCenter,
-    // LogoOuter,
   },
   computed: {
     ...mapGetters(['db', 'events', 'homeData', 'cooperations', 'locale']),
@@ -488,7 +485,7 @@ export default {
       }
 
       &--open {
-        width: calc(100% - 350px);
+        width: calc(100% - 380px);
 
         @media (max-width: 1200px) {
           width: calc(100% - 450px);
@@ -633,16 +630,11 @@ export default {
     &__title {
       font-size: 56px;
       line-height: 50px;
-      max-width: 590px;
       margin-bottom: 20px;
       font-family: 'Neuton', 'Rubik', Arial, Helvetica, sans-serif;
 
-      @media (max-width: 1100px) {
-        max-width: 460px;
-      }
-
-      @media (max-width: 950px) {
-        max-width: 400px;
+      @media (max-width: 1200px) {
+        max-width: 395px;
       }
 
       @media (max-width: 550px) {
@@ -665,6 +657,17 @@ export default {
       &--right {
         color: #fff;
         font-size: 40px;
+        max-width: 100%;
+
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        max-height: 100px;
+        overflow: hidden;
+        position: relative;
+        text-overflow: clip;
+        white-space: normal;
+        word-break: break-word;
 
         @media (max-width: 1200px) and (min-width: 949px) {
           display: none;
@@ -672,6 +675,7 @@ export default {
 
         @media (max-width: 950px) {
           padding-top: 25px;
+          max-height: 130px;
         }
 
         @media (max-width: 780px) {
@@ -681,7 +685,7 @@ export default {
     }
 
     &__description-wrapper {
-      max-height: 200px;
+      max-height: 162px;
       position: relative;
       overflow-y: auto;
 
@@ -690,7 +694,17 @@ export default {
       }
 
       @media (max-width: 950px) {
-        max-height: 220px;
+        max-height: 230px;
+      }
+
+      &::-webkit-scrollbar {
+        width: 5px;
+        background-color: hsl(0, 0%, 90%);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        height: 24px;
+        background-color: hsl(0, 0%, 70%);
       }
     }
 

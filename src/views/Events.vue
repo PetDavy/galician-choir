@@ -129,7 +129,7 @@ export default {
   border-radius: 4px;
   overflow: hidden;
 
-  @media (max-width: 1400px) {
+  @media (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     max-width: 950px;
@@ -142,7 +142,7 @@ export default {
     width: 60%;
     padding-right: 50px;
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -177,7 +177,7 @@ export default {
     line-height: 60px;
     letter-spacing: 1.5px;
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       text-align: center;
     }
 
@@ -190,7 +190,7 @@ export default {
       font-size: 42px;
       line-height: 48px;
 
-      @media (max-width: 1400px) {
+      @media (max-width: 1200px) {
         text-align: center;
       }
 
@@ -202,15 +202,31 @@ export default {
   }
 
   &__description {
-      max-width: 80%;
-      margin-bottom: 80px;
-      font-size: 17px;
-      line-height: 30px;
-      letter-spacing: 0.8px;
+    position: relative;
+    max-height: 360px;
+    margin-bottom: 50px;
+    font-size: 17px;
+    line-height: 30px;
+    letter-spacing: 0.8px;
+    overflow-y: auto;
 
-      @media (max-width: 1400px) {
-        max-width: 100%;
-      }
+    @media (max-width: 1400px) {
+      max-height: 180px;
+    }
+
+    @media (max-width: 1200px) {
+      max-width: 100%;
+    }
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      background-color: hsl(0, 0%, 90%);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      height: 24px;
+      background-color: hsl(0, 0%, 70%);
+    }
   }
 
   &__btn {
@@ -264,7 +280,7 @@ export default {
     padding-top: 46%;
     overflow: hidden;
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       position: relative;
       top: initial;
       right: initial;
@@ -287,7 +303,7 @@ export default {
     object-fit: cover;
     object-position: center;
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       position: relative;
       top: initial;
       bottom: initial;
