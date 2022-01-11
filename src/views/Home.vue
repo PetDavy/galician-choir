@@ -13,6 +13,7 @@
             <div class="showcase__logo" :class="{'showcase__logo--ua': locale === 'ua'}">
               <Logo class="showcase__logo--fullwidth" />
               <LogoMobile class="showcase__logo--mobile" />
+              <div class="showcase__hidden-name">Галицький академічний камерний хор</div>
             </div>
           </div>
         </div>
@@ -281,6 +282,12 @@ export default {
       @media (max-width: 500px) {
         transform: scale(0.5);
       }
+    }
+
+    &__hidden-name {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
     }
 
     &__logo {
