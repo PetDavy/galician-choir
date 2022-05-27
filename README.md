@@ -1,4 +1,4 @@
-# roman-choir
+# Galician-choir 
 
 ## Project setup
 ```
@@ -22,3 +22,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+[LIVE SITE](https://galician-choir.com/)
