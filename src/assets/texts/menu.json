@@ -1,0 +1,20 @@
+{
+  "en": {
+    "home": "home",
+    "about": "about",
+    "events": "events",
+    "gallery": "gallery",
+    "videos": "videos",
+    "contact": "contact",
+    "cabinet": "cabinet"
+  },
+  "ua": {
+    "home": "головна",
+    "about": "про нас",
+    "events": "події",
+    "gallery": "галерея",
+    "videos": "відео",
+    "contact": "контакт",
+    "cabinet": "кабінет"
+  }
+}

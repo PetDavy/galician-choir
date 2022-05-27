@@ -1,0 +1,20 @@
+{
+  "en": {
+    "last-event": "our latest event",
+    "coming-event": "visit our event",
+    "coop-header": "our sponsors and cooperations",
+    "phone": "phone",
+    "name": "name",
+    "email": "email",
+    "message": "your message"
+  },
+  "ua": {
+    "last-event": "наш останній захід",
+    "coming-event": "відвідайте захід",
+    "coop-header": "наші спонсори та співпраці",
+    "phone": "телефон",
+    "name": "ім'я",
+    "email": "мейл",
+    "message": "повідомлення"
+  }
+}

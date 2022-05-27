@@ -1,19 +1,38 @@
 <template>
-    <a class='animated-arrow' href='https://google.com'>
-      <span class='the-arrow -left'>
-        <span class='shaft'></span>
+  <span
+    class="animated-arrow"
+    :class="{'animated-arrow--open': isOpen}"
+  >
+    <span class="the-arrow -left">
+      <span class="shaft"></span>
+    </span>
+    <span class="main">
+      <span class="text">
+        {{isOpen ? buttons[locale].hide : buttons[locale]['ex-more']}}
       </span>
-      <span class='main'>
-        <span class='text'>
-          Explore More
-        </span>
-        <span class='the-arrow -right'>
-          <span class='shaft'></span>
-        </span>
-      </span>
-    </a>
-
+    </span>
+  </span>
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+import buttons from '@/assets/texts/buttons.json';
+
+export default {
+  name: 'ArrowRight',
+  props: {
+    isOpen: Boolean,
+  },
+  data() {
+    return {
+      buttons,
+    };
+  },
+  computed: {
+    ...mapGetters(['locale']),
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 $black: #808080;
@@ -113,15 +132,41 @@ $arrow-head-thickness: $shaft-thickness;
 }
 
 .animated-arrow {
+  position: absolute;
+  top: 50%;
   display: inline-flex;
   align-items: center;
-  height: 100%;
   color: $black;
   font-size: 1.25em;
-  font-style: italic;
   text-decoration: none;
-  position: relative;
+  transform: translateY(-50%);
+  cursor: pointer;
   transition: all 0.2s;
+  transition-delay: .3s;
+  z-index: 2;
+
+  &--open {
+    top: 30px;
+    right: 0;
+    transform: translateY(0);
+
+    @media (max-width: 1600px) {
+      right: 40px;
+    }
+
+    @media (max-width: 1200px) {
+      right: initial;
+    }
+
+    .-left {
+      left: 40px;
+      transform: scale(-1);
+    }
+
+    .-right {
+      display: none;
+    }
+  }
 
   &:hover {
     color: $gray;
@@ -184,7 +229,7 @@ $arrow-head-thickness: $shaft-thickness;
     transition: all 0.2s;
 
     .text {
-      margin: 0 $text-arrow-space 0 0;
+      margin: 0 45px 0 0;
       line-height: 1;
     }
 
